@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistical Inference - 3&nbsp; Asymptotics of maximum likelihood estimators</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./week4.html" rel="next">
+<link href="./week2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Inference</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week3.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#asymptotic-normality-of-the-mle" id="toc-asymptotic-normality-of-the-mle" class="nav-link active" data-scroll-target="#asymptotic-normality-of-the-mle"> <span class="header-section-number">3.1</span> Asymptotic normality of the MLE</a></li>
+  <li><a href="#asymptotic-variance" id="toc-asymptotic-variance" class="nav-link" data-scroll-target="#asymptotic-variance"> <span class="header-section-number">3.2</span> Asymptotic variance</a></li>
+  <li><a href="#asymptotic-efficiency" id="toc-asymptotic-efficiency" class="nav-link" data-scroll-target="#asymptotic-efficiency"> <span class="header-section-number">3.3</span> Asymptotic efficiency</a></li>
+  <li><a href="#asymptotic-relative-efficiency" id="toc-asymptotic-relative-efficiency" class="nav-link" data-scroll-target="#asymptotic-relative-efficiency"> <span class="header-section-number">3.4</span> Asymptotic relative efficiency</a></li>
+  <li><a href="#example-ntheta-theta" id="toc-example-ntheta-theta" class="nav-link" data-scroll-target="#example-ntheta-theta"> <span class="header-section-number">3.5</span> Example: N(<span class="math inline">\(\theta, \theta\)</span>)</a></li>
+  <li><a href="#example-convergence-of-a-transformation-of-the-uniform" id="toc-example-convergence-of-a-transformation-of-the-uniform" class="nav-link" data-scroll-target="#example-convergence-of-a-transformation-of-the-uniform"> <span class="header-section-number">3.6</span> Example: Convergence of a transformation of the Uniform</a></li>
+  <li><a href="#example-average-relative-efficiency" id="toc-example-average-relative-efficiency" class="nav-link" data-scroll-target="#example-average-relative-efficiency"> <span class="header-section-number">3.7</span> Example: Average relative efficiency</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="asymptotic-normality-of-the-mle" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="asymptotic-normality-of-the-mle"><span class="header-section-number">3.1</span> Asymptotic normality of the MLE</h2>
+<p>As <span class="math inline">\(n \rightarrow \infty\)</span>, <span class="math display">\[\sqrt{n}(\hat \theta - \theta_0) \xrightarrow{D} N\Big(0, I_1(\theta_0)^{-1}\Big)\]</span></p>
+</section>
+<section id="asymptotic-variance" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="asymptotic-variance"><span class="header-section-number">3.2</span> Asymptotic variance</h2>
+<p>If a sequence of estimators <span class="math inline">\(\pmb W_n\)</span> of <span class="math inline">\(\pmb \tau(\pmb \theta)\)</span> satisfies</p>
+<p><span class="math display">\[\sqrt{n}(\pmb W_n - \pmb\tau(\pmb \theta)) \xrightarrow{D} N(\pmb 0, \pmb V(\pmb \theta)),\]</span></p>
+<p>then <span class="math inline">\(\pmb V(\pmb\theta)\)</span> is called the asymptotic variance of the sequence <span class="math inline">\(\pmb W_n\)</span> in <span class="math inline">\(\pmb\tau(\pmb \theta)\)</span></p>
+<p><span class="math display">\[
+\text{Var}(\pmb W_n) \approx \pmb V(\pmb \theta)/n
+\]</span></p>
+<p>For scalar <span class="math inline">\(W_n\)</span> and <span class="math inline">\(\tau\)</span> this becomes</p>
+<p><span class="math display">\[
+\begin{split}
+\text{if } \sqrt{n}( W_n - \tau(\pmb \theta)) \xrightarrow{D} N( 0,  V(\pmb \theta)), &amp;\text{ then, for any } \epsilon &gt; 0 \\
+\lim_{n \rightarrow \infty} P\Bigg( \sqrt{n}\Big( W_n - \tau(\pmb \theta)\Big) \le \epsilon \Bigg) &amp;= \Phi\Bigg(\frac{\epsilon}{\sqrt{V(\pmb \theta)}}\Bigg)
+\end{split}
+\]</span></p>
+</section>
+<section id="asymptotic-efficiency" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="asymptotic-efficiency"><span class="header-section-number">3.3</span> Asymptotic efficiency</h2>
+<p>A sequence of estimators <span class="math inline">\(\pmb W_n\)</span> is called asymptotically efficient for a parameter <span class="math inline">\(\pmb \tau(\pmb \theta)\)</span> if the asymptotic variance of <span class="math inline">\(\pmb W_n\)</span> achieves the Cramer-Rao bound. That is,</p>
+<p><span class="math display">\[
+\begin{split}
+\sqrt{n}(\pmb W_n - \pmb\tau(\pmb \theta)) &amp;\xrightarrow{D} N(\pmb 0, \pmb V(\pmb \theta)) \\
+\text{ with } \pmb V(\pmb \theta) = \Big(\pmb \tau'&amp;(\pmb \theta)\Big)^T \Big( \pmb I_1(\pmb\theta) \Big)^{-1} \pmb \tau'(\pmb \theta)
+\end{split}
+\]</span></p>
+<p>Through the Delta method,</p>
+<p><span class="math display">\[
+\sqrt{n} \Big(\tau(\hat \theta_n) - \tau(\theta) \Big) \xrightarrow{D} N\Big(0, I_1(\theta)^{-1} [\tau'(\theta)]^2 \Big)
+\]</span></p>
+</section>
+<section id="asymptotic-relative-efficiency" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="asymptotic-relative-efficiency"><span class="header-section-number">3.4</span> Asymptotic relative efficiency</h2>
+<p>Let <span class="math inline">\(\tau(\pmb \theta)\)</span> be a scalar function of <span class="math inline">\(\pmb \theta\)</span>. If two sequences of estimators <span class="math inline">\(W_n\)</span> and <span class="math inline">\(U_n\)</span> satisfy</p>
+<p><span class="math display">\[
+\begin{split}
+\sqrt{n}( W_n - \tau(\pmb \theta)) \xrightarrow{D} N( 0,  V_W(\pmb \theta)) \\
+\sqrt{n}( U_n - \tau(\pmb \theta)) \xrightarrow{D} N( 0,  V_U(\pmb \theta)),
+\end{split}
+\]</span></p>
+<p>then the asymptotic relative efficiency (ARE) of <span class="math inline">\(U_n\)</span> with respect to <span class="math inline">\(W_n\)</span> is</p>
+<p><span class="math display">\[
+\text{ARE}(U_n, W_n) = \frac{V_W(\pmb \theta)}{V_U(\pmb \theta)}
+\]</span></p>
+</section>
+<section id="example-ntheta-theta" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="example-ntheta-theta"><span class="header-section-number">3.5</span> Example: N(<span class="math inline">\(\theta, \theta\)</span>)</h2>
+<p>The MLE of <span class="math inline">\(\theta\)</span> based on a set of <span class="math inline">\(n\)</span> iid <span class="math inline">\(X_i \sim N(\theta,\theta)\)</span> measurements is given by</p>
+<p><span class="math display">\[\displaystyle \hat \theta_{\text{MLE}} = \frac{1}{2}\Big(-1 + \sqrt{1 + 4\bar Y_n}\Big), \text{ with } Y_i = X_i^2\]</span></p>
+<p>Show that <span class="math inline">\(\hat \theta_{\text{MLE}}\)</span> is consistent for <span class="math inline">\(\theta\)</span>. By the weak law of large numbers,</p>
+<p><span class="math display">\[
+\begin{split}
+\bar Y_n &amp;\xrightarrow{P} E[Y_i] \\
+E[Y_i] &amp;= E[X_i^2] \\
+&amp;= \text{Var}[X_i] + (E[X_i])^2 \\
+&amp;= \theta + \theta^2. \text{ Thus, } \\
+\bar Y_n &amp;\xrightarrow{P} \theta + \theta^2 \\
+h(\bar Y_n) &amp;\xrightarrow{P} h(\theta + \theta^2) \\
+\frac{1}{2}\Big(-1 + \sqrt{1 + 4\bar Y_n}\Big)  &amp;\xrightarrow{P} \frac{1}{2}\Big(-1 + \sqrt{1 + 4(\theta + \theta^2)}\Big) \\
+&amp;= \frac{1}{2}\Big(-1 + \sqrt{4\theta^2 + 4\theta + 1}\Big) \\
+&amp;= \frac{1}{2}\Bigg(-1 + \sqrt{4\Big(\theta^2 + \theta + \frac{1}{4}\Big)}\Bigg) \\
+&amp;= \frac{1}{2}\Bigg(-1 + \sqrt{4\Big(\theta + \frac{1}{2}\Big)^2}\Bigg) \\
+&amp;= \frac{1}{2}\Big(-1 + 2 \Big[\theta + \frac{1}{2}\Big]\Big) \\
+&amp;=\frac{1}{2} (-1 + 2\theta + 1)\\
+&amp;= \theta \\
+\text{Thus, } \hat \theta_{\text{MLE}}  &amp;\xrightarrow{P}  \theta
+\end{split}
+\]</span></p>
+<p>Show that <span class="math inline">\(\hat \theta_{\text{MLE}}\)</span> is asymptotically normal. Use the following fact:</p>
+<p><span class="math display">\[
+\begin{split}
+\text{When } X \sim N(\mu, \sigma^2), E[X^4] &amp;= \mu^4 + 6\mu^2\sigma^2 + 3\sigma^4. \text{ Thus, } \\
+\text{When } X \sim N(\theta, \theta), E[X^4] &amp;= \theta^4 + 6\theta^2\theta + 3\theta^2 \\
+&amp;= \theta^4 + 6\theta^3 + 3\theta^2
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\text{Var}[Y_i]
+&amp;=E[Y_i^2] - \Big(E[Y_i]\Big)^2 \\
+&amp;= E[X_i^4] - (\theta + \theta^2)^2 \\
+&amp;=\theta^4 + 6\theta^2\theta + 3\theta^2 - (\theta + \theta^2)^2\\
+&amp;= \theta^4 + 6\theta^3 + 3\theta^2 - [\theta^2 +2\theta^3 + \theta^4 ] \\
+&amp;= 4\theta^3+2\theta^2 \\
+&amp;= 2\theta^2(2\theta + 1) \\
+&amp;\text{Using the CLT, } \\
+\sqrt{n}(\bar Y_n - \mu) &amp;\xrightarrow{D} N\Big(0, 2\theta^2(2\theta + 1)\Big) \\
+&amp;\text{Using the Delta method, } \\
+\sqrt{n}\Big(g(\bar Y_n) - g(\mu)\Big) &amp;\xrightarrow{D} N\Big(0, 2\theta^2(2\theta + 1)\Big[g'(\mu) \Big]^2 \Big) \\
+\text{Let } g(\mu) &amp;=\frac{1}{2}\Big(-1 + \sqrt{1 + 4\mu}\Big). \text{ Then, } \\
+g'(\mu) &amp;=\frac{1}{2} \cdot \frac{1}{2}(1 + 4\mu)^{-1/2} \cdot 4 \\
+&amp;=(1 + 4\mu)^{-1/2} \\
+&amp;= \frac{1}{\sqrt{1 + 4\mu}} \\
+&amp;=\frac{1}{\sqrt{1 + 4 (\theta + \theta^2)}} \\
+&amp;=\frac{1}{\sqrt{4\theta^2 + 4\theta + 1}}  \\
+&amp;=\frac{1}{\sqrt{4 (\theta^2+ \theta + \frac{1}{4}) }} \\
+&amp;=\frac{1}{\sqrt{4 (\theta + \frac{1}{2})^2 }} \\
+&amp;=\frac{1}{{2 (\theta + \frac{1}{2}) }} \\
+&amp;=\frac{1}{{2\theta + 1 }} \\
+[g'(\mu)]^2 &amp;=\frac{1}{{(2\theta + 1)^2 }}. \text{ Thus, } \\
+\sqrt{n}\Big(g(\bar Y_n) - g(\mu)\Big) &amp;\xrightarrow{D} N\Bigg(0, \frac{2\theta^2(2\theta + 1)}{(2\theta + 1)^2} \Bigg)  \\
+&amp;= N\Bigg(0, \frac{2\theta^2}{2\theta + 1} \Bigg)
+\end{split}
+\]</span></p>
+<p>Confirm the asymptotic variance by obtaining the Fisher information matrix. We have</p>
+<p><span class="math display">\[
+\begin{split}
+X_i &amp;\sim N(\theta,\theta)\\
+f_{X_i}(x_i) &amp;= \frac{1}{\sqrt{2\pi}} \theta^{-1/2} \exp\Bigg( - \frac{(x_i - \theta)^2}{2\theta} \Bigg) \\
+\ln f_{X_i}(X_i;\theta) &amp;= \ln\frac{1}{\sqrt{2\pi}} -\frac{1}{2}\ln\theta - \frac{1}{2}\Bigg[\frac{(X_i - \theta)^2}{\theta}\Bigg]  \\
+&amp;=\ln\frac{1}{\sqrt{2\pi}} -\frac{1}{2}\ln\theta - \frac{1}{2}\Bigg[\frac{X_i^2 - 2X_i\theta + \theta^2}{\theta}\Bigg]\\
+&amp;=\ln\frac{1}{\sqrt{2\pi}} -\frac{1}{2}\ln\theta - \frac{1}{2}\Bigg[\frac{X_i^2 }{\theta} - 2X_i+ \theta \Bigg]  \\
+S_i(\theta) = \frac{\partial}{\partial \theta} \ln f_{X_i}(X_i;\theta) &amp;= -\frac{1}{2\theta} - \frac{1}{2}\Big[ -\frac{X_i^2}{\theta^2} +1\Big] \\
+&amp;=-\frac{1}{2\theta} +  \frac{X_i^2}{2\theta^2} -\frac{1}{2}\\
+I_1(\theta) &amp;= -E\Big[\frac{\partial}{\partial \theta}S_i(\theta)\Big] \\
+&amp;= -E\Big[\frac{\partial}{\partial \theta} -\frac{1}{2}\theta^{-1} + \frac{1}{2}X_i^2 \cdot\theta^{-2} - \frac{1}{2} \Big] \\
+&amp;= -E\Big[-\frac{1}{2} \cdot-\theta^{-2} +\frac{1}{2}X_i^2 \cdot -2\theta^{-3}\Big] \\
+&amp;=-E\Big[\frac{1}{2\theta^2} - \frac{X_i^2}{\theta^3} \Big] \\
+&amp;=E\Big[ \frac{X_i^2}{\theta^3} -\frac{1}{2\theta^2} \Big] \\
+&amp;=\frac{1}{\theta^3}E[{X_i^2}] -\frac{1}{2\theta^2}  \\
+&amp;= \frac{\theta + \theta^2}{\theta^3} -\frac{1}{2\theta^2}  \\
+&amp;= \frac{1}{\theta^2} + \frac{1}{\theta} -\frac{1}{2\theta^2}  \\
+&amp;= \frac{1}{2\theta^2}  + \frac{1}{\theta} \\
+&amp;= \frac{1}{2\theta^2}  + \frac{2\theta}{\theta \cdot 2\theta} \\
+&amp;= \frac{1 + 2\theta}{2\theta^2}  \\
+\text{Var}[\hat \theta_{\text{MLE}}] &amp;\approx \frac{1}{n} \cdot \frac{2\theta^2}{1 + 2\theta} \\
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\text{Earlier, } &amp;\text{we obtained} \\
+\sqrt{n}(\hat \theta_{\text{MLE}} - \theta_0) &amp;\xrightarrow{D} N\Bigg(0, \frac{2\theta^2}{1 + 2\theta}\Bigg) \\
+\text{Which is } &amp;\text{equivalent to} \\
+\hat \theta_{\text{MLE}} - \theta_0 &amp;\xrightarrow{D} \frac{1}{\sqrt n} N\Bigg(0, \frac{2\theta^2}{1 + 2\theta}\Bigg) \\
+\hat \theta_{\text{MLE}} - \theta_0 &amp;\xrightarrow{D}N\Bigg(0, \frac{1}{n} \cdot \frac{2\theta^2}{1 + 2\theta}\Bigg) \\
+\hat \theta_{\text{MLE}} &amp;\xrightarrow{D}N\Bigg(\theta_0 , \frac{1}{n} \cdot \frac{2\theta^2}{1 + 2\theta}\Bigg) \\
+\end{split}
+\]</span></p>
+</section>
+<section id="example-convergence-of-a-transformation-of-the-uniform" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="example-convergence-of-a-transformation-of-the-uniform"><span class="header-section-number">3.6</span> Example: Convergence of a transformation of the Uniform</h2>
+<p>Let <span class="math inline">\(U_1, U_2, ...\)</span> be iid observations from a uniform distribution over the unit interval <span class="math inline">\([0,1]\)</span> and define <span class="math inline">\(\displaystyle Y_n = \Bigg(\prod_{i = 1}^n U_i \Bigg)^{-1/n}\)</span>. Recall that <span class="math inline">\(\displaystyle \prod_{i = 1}^n x_i = \exp\Bigg(\sum_{i = 1}^n \ln x_i\Bigg)\)</span> and show that <span class="math inline">\(Y_n\)</span> converges in probability to <span class="math inline">\(e\)</span>. We have</p>
+<p><span class="math display">\[
+\begin{split}
+f_U(u) &amp;= 1 \\
+Y_n &amp;= \Bigg(\prod_{i = 1}^n U_i \Bigg)^{-1/n} \\
+&amp;= e^{\Big(\displaystyle \sum_{i = 1}^n \ln U_i\Big)^{-1/n}} \\
+&amp;= e^{\Big(\displaystyle -\frac{1}{n} \sum_{i = 1}^n \ln U_i\Big)} \\
+\ln U_i &amp;\xrightarrow{P} E\Big[\ln U_i\Big] \\
+E\Big[ \ln U_i\Big] &amp;= \int_0^1 \ln U_i ~f_U(u) ~du \\
+&amp;= \int_0^1 \ln U_i  ~du\\
+&amp;= u\ln(u) - u \Bigg|_0^1 \\
+&amp;=\ln(1) - 1 \\
+&amp;=-1 \\
+\ln U_i &amp;\xrightarrow{P} -1 \\
+\text{By continuous} &amp;\text{ mapping, } \\
+h(\ln U_i) &amp;\xrightarrow{P} h(-1) \\
+\exp{\Big(\displaystyle -\frac{1}{n} \sum_{i = 1}^n \ln U_i\Big)} &amp;\xrightarrow{P} \exp{\Big(\displaystyle -\frac{1}{n} \sum_{i = 1}^n -1\Big)} \\
+&amp;= e^{n/n} \\
+&amp;= e
+\end{split}
+\]</span></p>
+</section>
+<section id="example-average-relative-efficiency" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="example-average-relative-efficiency"><span class="header-section-number">3.7</span> Example: Average relative efficiency</h2>
+<p>Suppose iid <span class="math inline">\(X_i \sim \text{Poisson}(\lambda)\)</span> and we are interested in estimating <span class="math inline">\(P(X = 0) = e^{-\lambda}\)</span>. Derive two estimators; (1) based on the Poisson process and (2) by setting <span class="math inline">\(Y_i = I(X_i = 0)\)</span>, in which case we have iid <span class="math inline">\(Y_i \sim \text{Bernoulli}(e^{-\lambda})\)</span>. Compare their efficiencies. We have</p>
+<p><span class="math display">\[
+\begin{split}
+E[X_i] &amp;= \text{Var}[X_i]  =\lambda \\
+\text{By } &amp;\text{WLLN, }  \\
+\bar X_n &amp;\xrightarrow{P} \lambda\\
+\text{By  } &amp;\text{continuous mapping, } \\
+h(\bar X_n) &amp;\xrightarrow{P} h(\lambda) \\
+e^{-\bar X_n} &amp;\xrightarrow{P} e^{- \lambda} \\
+\text{By } &amp;\text{CLT}, \\
+\sqrt n(\bar X_n - \lambda) &amp;\xrightarrow{D} N(0,\lambda)\\
+\text{By } &amp;\text{Delta method}, \\
+\sqrt n\Big(h(\bar X_n) - h(\lambda)\Big) &amp;\xrightarrow{D} N(0,\lambda\Big[h'(\lambda)\Big]^2) \\
+\text{Let } h(\lambda) &amp;= e^{-\lambda}. \text{Then, } \\
+h'(\lambda) &amp;= -e^{-\lambda} \\
+[h'(\lambda)\Big]^2 &amp;= e^{-2\lambda}. \text{Thus, } \\
+\sqrt n\Big(h(\bar X_n) - h(\lambda)\Big) &amp;\xrightarrow{D} N(0,\lambda e^{-2\lambda}) \\
+\end{split}
+\]</span></p>
+<p>If, instead, we set <span class="math inline">\(Y_i = I(X_i = 0)\)</span>, then we have</p>
+<p><span class="math display">\[
+\begin{split}
+\text{iid } Y_i &amp;\sim \text{Bernoulli}(e^{-\lambda}) \\
+E[Y_i] &amp;= e^{-\lambda} \\
+\text{Var}[Y_i] &amp;= e^{-\lambda}(1-e^{-\lambda}) \\
+\text{By the} &amp;\text{ WLLN,} \\
+\bar Y_n &amp;\xrightarrow{P} e^{-\lambda} \\
+\text{By the} &amp;\text{ CLT}, \\
+\sqrt n(\bar Y_n - e^{-\lambda}) &amp;\xrightarrow{D} N\Big(0,e^{-\lambda}(1-e^{-\lambda})\Big)\\
+\end{split}
+\]</span></p>
+<p>The average relative efficiency of <span class="math inline">\(\bar Y_n\)</span> vs.&nbsp;<span class="math inline">\(e^{-\bar X}\)</span> is given by</p>
+<p><span class="math display">\[
+\begin{split}
+\text{ARE}(\bar Y, e^{-\bar X}) &amp;= \frac{\lambda e^{-2\lambda}}{e^{-\lambda}(1-e^{-\lambda})} \\
+&amp;= \frac{\lambda e^{-\lambda}}{1 - e^{-\lambda}}
+\end{split}
+\]</span></p>
+<p>This is a decreasing function. Thus, the Poisson estimator <span class="math inline">\(e^{-\bar X_n}\)</span> is more efficient than the Bernoulli estimator <span class="math inline">\(\bar Y_n\)</span>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./week2.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./week4.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

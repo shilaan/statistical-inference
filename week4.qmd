@@ -1,0 +1,851 @@
+# Hypothesis testing
+
+## A note on notation ($z_\alpha$, $t_\alpha$, $\chi^2_\alpha$)
+
+A note on notation: $z_{\alpha} = \Phi^{-1}(1-\alpha)$. For example, when $\alpha = 0.05, z_{\alpha} \approx 1.64$. We have $P(Z \le z_\alpha) = 1- \alpha$ and $P(Z > z_\alpha) = \alpha$.  
+
+- $z_\alpha$ satisfies $P(Z > z_\alpha) = \alpha$, where $Z \sim N(0,1)$
+- $-z_\alpha = z_{1 - \alpha}$ satisfies $P(Z \le z_\alpha) = \alpha$, where $Z \sim N(0,1)$
+- $t_{n-1,\alpha}$ satisfies $P(T_{n-1} >t_{n-1,\alpha}) = \alpha$, where $T_{n-1} \sim t_{n=1}$
+- $-t_{n-1,\alpha} = t_{n-1,1 -\alpha}$ satisfies $P(T_{n-1} \le t_{n-1,\alpha}) = \alpha$, where $T_{n-1} \sim t_{n-1}$
+- $\chi^2_{r, \alpha}$ satisfies $P(\chi^2_r > \chi^2_{r,\alpha}) = \alpha$, where $\chi^2_p$ is a chi-squared random variable with *p* degrees of freedom. 
+- $-\chi^2_{r, \alpha} = \chi^2_{r, 1-\alpha}$ satisfies $P(\chi^2_r \le \chi^2_{r,\alpha}) = \alpha$, where $\chi^2_p$ is a chi-squared random variable with *p* degrees of freedom. 
+
+## Wald, Score, and LR test statistic: Simple null 
+  
+Suppose we want to test $H_0: \theta = \theta_0$ vs. $H_a: \theta \ne \theta_0$. We can use the following test statistics (which are asymptotically equivalent):
+
+$$
+\begin{split}
+\text{Wald: }T_W &= \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\Big\{nI_1(\hat \theta_{\text MLE})\Big\}^{-1}} \\
+&= \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\text{Var}(\hat \theta_{\text{MLE}})} \\
+&= nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2   \\
+\text{Score: } T_S &= \frac{\Big[S_n(\theta_0)\Big]^2}{nI_1(\theta_0)}\\
+\text{Likelihood ratio: } T_{LR} &= -2\Big\{\ell(\theta_0) - \ell(\hat \theta_{\text{MLE}}) \Big\} \\
+&=  2\Big\{\ell(\hat \theta_{\text{MLE}}) - \ell(\theta_0)  \Big\} \\
+&= -2\ln\Bigg\{\frac{L(\theta_0)}{L(\hat \theta_{\text{MLE}})} \Bigg\} \\
+&=  2\ln\Bigg\{\frac{ L(\hat \theta_{\text{MLE}})}{L(\theta_0)} \Bigg\}
+\end{split}
+$$
+
+
+
+\newpage
+
+### Example: Test statistics for Normal($\theta,1$)
+
+Let iid $Y_i \sim N(\theta,1)$ and $H_0: \theta = \theta_0$. Obtain the three test statistics. 
+
+$$
+\begin{split}
+L(\theta) &= \prod_{i = 1}^n \frac{1}{\sqrt{2\pi}} \exp\Bigg(-\frac{1}{2}(Y_i - \theta)^2 \Bigg) \\
+&= (2\pi)^{-n/2} \exp\Big(-\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta)^2\Big) \\
+\ell(\theta) &= -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta)^2 \\
+S_n(\theta) &= \frac{d}{d\theta} \ell(\theta) \\ 
+&= \sum_{i = 1}^n Y_i - \theta = 0 \\
+\Rightarrow n\theta &= \sum_{i = 1}^n Y_i \\
+\hat \theta_{\text{MLE}} &= \frac{1}{n} \sum_{i = 1}^n Y_i = \bar Y \\
+I_1(\theta) &= - E\Big[\frac{\partial}{\partial\theta}  S_i(\theta) \Big] \\
+&= - E\Big[\frac{\partial}{\partial\theta}  Y_i - \theta \Big] \\
+&= -E[-1] \\
+&=1 \\
+T_W &= (\hat \theta_{\text{MLE}} - \theta_0)^2 \cdot nI_1(\hat \theta_{\text{MLE}}) \\
+&= n(\bar Y - \theta_0)^2 \\
+\ell(\theta_0) &=  -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 \\ 
+\ell(\hat \theta_{\text{MLE}}) &=  -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 \\ 
+T_{LR} &= 2\Big\{\ell(\hat \theta_{\text{MLE}}) - \ell(\theta_0)  \Big\} \\
+&= 2\Big\{-n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 - \Big( -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2\Big)  \Big\} \\
+&= 2\Big\{-\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 + \frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 \Big\} \\ 
+&= 2\Big\{\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 -\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 \Big\} \\ 
+&= 2\Big\{\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 -(Y_i - \bar Y)^2 \Big\} \\ 
+&=  \sum_{i = 1}^n (Y_i - \theta_0)^2 -(Y_i - \bar Y)^2 \\
+&= \sum_{i = 1}^n Y_i^2 - 2\theta_0Y_i + \theta_0^2 - (Y_i^2 - 2\bar YY_i + \bar Y^2) \\
+&=\sum_{i = 1}^n - 2\theta_0Y_i + \theta_0^2 + 2\bar YY_i - \bar Y^2 \\
+&= -2\theta_0\sum_{i = 1}^n Y_i +n\theta_0^2 + 2\bar Y\sum_{i=1}^n Y_i -n\bar Y ^2 \\
+&= -2\theta_0n\bar Y +n\theta_0^2 + 2\bar Yn\bar Y -n\bar Y ^2 \\
+&= n\Big(-2\theta_0\bar Y +\theta_0^2 + 2\bar Y^2 -\bar Y ^2 \Big) \\
+&= n\Big( \bar Y ^2 -2\theta_0\bar Y +\theta_0^2  \Big) \\
+&= n\Big(\bar Y - \theta_0 \Big)^2 \\
+T_S &= \frac{\Big[S_n(\theta_0)\Big]^2}{nI_1(\theta_0)}\\
+&= \frac{\Big[S_n(\theta_0)\Big]^2}{n} \\
+&= \frac{1}{n} \Bigg({\sum_{i = 1}^n Y_i - \theta_0}\Bigg)^2 \\
+&= \frac{1}{n} \Big(n\bar Y - n\theta_0 \Big)^2 \\
+&= \frac{1}{n} \Big(n(\bar Y - \theta_0) \Big)^2 \\
+&= \frac{n^2}{n} (\bar Y - \theta_0)^2 \\
+&= n(\bar Y - \theta_0)^2
+\end{split}
+$$
+
+### Example: Test statistics for Normal($\mu, \sigma^2$) with $\sigma^2$ known
+
+Now, let iid $Y_i \sim N(\mu,\sigma^2)$ with $\sigma^2$ known and $H_0: \mu = \mu_0$. Obtain the three test statistics. 
+
+$$
+\begin{split}
+\ell(\mu) &= -n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu)^2 \\
+S_n(\mu) &= \frac{1}{\sigma^2}\sum_{i = 1}^n Y_i - \mu = 0 \\
+\hat \mu_{\text{MLE}} &= \frac{1}{n} \sum_{i = 1}^n Y_i = \bar Y \\
+I_1(\mu) &= - E\Big[\frac{\partial}{\partial\mu}  S_i(\mu) \Big] \\
+&= - E\Big[\frac{\partial}{\partial\mu}  \frac{1}{\sigma^2} \Big(Y_i - \mu \Big) \Big] \\
+&= -E\Big[-\frac{1}{\sigma^2}\Big] \\
+&=\frac{1}{\sigma^2}\\
+T_W &= (\hat \mu_{\text{MLE}} - \mu_0)^2 \cdot nI_1(\hat \mu_{\text{MLE}}) \\
+&= \frac{n(\bar Y - \mu_0)^2}{\sigma^2} \\
+\ell(\mu_0) &= -n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\ell(\hat \mu_{\text{MLE}}) &= -n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \bar Y)^2 \\
+T_{LR} &= 2\Big\{\ell(\hat \mu_{\text{MLE}}) - \ell(\mu_0)  \Big\} \\
+&= 2\Big\{-n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \bar Y)^2 - \\ &~~~~~~~~~\Big(-n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 \Big)  \Big\} \\
+&= 2\Big\{\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 -(Y_i - \bar Y)^2 \Big\} \\ 
+&=  \frac{1}{\sigma^2}\sum_{i = 1}^n (Y_i - \mu_0)^2 -(Y_i - \bar Y)^2 \\
+&= \frac{n(\bar Y - \mu_0)^2}{\sigma^2} \\
+T_S &= \frac{\Big[S_n(\mu_0)\Big]^2}{nI_1(\mu_0)}\\
+&=  \Big(\frac{1}{\sigma^2}\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \frac{1}{nI_1(\mu_0)} \\
+&=  \Big(\frac{1}{\sigma^2}\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \frac{\sigma^2}{n} \\
+&=  \frac{\sigma^2}{n\sigma^4}\Big(\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \\
+&=  \frac{1}{n\sigma^2}\Big(\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \\
+&=  \frac{n^2}{n\sigma^2}\Big(Y_i - \mu_0 \Big)^2 \\
+&= \frac{n(\bar Y - \mu_0)^2}{\sigma^2} \\
+\end{split}
+$$
+
+
+\newpage 
+
+Now, say we want to test $H_0: \mu \le \mu_0$ vs. $H_a: \mu > \mu_0$. We have obtained the T-statistic $$T_W = T_S = T_{LR} =  \frac{n(\bar Y - \mu_0)^2}{\sigma^2}$$
+
+We reject $H_0$ if $T > \chi^2_{1,\alpha}$. For example, when $\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84$. This is equivalent to rejecting $H_0$ if $Z > z_{\alpha}$, where $z_\alpha$ satisfies $P(Z \ge z_\alpha) = \alpha$ and $$Z = \sqrt T = \frac{\bar Y - \mu_0}{\sigma/\sqrt n}$$
+
+
+\newpage
+
+## Wald test: Simple null $(H_0: \theta = \theta_0)$
+
+Let $Y_i$ be iid with density $f(y | \theta)$. Consider a simple null hypothesis $H_0: \theta = \theta_0$. Suppose that $\hat \theta_{\text{MLE}}$ is a consistent root of the likelihood equation. Then,
+$$
+\begin{split}
+\sqrt{n}(\hat \theta_{\text{MLE}} - \theta) &\xrightarrow{D} N\Bigg(0, \frac{1}{I_1(\theta)}\Bigg) \\
+Z_W =\sqrt{nI_1(\theta)}(\hat \theta_{\text{MLE}} - \theta) &\xrightarrow{D} N(0, 1)
+\end{split}
+$$
+
+If $nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)$ converges in probability to 1 as $n \rightarrow \infty$, then $$T_W = Z^2_W =nI_1(\theta)(\hat \theta_{\text{MLE}} -\theta)^2 \xrightarrow{D} \chi_1^2 \text{ under } H_0,$$ and we reject the null hypothesis is $T_W > \chi^2_{1,\alpha}$, where $\chi^2_{1,\alpha} = Q(1 - \alpha)$ and $Q$ is the quantile function associated with the $\chi^2$ distribution. For example, when $\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84$.
+
+### Multi-parameter formulation: Simple null ($H_0: \pmb \theta = \pmb \theta_0$)
+
+The more general vector-formulation of the Wald statistic (including a possible alternative formulation) is given by 
+
+$$
+\begin{split}
+&\hat{\pmb\theta}_{\text{MLE}} \xrightarrow{D} N\Big({\pmb\theta}_0, \Big[\pmb I_T(\pmb \theta_0) \Big]^{-1}\Big) \\
+&\sqrt{\pmb I_T(\pmb \theta_0)} (\hat{\pmb\theta}_{\text{MLE}} - \pmb \theta_0) \xrightarrow{D} N\Big({\pmb\theta}_0,  \mathbb{1}_b \Big) \\
+&(1) ~T_W = (\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0)^T \{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}(\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0) \xrightarrow{D} \chi^2_b \\
+&\text{Reject if }   T_W > \chi^2_{b,\alpha} \\
+&(2) ~T_W' = (\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0)^T \{\pmb I_T({\pmb \theta}_0)\}(\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0) \xrightarrow{D} \chi^2_b \\
+&\text{Reject if }   T'_W > \chi^2_{b,\alpha}
+\end{split}
+$$
+
+\newpage
+
+### $H_0: \theta = \theta_0$ vs. $H_a: \theta \ne \theta_0$
+
+There are two possible forms for the Wald test, depending on whether we plug $\theta_0$ or $\hat \theta_{\text{MLE}}$ into the Fisher information matrix. If $nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)$ converges in probability to 1 as $n \rightarrow \infty$, we have the following rejection rules at significance level $\alpha$ for a two-sided test against $Ha: \theta \ne \theta_0$:
+$$
+\begin{split}
+&\text{First approach (plug in } \hat\theta_{\text{MLE}}): \text{Under } H_0,\\
+&T_W = nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&Z_W = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&\text{Reject } H_0 \text{ if, equivalently, } \\
+&(1) ~Z_W > z_{\alpha/2}, \text{ or } Z_W < -z_{\alpha/2}~; \\
+&(2)~\hat \theta_{\text{MLE}} < \theta_0 -\frac{z_{\alpha/2}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}}, \text{ or }  \hat \theta_{\text{MLE}} > \theta_0 +\frac{z_{\alpha/2}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}} \\\\
+&\text{Second approach (plug in } \theta_0): \text{Under } H_0,\\
+&T_W' = nI_1( \theta_0)(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&Z_W' = \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&\text{Reject } H_0 \text{ if, equivalently, } \\
+&(1) ~Z'_W > z_{\alpha/2}, \text{ or } Z'_W < -z_{\alpha/2}~; \\
+&(2)~\hat \theta_{\text{MLE}} < \theta_0 -\frac{z_{\alpha/2}}{\sqrt{nI_1( \theta_0)}}, \text{ or }  \hat \theta_{\text{MLE}} > \theta_0 +\frac{z_{\alpha/2}}{\sqrt{nI_1( \theta_0)}} \\
+\end{split}
+$$
+
+### $H_0: \theta = \theta_0$ vs. $H_a: \theta < \theta_0$
+
+If $nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)$ converges in probability to 1 as $n \rightarrow \infty$, we have, for a one-sided test against $H_a: \theta < \theta_0$,
+$$
+\begin{split}
+&\text{First approach (plug in } \hat\theta_{\text{MLE}}): \text{Under } H_0,\\
+&T_W = nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&Z_W = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&\text{Reject } H_0 \text{ if, equivalently, } \\
+&Z_W  = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) <- z_{\alpha}, \text{ or }\\
+&\hat \theta_{\text{MLE}} < \theta_0 -\frac{z_{\alpha}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}}\\\\
+&\text{Second approach (plug in } \theta_0): \text{Under } H_0,\\
+&T_W' = nI_1( \theta_0)(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&Z_W' = \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&\text{Reject } H_0 \text{ if, equivalently, } \\
+&Z'_W  =  \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) <- z_{\alpha}, \text{ or }\\
+&\hat \theta_{\text{MLE}} < \theta_0 -\frac{z_{\alpha}}{\sqrt{nI_1( \theta_0)}}\\
+\end{split}
+$$
+
+### $H_0: \theta = \theta_0$ vs. $H_a: \theta > \theta_0$
+
+If $nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)$ converges in probability to 1 as $n \rightarrow \infty$, we have, for a one-sided test against $H_a: \theta > \theta_0$,
+$$
+\begin{split}
+&\text{First approach (plug in } \hat\theta_{\text{MLE}}): \text{Under } H_0,\\
+&T_W = nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&Z_W = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&\text{Reject } H_0 \text{ if, equivalently, } \\
+&Z_W  = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) > z_{\alpha}, \text{ or }\\
+&\hat \theta_{\text{MLE}} > \theta_0 +\frac{z_{\alpha}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}}\\\\
+&\text{Second approach (plug in } \theta_0): \text{Under } H_0,\\
+&T_W' = nI_1( \theta_0)(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&Z_W' = \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&\text{Reject } H_0 \text{ if, equivalently, } \\
+&Z'_W  =  \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) > z_{\alpha}, \text{ or }\\
+&\hat \theta_{\text{MLE}} > \theta_0 +\frac{z_{\alpha}}{\sqrt{nI_1( \theta_0)}}\\
+\end{split}
+$$
+
+\newpage
+
+### Example: Bernoulli test of $H_0: p = p_0$ vs. $H_a: p > p_0$
+
+We have iid $Y_i \sim$ Bernoulli($p$). Consider a simple null hypothesis $H_0: p = p_0$ vs. $H_a: p > p_0$. Derive $\ell(p), S_n(p), \hat p_{\text{MLE}}$, and $I_T(p)$. From this, derive two expressions for the Wald test.
+
+$$
+\begin{split}
+E[Y_i] &= p \\
+L(p) &= \prod_{i = 1}^n p^{Y_i} (1-p)^{1 - Y_i} \\
+\ell(p) &= \sum_{i = 1}^n Y_i\ln p + (1-Y_i)\ln(1-p) \\
+S_n(p) = \frac{d\ell(p)}{dp} &= \sum_{i = 1}^n \frac{Y_i}{p} - \frac{1-Y_i}{1 - p} = 0 \\
+ \sum_{i = 1}^n \frac{Y_i}{p} &= \sum_{i = 1}^n \frac{1-Y_i}{1 - p} \\
+\frac{1}{p}\sum_{i = 1}^n {Y_i} &= \frac{1}{{1 - p}}\sum_{i = 1}^n {1-Y_i} \\
+\frac{1 - p}{p} &= \frac{\sum_{i = 1}^n {1-Y_i}}{\sum_{i = 1}^n {Y_i}} \\
+\frac{1}{p} - 1 &= \frac{n}{\sum_{i = 1}^n Y_i} - 1 \\
+\frac{1}{p} &= \frac{n}{\sum_{i = 1}^n Y_i} \\
+\hat p_{\text{MLE}} &= \frac{1}{n} \sum_{i = 1}^n Y_i = \bar Y \\
+I_1(p) &= - E\Big[\frac{\partial}{\partial p} S_i(p) \Big] \\
+&= - E\Big[\frac{\partial}{\partial p} {Y_i} \cdot{p}^{-1} - (1-Y_i) \cdot(1 - p)^{-1} \Big]\\
+&= - E\Big[ {Y_i} \cdot-{p}^{-2} - (1-Y_i) \cdot-(1 - p)^{-2} \cdot -1 \Big]\\
+&= - E\Big[ -\frac{Y_i}{{p}^{2}} - \frac{1-Y_i}{(1 - p)^{2}}  \Big]\\
+&= E\Big[ \frac{Y_i}{{p}^{2}} + \frac{1-Y_i}{(1 - p)^{2}}  \Big]\\
+&= \frac{1}{p^2}E[ {Y_i}] + \frac{1}{(1-p)^2} E[{1-Y_i}]  \\
+&= \frac{p}{p^2} + \frac{1-p}{(1-p)^2} \\
+&= \frac{1}{p} + \frac{1}{1-p} \\
+&= \frac{1 -p}{p(1-p)} + \frac{p}{p(1-p)} \\
+&= \frac{1}{p(1 - p)} \\
+I_T(p) = nI_1(p) &= \frac{n}{p(1 - p)} \\\\
+\text{Under } H_0&, \sqrt{nI_1(p)}(\hat p_{\text{MLE}} - p) \xrightarrow{D} N(0, 1) \\
+(1) \text{ Based on } Z_W &=  \sqrt{nI_1(\hat p_{\text{MLE}})}(\hat p_{\text{MLE}} - p_0) \xrightarrow{D} N(0, 1), \\
+\text{Reject } H_0 \text{ if } Z_W &= \frac{\sqrt n (\hat p_{\text{MLE}} - p_0)}{\sqrt{\hat p_{\text{MLE}}(1 - \hat p_{\text{MLE}})}}  > z_{\alpha} \\
+(2) \text{ Based on } Z'_W &=  \sqrt{nI_1( p_0)}(\hat p_{\text{MLE}} - p_0) \xrightarrow{D} N(0, 1), \\
+\text{Reject } H_0 \text{ if } Z'_W &= \frac{\sqrt n (\hat p_{\text{MLE}} - p_0)}{\sqrt{ p_0(1 -  p_0)}}  > z_{\alpha} \\
+\end{split}
+$$
+
+## Score (Lagrange Multiplier) test: Simple null $(H_0: \theta = \theta_0)$
+
+$$
+\begin{split}
+T_S = \frac{[S_n(\theta_0)]^2}{nI_1(\theta_0)}~ &\xrightarrow{D} \chi^2_1 \\
+\text{Reject } H_0 \text{ if } T_S &> \chi^2_{1, \alpha} \\
+Z_S = \frac{S_n(\theta_0)}{\sqrt{nI_1(\theta_0)}}~ &\xrightarrow{D} N(0,1) \\
+\text{Reject } H_0 \text{ if } Z_S &> z_{\alpha} \\
+\end{split}
+$$
+
+### Multi-parameter formulation: Simple null ($H_0: \pmb \theta = \pmb \theta_0$)
+
+Under $H_0$,
+
+$$
+\begin{split}
+T_S = \pmb S_n(\pmb \theta_0)^T [\pmb I_T(\pmb \theta_0)]^{-1} \pmb S_n(\pmb \theta_0) &\xrightarrow {D} \chi^2_b \\
+[\pmb I_T(\pmb \theta_0)]^{-1/2} \pmb S_n(\pmb \theta_0) &\xrightarrow {D} N(\pmb 0, \mathbb{1}_b)
+\end{split}
+$$
+
+\newpage
+
+### Example: Bernoulli test of $H_0: p = p_0$ vs. $H_a: p > p_0$
+
+Return to the example above. What is the Score test statistic?
+
+$$
+\begin{split}
+T_S &= \frac{[S_n(\theta_0)]^2}{nI_1(\theta_0)} \\
+&= \Bigg(\sum_{i = 1}^n \frac{Y_i}{p_0} - \frac{1-Y_i}{1 - p_0}\Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&= \Bigg(\sum_{i = 1}^n \frac{Y_i(1 - p_0)}{p_0(1 - p_0)} - \frac{p_0(1-Y_i)}{p_0(1 - p_0)}\Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&= \Bigg(\sum_{i = 1}^n \frac{Y_i - Y_ip_0}{p_0(1 - p_0)} - \frac{p_0 -Y_ip_0}{p_0(1 - p_0)}\Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&= \Bigg(\sum_{i = 1}^n \frac{Y_i - p_0}{p_0(1 - p_0)} \Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&=  \Bigg(\frac{n\bar Y - np_0}{p_0(1 - p_0)} \Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&= \Bigg(n \frac{(\bar Y - p_0)}{p_0(1 - p_0)} \Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&= \frac{n^2}{n} \frac{(\bar Y - p_0)^2}{p_0^2(1 - p_0)^2} \Big(p_0(1 - p_0)\Big) \\
+&= \frac{n(\bar Y - p_0)^2}{p_0(1 - p_0)} \\
+Z_S &= \sqrt{T_S} \\ &=   \frac{\sqrt n(\bar Y - p_0)}{\sqrt{p_0(1 - p_0)}} \\
+&= Z'_W
+\end{split}
+$$
+
+\newpage
+
+## Likelihood ratio test: Simple null ($H_0: \theta = \theta_0$)
+
+$$
+\begin{split}
+T_{LR} = 2\Big\{ \ell(\hat \theta_{MLE}) - \ell(\theta_0) \Big\} &\xrightarrow{D} \chi^2_1 \text{ under } H_0, \text{ as } n \rightarrow \infty \\
+\text{Reject } H_0 \text{ if } T_{LR} &> \chi^2_{1, \alpha}
+\end{split}
+$$
+
+We have the following equivalent definitions:
+$$
+\begin{split}
+T_{LR} &= -2\Big\{\ell(\theta_0) - \ell(\hat \theta_{\text{MLE}})\Big\} \\
+&= 2\Big\{\ell(\hat \theta_{\text{MLE}}) -\ell(\theta_0) \Big\} \\
+&= -2\ln\Bigg\{\frac{L(\theta_0)}{L(\hat \theta_{\text{MLE}})}\Bigg\} \\
+&= 2\ln\Bigg\{\frac{L(\hat \theta_{\text{MLE}})}{L(\theta_0)}\Bigg\} 
+\end{split}
+$$
+
+
+### Multi-parameter formulation: Simple null ($H_0: \pmb \theta = \pmb \theta_0$)
+
+$$T_{LR} = 2\Big\{ \ell(\hat {\pmb \theta}_{MLE}) - \ell(\pmb\theta_0) \Big\} \xrightarrow{D} \chi^2_b \text{ under } H_0, \text{ as } n \rightarrow \infty$$
+
+The distribution of $T_{LR}$ converges to a $\chi^2_r$ distribution as $n \rightarrow \infty$, where the degrees of freedom $r$ are given by the difference between the number of free parameters specified by $\pmb \theta \in \Theta_0$ (the $H_0$-restricted parameter space) and the number of free parameters specified by $\pmb \theta \in \Theta$ (the entire parameter space).
+
+We reject $H_0$ iff $T_{LR} > \chi^2_{r, \alpha}$.
+
+\newpage
+
+### Example: Bernoulli test of $H_0: p = p_0$ vs. $H_a: p > p_0$
+
+Return to the example above. What is the Likelihood ratio test statistic?
+
+$$
+\begin{split}
+\ell(p) &= \sum_{i = 1}^n Y_i \ln p + (1 - Y_i)\ln(1-p) \\
+T_{LR} &= -2\Big\{\ell(p_0) - \ell(\hat p_{\text{MLE}})\Big\} \\
+&= -2\Big\{ \sum_{i = 1}^n Y_i \ln p_0 + (1 - Y_i)\ln(1-p_0)  - \\
+&~~~~~~~~~~ \Big [ \sum_{i = 1}^n Y_i \ln \hat p_{\text{MLE}} + (1 - Y_i)\ln(1-\hat p_{\text{MLE}})  \Big]\Big\} \\
+&= -2 \Big\{\ln\Big( \frac{p_0}{\hat p_{\text{MLE}}} \Big)  \sum_{i = 1}^n Y_i + \ln\Big( \frac{1 - p_0}{1 - \hat p_{\text{MLE}}} \Big) \sum_{i = 1}^n 1 - Y_i \Big\} \\
+\text{Reject } &H_0 \text{ if } T_{LR} > \chi^2_{1, \alpha}
+\end{split}
+$$
+
+\newpage
+
+
+
+### Example: Poisson distribution
+
+Let $X_1, ..., X_n$ be independent random samples from a Poisson distribution with parameter $\lambda$ and define the sum $Y = \sum_{i = 1}^n X_i$. Construct a confidence interval for $\lambda$ by inverting a LR test statistic testing $H_0: \lambda = \lambda_0$ vs. $H_a: \lambda \ne \lambda_0$. 
+
+$$
+\begin{split}
+T_{LR} &= -2\ln\Big\{\frac{L(\lambda_0)}{L(\hat \lambda_{\text{MLE}})}\Big\} \\
+L(\lambda | \pmb x) &= \frac{e^{-n\lambda}\lambda^{\sum_ix_i}}{\prod_i x_i!}, \text{with } \hat \lambda_{\text{MLE}} = \bar x \\
+L(\lambda_0) &=\frac{e^{-n\lambda_0}\lambda_0^{\sum_ix_i}}{\prod_i x_i!} \\
+L(\hat \lambda_{\text{MLE}}) &= \frac{e^{-n\bar x}\bar x^{\sum_ix_i}}{\prod_i x_i!} \\
+T_{LR} &= -2\ln\Big\{\frac{L(\lambda_0)}{L(\hat \lambda_{\text{MLE}})}\Big\} \\
+&= -2\ln\Big\{ \frac{e^{-n\lambda_0}\lambda_0^{\sum_ix_i}}{\prod_i x_i!} \cdot \frac{\prod_i x_i!}{e^{-n\bar x}\bar x^{\sum_ix_i}}\Big\} \\
+&=-2\ln\Big\{ \frac{e^{-n\lambda_0}\lambda_0^{\sum_ix_i}}{e^{-n\bar x}\bar x^{\sum_ix_i}}\Big\} \\
+&=-2\ln\Big\{e^{-n\lambda_0 + n\bar x} \Big(\frac{\lambda_0}{\bar x}\Big)^{\sum_i x_i}\Big\} \\
+&= -2\Big\{-n\lambda_0 + n\bar x + \sum_i x_i\ln\Big[\frac{\lambda_0}{\bar x}\Big]\Big\} \\
+&=-2n\Big\{-\lambda_0 + \bar x + \bar x\ln\Big[\frac{\lambda_0}{\bar x}\Big]\Big\} \\
+&=2n\Big\{\lambda_0 - \bar x + \bar x\ln\Big[\frac{\bar x}{\lambda_0}\Big]\Big\} \\
+\text{By }& \text{Wilk's theorem}, \\
+&2n\Big\{\lambda_0 - \bar X + \bar X\ln\Big[\frac{\bar X}{\lambda_0}\Big] \Big\} \sim \chi_1^2
+\end{split}
+$$
+
+
+\newpage
+
+## Composite null hypotheses ($H_0: \pmb \theta_1 = \pmb \theta_{10}$)
+
+Earlier, we defined the test statistics when the null hypothesis is of the form $H_0: \pmb \theta = \pmb\theta_0$. Note that this restricts the entire parameter vector $\pmb \theta$ (for example, for a normal distribution, we would restrict both $\mu$ and $\sigma^2$ to $\pmb\theta_0$ under the null). However, we are often interested only in certain components of $\pmb \theta$. For example, we wish to test $\theta_1 =\mu$, while leaving $\theta_2 =\sigma^2$ unrestricted.
+
+In other words, under a simple null hypothesis, all parameters in $\theta$ are specified, i.e. assumed to be known. Under a composite null hypothesis, we can account for parameters that are unknown and leave them unrestricted.
+
+### Partitioning the information matrix
+
+$$\hat{\pmb I} = \pmb I_T(\hat{\pmb \theta}_{\text{MLE}}) = n \pmb I_1(\hat{\pmb \theta}_{\text{MLE}})$$
+
+$$
+\hat{\pmb I} = 
+\begin{bmatrix}
+\hat{\pmb I}_{11} & \hat{\pmb I}_{12} \\
+\hat{\pmb I}_{21} & \hat{\pmb I}_{22} \\
+\end{bmatrix}
+$$
+
+
+### Wald test: Composite null ($H_0: \pmb \theta_1 = \pmb \theta_{10}$) with unknown parameter(s)
+
+Consider testing $H_0: \pmb \theta_1 = \pmb \theta_{10}$ versus $H_a: \pmb \theta_1 \ne \pmb \theta_{10}$.
+
+Recall that, in the simple null hypothesis ($H_0: \pmb \theta = \pmb \theta_0$) case, 
+$$
+T_W = (\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0)^T \{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}(\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0) \xrightarrow{D} \chi^2_b 
+$$
+
+Instead, when we have a composite null hypothesis of the form $H_0: \pmb \theta_1 = \pmb \theta_{10}$ (and thus, we leave at least one parameter $\in \pmb \theta$ unknown under the null), we replace $\{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}$ with 
+$$
+\begin{split}
+\Big(\hat{\pmb I}_{11}- \hat{\pmb I}_{12}\Big[\hat{\pmb I}_{22}\Big]^{-1}\hat{\pmb I}_{21} \Big)  &= \Bigg( \hat{\pmb I}_{11}- \frac{\hat{\pmb I}_{12}\hat{\pmb I}_{21}}{\hat{\pmb I}_{22}} \Bigg) \\
+\text{If } \hat{\pmb I}_{12} &\equiv \hat{\pmb I}_{21},\\
+\Big(\hat{\pmb I}_{11}- \hat{\pmb I}_{12}(\hat{\pmb I}_{22})^{-1}\hat{\pmb I}_{21} \Big)  &= \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)
+\end{split}
+$$
+
+Notice the similarity with the Fisher information matrix we formulated earlier, when the other parameter is unknown. In particular, when the other parameter $\eta$ is unknown, we have the Fisher information
+
+$$I^*_{\theta\theta} = I_{\theta\theta} - \Big[ I_{\theta\eta} \cdot I^{-1}_{\eta\eta} \cdot I_{\eta\theta} \Big] = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}}$$
+
+Putting this all together, we obtain the Wald test statistic for testing the composite null hypothesis $H_0: \pmb \theta_1 = \pmb \theta_{10}$ versus $H_a: \pmb \theta_1 \ne \pmb \theta_{10}$:
+
+$$
+\begin{split}
+&\text{Under } H_0, \text{ when } n \rightarrow \infty,  \\
+T_W &= (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Big(\hat{\pmb I}_{11}- \hat{\pmb I}_{12}\Big[\hat{\pmb I}_{22}\Big]^{-1}\hat{\pmb I}_{21} \Big)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \\
+&= (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \xrightarrow{D} \chi^2_r 
+\end{split}
+$$
+
+### Score test: Composite null ($H_0: \pmb \theta_1 = \pmb \theta_{10}$) with unknown parameter(s)
+
+Recall that, in the simple null hypothesis ($H_0: \pmb \theta = \pmb \theta_0$) case, 
+$$
+T_S = \pmb S_n(\pmb \theta_0)^T [\pmb I_T(\pmb \theta_0)]^{-1} \pmb S_n(\pmb \theta_0) \xrightarrow {D} \chi^2_b \\ 
+$$
+
+The Score statistic $T_S$ for the composite null hypothesis requires calculating the MLE of $\pmb \theta$ under the restriction imposed by $H_0$. We denote this restricted MLE by $\tilde{\pmb \theta}$, and obtain the total Fisher information matrix evaluated at the restricted MLE: $\tilde{\pmb I} = \pmb I_T(\tilde{\pmb \theta})$. 
+
+Putting this all together, we obtain the Score test statistic for testing the composite null hypothesis $H_0: \pmb \theta_1 = \pmb \theta_{10}$ versus $H_a: \pmb \theta_1 \ne \pmb \theta_{10}$:
+
+$$
+\begin{split}
+&\text{Under } H_0, \text{ when } n \rightarrow \infty,  \\
+T_S &= \pmb S_{1n}(\pmb \theta_{10})^T \Big(\tilde{\pmb I}_{11}- \tilde{\pmb I}_{12}\Big[\tilde{\pmb I}_{22}\Big]^{-1}\tilde{\pmb I}_{21} \Big)^{-1} \pmb S_{1n}(\pmb \theta_{10}) \\
+&= \pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10}) 
+\xrightarrow {D} \chi^2_r \\ 
+\end{split}
+$$
+
+
+### Likelihood ratio test: Composite null ($H_0: \pmb \theta_1 = \pmb \theta_{10}$) with unknown parameter(s)
+
+We can measure the relative plausibility of $H_1$ to $H_0$ by the log likelihood ratio. To generalize the case of simple hypotheses, assume that $H_0$ specifies $\theta \in \Theta_0$ and $H_1$ specifies $\theta \in \Theta_1$. Let $\Theta = \Theta_0 \cup \Theta_1$. We have the simple ($\Lambda$) and the generalized ($\Lambda^*$) log-likelihood ratio:
+
+$$
+\begin{split}
+\text{In the simple case, } \Lambda &=
+\ln\frac{f(X_1, ..., X_n | H_1)}{f(X_1, ..., X_n | H_0)} \\
+\text{In the general case, } \Lambda^*&=
+\ln\frac{\sup_{\theta \in \Theta_1} f(X_1, ..., X_n | \pmb\theta)}{\sup_{\theta \in \Theta_0}f(X_1, ..., X_n | \pmb\theta)} \\  
+&= \ln\frac{\sup_{\theta \in \Theta_1} L(\pmb \theta | \pmb X)}{\sup_{\theta \in \Theta_0} L(\pmb \theta | \pmb X)} \\  
+\end{split}
+$$
+
+We can again use the likelihood ratio statistic  
+$$
+\begin{split}
+T_{LR} &=  2\ln\frac{\sup_{\theta \in \Theta} f(X_1, ..., X_n | \pmb \theta)}{\sup_{\theta \in \Theta_0}f(X_1, ..., X_n | \pmb \theta)}  \\
+&= 2\ln\frac{\sup_{\theta \in \Theta} L(\pmb\theta | \pmb X)}{\sup_{\theta \in \Theta_0}L(\pmb\theta | \pmb X)} \\
+&= -2\ln \frac{\sup_{\theta \in \Theta_0}L(\pmb\theta | \pmb X)}{\sup_{\theta \in \Theta} L(\pmb\theta | \pmb X)}   \\
+&= -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\},
+\end{split}
+$$
+
+where $\tilde{\pmb \theta}$ is the restricted MLE under $H_0$ and $\hat{\pmb \theta}$ is the unrestricted MLE.  
+
+Large values of $T_{LR}$ provide stronger evidence against $H_0$. According to **Wilks Theorem**, when the joint distribution of $X_1, ..., X_n$ depends on $p$ unknown parameters and $p_0$ unknown parameters under $H_0$, under regularity conditions and assuming $H_0$ is true, the distribution of $T_{LR}$ tends to a $\chi^2$ distribution with degrees of freedom $r = p - p_0$ as $n \rightarrow \infty$. For *n* large, we compare the value of $T_{LR}$ to the expected values from a $\chi^2_{r}$. 
+$$
+\begin{split}
+\text{Under } H_0, \text{ as } n \rightarrow \infty, \\
+T_{LR} = -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\} &\xrightarrow{D} \chi^2_{r}
+\end{split}
+$$
+The critical region for a test with approximate significance level $\alpha$ is given by 
+$$
+R = \{\pmb X: T_{LR} \ge \chi^2_{r,\alpha}\} 
+$$
+
+In a simple case when we are testing $H_0: \theta = 0$ against $H_a: \theta \ne 0$, we have $p = 1$, $p_0 = 0$, and $\nu = p - p_0 = 1$. In this case, $\sup_{\theta \in \Omega} L(\theta | \pmb X)$ simplifies to $L(\hat\theta_{\text{MLE}})$; $\sup_{\theta \in \Theta_0}L(\theta | \pmb X)$ simplifies to $L(\theta_0)$.
+
+## Example: Normality with unknown variance (t-test)
+
+We have iid $Y_i \sim N(\mu, \sigma^2)$ with $\sigma^2$ unknown. We want to test $H_0: \mu = \mu_0$ vs. $H_a: \mu \ne \mu_0$. Notice that this is a composite null: we leave $\sigma^2$ unspecified under the null. 
+
+For the Wald statistic, recall that 
+$$
+T_W = (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \xrightarrow{D} \chi^2_r
+$$
+
+We have 
+$$
+\begin{split}
+{\pmb\theta}_{10} &= \mu_{0} \\
+\hat{\pmb\theta}_1 &= \hat \mu = \bar Y \\
+\text{In the simple case, we } &\text{have the total Fisher information matrix  } \\
+\text{} I_T(\theta) &=
+\begin{bmatrix}
+\displaystyle \frac{n}{\sigma^2} & 0 \\
+ 0 & \displaystyle \frac{2n}{\sigma^2}\\
+\end{bmatrix} \\
+\text{In the composite case, } &\text{we have } \\
+\pmb I_T(\hat  {\pmb \theta}_{\text{MLE}}) &=
+\begin{bmatrix}
+\displaystyle \frac{n}{s^2} & 0 \\
+ 0 & \displaystyle \frac{2n}{s^2}\\
+\end{bmatrix}, \text{ where }  \\
+s^2 = \hat \sigma^2 &= \frac{1}{n} \sum_{i = 1}^n (Y_i - \bar Y)^2. \text{ Thus, }\\
+\Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg) &= \frac{n}{s^2} \\
+T_W &= (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \\
+&= (\hat \mu - \mu_0)^T(\frac{n}{s^2})(\hat \mu - \mu_0) \\
+&= (\bar Y - \mu_0)^T(\frac{n}{s^2})(\bar Y - \mu_0) \\
+&= \frac{n(\bar Y - \mu_0)^2}{s^2}
+\end{split}
+$$
+
+For the Score statistic, recall that 
+$$
+T_S =\pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10})
+$$
+We know
+$$
+\begin{split}
+\pmb I_T(  {\tilde{\pmb \theta}}) &=
+\begin{bmatrix}
+\displaystyle \frac{n}{\tilde \sigma^2} & 0 \\
+ 0 & \displaystyle \frac{2n}{\tilde \sigma^2}\\
+\end{bmatrix} \\
+\text{Recall that } S_{\mu n}(\mu,\sigma^2) &= \frac{1}{\sigma^2} \sum_{i = 1}^n (Y_i - \mu) \\
+\text{ and }S_{\sigma^2 n}(\mu,\sigma^2) &= \frac{-n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n (Y_i - \mu)^2 \\
+\pmb S_{1n}(\pmb \theta_{10}) &= S_{\mu n}(\mu_0,\tilde{\sigma}^2) \\
+&=\frac{1}{\tilde\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0) \\
+\end{split}
+$$
+
+First, we fix $\mu$ to $\mu_0$ in order to solve $S_{\sigma^2 n}(\mu_0,\sigma^2) = 0$ and obtain $\tilde\sigma^2$:
+$$
+\begin{split}
+S_{\sigma^2 n}(\mu_0,\sigma^2) &= \frac{-n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n (Y_i - \mu_0)^2 = 0 \\
+&\Rightarrow  \frac{1}{2\sigma^4} \sum_{i = 1}^n (Y_i - \mu_0)^2 = \frac{n}{2\sigma^2} \\
+&\Rightarrow \frac{2\sigma^2}{2\sigma^4} = \frac{n}{ \sum_{i = 1}^n (Y_i - \mu_0)^2} \\
+\tilde{\sigma}^2 &= \frac{1}{n}\sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\text{Using the identity } \sum_{i = 1}^n (Y_i - \mu_0)^2 &= \sum_{i = 1}^n \Big [(Y_i - \bar Y)^2 + (\bar Y - \mu_0)^2 \Big] \\
+&= \sum_{i = 1}^n (Y_i - \bar Y)^2 +  \sum_{i = 1}^n (\bar Y - \mu_0)^2 \\
+&= n(\bar Y - \mu_0)^2  + \sum_{i = 1}^n (Y_i - \bar Y)^2, \text{ we have} \\    
+\tilde{\sigma}^2 &= \frac{1}{n}\sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+&= \frac{1}{n} \Big[ n(\bar Y - \mu_0)^2  + \sum_{i = 1}^n (Y_i - \bar Y)^2\Big] \\
+&= s^2 + (\bar Y - \mu_0)^2
+\end{split}
+$$
+
+\newpage
+
+Now,
+
+$$
+\begin{split}
+\pmb I_T(  {\tilde{\pmb \theta}}) &=
+\begin{bmatrix}
+\displaystyle \frac{n}{\tilde \sigma^2} & 0 \\
+ 0 & \displaystyle \frac{2n}{\tilde \sigma^2}\\
+\end{bmatrix} \\
+&= \begin{bmatrix}
+\displaystyle \frac{n}{s^2 + (\bar Y - \mu_0)^2} & 0 \\
+ 0 & \displaystyle \frac{2n}{s^2 + (\bar Y - \mu_0)^2}\\
+\end{bmatrix} \\
+\Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} &= \Bigg(\frac{n}{s^2 + (\bar Y - \mu_0)^2}\Bigg)^{-1} \\
+&= \frac{s^2 + (\bar Y - \mu_0)^2}{n}
+\\
+\pmb S_{1n}(\pmb \theta_{10}) &= S_{\mu n}(\mu_0,\tilde{\sigma}^2) \\
+&=\frac{1}{\tilde\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0) \\
+&= \frac{1}{s^2 + (\bar Y - \mu_0)^2}  \sum_{i = 1}^n (Y_i - \mu_0) \\
+&= \frac{1}{s^2 + (\bar Y - \mu_0)^2} \sum_{i = 1}^n Y_i - \sum_{i = 1}^n \mu_0 \\
+&= \frac{n\bar Y - n\mu_0}{s^2 + (\bar Y - \mu_0)^2} \\
+&= \frac{n(\bar Y - \mu_0)}{s^2 + (\bar Y - \mu_0)^2} \\
+T_S &=\pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10}) \\
+&=  \frac{n(\bar Y - \mu_0)}{s^2 + (\bar Y - \mu_0)^2} \Bigg(\frac{s^2 + (\bar Y - \mu_0)^2}{n} \Bigg) \frac{n(\bar Y - \mu_0)}{s^2 + (\bar Y - \mu_0)^2} \\
+&= \frac{n\Big(s^2 + (\bar Y - \mu_0)^2 \Big) n(\bar Y - \mu_0)^2}{n\Big(s^2 + (\bar Y - \mu_0)^2 \Big)s^2 + (\bar Y - \mu_0)^2}  \\
+&= \frac{n(\bar Y - \mu_0)^2}{s^2 + (\bar Y - \mu_0)^2}
+\end{split}
+$$
+\newpage
+
+For the Likelihood Ratio test statistic, recall that
+$$
+T_{LR} = -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\}
+$$
+
+We have
+$$
+\begin{split}
+\ell(\mu, \sigma^2) &= -n/2\ln(2\pi) - n/2\ln[\sigma^2] - \frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu)^2 \\
+\ell(\tilde{\pmb \theta}) &= \ell(\mu_0, \tilde \sigma^2) \\ 
+&=  -n/2\ln(2\pi) - n/2\ln[\tilde\sigma^2] - \frac{1}{2\tilde\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\text{Recall that } \tilde \sigma^2 &=  \frac{1}{n}\sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\text{Thus, } -\frac{1}{2\tilde\sigma^2} &= -\frac{n}{2\sum_{i = 1}^n (Y_i - \mu_0)^2} \text{ and } \\
+\ell(\tilde{\pmb \theta}) &= -n/2\ln(2\pi) - n/2\ln[\tilde\sigma^2] -\frac{n\sum_{i = 1}^n (Y_i - \mu_0)^2}{2\sum_{i = 1}^n (Y_i - \mu_0)^2}  \\
+&=-n/2\ln(2\pi) - n/2\ln[\tilde\sigma^2] -{n}/{2}\\
+\ell(\hat{\pmb \theta}) &= -n/2\ln(2\pi) - n/2\ln[s^2] - \frac{1}{2s^2} \sum_{i = 1}^n (Y_i - \bar Y)^2  \\
+&= -n/2\ln(2\pi) - n/2\ln[s^2] - \frac{1}{2s^2}  ns^2  \\
+&= -n/2\ln(2\pi) - n/2\ln[s^2] - n/2  \\
+T_{LR} &= -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\} \\
+&= -2\Big[ - n/2\ln[\tilde \sigma^2]  + n/2\ln[s^2] \Big] \\
+&= 2 \Big[n/2\ln[\tilde \sigma^2]  - n/2\ln[s^2] \Big] \\
+&= 2\Big[n/2 \Big(\ln[\tilde \sigma^2]  - \ln[s^2] \Big)  \Big] \\
+&= n \ln \Big(\frac{\tilde \sigma^2}{s^2} \Big) \\
+&= n \ln \Bigg(\frac{s^2 + (\bar Y - \mu_0)^2}{s^2} \Bigg) \\
+&= n \ln \Bigg(1 + \frac{(\bar Y - \mu_0)^2}{s^2} \Bigg)
+\end{split}
+$$
+
+
+## Power function and consistency of tests
+
+The power function of a test with rejection region $R$ based on a sample of size $n$ is given by 
+$$\beta_n(\pmb \theta) = P_{\pmb \theta}(\pmb Y \in R)$$
+If $\pmb \theta \notin \Theta_0$, $\beta_n(\pmb \theta)$ is the probability of detecting the alternative: $\beta_n(\pmb \theta) =1 - \beta(R)$.  
+
+If $\pmb \theta \in \Theta_0$, $\beta_n(\pmb \theta)$ is the Type I error probability: $\beta_n(\pmb \theta) = \alpha(R)$.  
+
+A sequence of tests is called consistent against a specific alternative $\pmb \theta_1$ if $\beta_n(\pmb \theta_1) \xrightarrow{n \rightarrow \infty} 1$. 
+
+For example, for a test of $H_0: \theta \le \theta_0$ versus $H_a: \theta > \theta_0$, say we use a test statistic $T_n$ with rejection region 
+$$
+\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} > z_{\alpha}
+$$
+Then, the test is consistent against all alternatives $\theta_1 > \theta_0$ if, for all $\theta$,
+$$
+\begin{split}
+\sqrt{n}(T_n - \theta) &\xrightarrow D N\Big(0, \sigma^2(\theta)\Big) \text{ or, equivalently,} \\
+\frac{\sqrt{n}(T_n - \theta)}{\sigma(\theta)} &\xrightarrow D N(0, 1) 
+\end{split}
+$$
+
+### Power example: $N(\mu, \sigma^2)$ with $\sigma^2$ known
+
+Recall the example in which we obtained the test statistics for $Y_i \sim N(\mu, \sigma^2)$ with $\sigma^2$ known and a simple null hypothesis $H_0: \mu = \mu_0$. We obtained
+
+$$
+\begin{split}
+T_W = T_S = T_{LR} &= \frac{n(\bar Y -\mu_0)^2}{\sigma^2} \\
+\text{We reject } H_0 \text{ if } T_W &> \chi^2_{1,\alpha}\\
+Z_W = Z_S = Z_{LR} &= \frac{\sqrt n(\bar Y -\mu_0)}{\sigma} \\
+& = \frac{\bar Y - \mu_0}{\sigma/\sqrt{n}}\\
+\text{We reject } H_0 \text{ if } Z_W &> z_{\alpha}\\
+\end{split}
+$$
+
+
+\newpage
+
+The corresponding power function is 
+
+$$
+\begin{split}
+\beta_n(\mu) &= P_\mu (\pmb Y \in R) \\
+&= P_\mu\Bigg(\frac{\bar Y - \mu_0}{\sigma/\sqrt n} >  z_{\alpha}\Bigg) \\
+&= P_\mu\Bigg(\frac{\bar Y - \mu + \mu - \mu_0}{\sigma/\sqrt n} >  z_{\alpha}\Bigg) \\
+&= P_\mu\Bigg(\frac{\bar Y - \mu}{\sigma/\sqrt n} >  z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n}\Bigg) \\
+\text{Recall that } E[\bar Y] &= \mu; ~\text{Var}[\bar Y] = \sigma^2/n; ~\text{SD}[\bar Y] =\sigma/\sqrt n. \text{ Thus}, \\
+\beta_n(\mu) &= P_\mu \Bigg(Z > z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n} \Bigg)  \\
+&= 1 - P_\mu \Bigg(Z \le z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n} \Bigg) \\
+&= 1 - \Phi\Bigg( z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n}\Bigg)\\
+\text{Recall that } 1-\Phi(x) &= \Phi(-x). \text{ Thus, } \\
+\beta_n(\mu) &= \Phi\Bigg(\frac{\mu - \mu_0}{\sigma/\sqrt n} - z_{\alpha} \Bigg) \\
+\end{split}
+$$
+
+\newpage
+
+Suppose we require a 5% level test with a minimum power of 80% to reject $H_0: \mu = \mu_0$ in favor of $H_a: \mu > \mu_0$ if $\mu \ge \mu_0 + \sigma$. What is the required sample size? 
+
+Since $\beta_n(\mu_1)$ is increasing in $\mu_1$, we need to determine *n* such that $\beta_n(\mu_0 + \sigma) \ge 0.8$.
+
+$$
+\begin{split}
+\beta_n(\mu_1) &= \Phi\Bigg(\frac{\mu_1 - \mu_0}{\sigma/\sqrt n} - z_{\alpha} \Bigg) \\
+\beta_n(\mu_0 +\sigma) &= \Phi\Bigg(\frac{\mu_0 +\sigma - \mu_0}{\sigma/\sqrt n} - z_{\alpha} \Bigg) \\
+&= \Phi(\sqrt n - z_{\alpha}) \\
+&\ge 0.8 \\
+\sqrt n - z_{0.05} &\ge \Phi^{-1}(0.8) \\
+\sqrt n &\ge \Phi^{-1}(0.8)  + \Phi^{-1}(0.95) \\
+n &\ge \Big(\Phi^{-1}(0.8)  + \Phi^{-1}(0.95)\Big)^2 \\
+&\approx 6.18
+\end{split}
+$$
+Thus, we need $n = 7$ datapoints.   
+
+### Power example: $N(\mu, \sigma^2)$ with $\mu$ and $\sigma^2$ unknown (t-test)
+
+Earlier, we obtained the Wald statistic for a *t*-test 
+$$
+\begin{split}
+T_W &= \frac{n(\bar Y - \mu_0)^2}{S^2} \\
+Z_W &= \frac{\sqrt n(\bar Y - \mu_0)}{S} \\
+\end{split}
+$$ 
+We know, by the CLT, 
+
+$$
+\begin{split}
+&\sqrt n(\bar Y - \mu) \xrightarrow D N(0, \sigma^2) \\
+&\frac{\sqrt n(\bar Y - \mu_0)}{\sigma}  \xrightarrow D N(0, 1) \\
+&\text{We also know } S_n \text{ is a } \text{consistent estimator of } \sigma: \\
+&S_n \xrightarrow P \sigma \text{ for } n \rightarrow \infty \\
+&\text{Using } \text{Slutsky's lemma, } \\ 
+&\frac{\sqrt n(\bar Y - \mu_0)}{S} \xrightarrow{D} N(0,1)
+\end{split}
+$$
+
+Thus, $\displaystyle Z_W = \frac{\sqrt n(\bar Y - \mu_0)}{S} > z_{\alpha}$ is consistent against all alternatives.
+
+### Power example: Consistency for asymptotically normal test statistics
+
+Say we have rejection region
+$$
+\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} > z_{\alpha}
+$$
+and we know 
+$$
+\sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta)\Big) \text{ for all } \theta
+$$
+
+Then, for some alternative $\theta_1$, we have the power function
+
+$$
+\begin{split}
+\beta_n(\theta_1) &= P_\theta \Bigg(\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} > z_{\alpha} \Bigg)\\
+&= P_\theta\Big({\sqrt n(T_n - \theta_1 + \theta_1- \theta_0)} > z_{\alpha}{\sigma(\theta_0)} \Big)\\
+&= P_\theta\Big({\sqrt n(T_n - \theta_1)} > z_{\alpha}{\sigma(\theta_0) - \sqrt n( \theta_1- \theta_0)} \Big)\\
+\text{If } \theta_1 &> \theta_0, \text{ then} \\
+&\lim_{n \rightarrow \infty} z_{\alpha}{\sigma(\theta_0) - \sqrt n( \theta_1- \theta_0)} = -\infty \\
+&\text{Because }\sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta)\Big) \text{ for all } \theta, \\
+&\lim_{n \rightarrow \infty} P_\theta\Big({\sqrt n(T_n - \theta_1)} > z_{\alpha}{\sigma(\theta_0) - \sqrt n( \theta_1- \theta_0)} \Big) = 1. \text{ Hence, } \\
+\beta_n(\theta_1) &\xrightarrow{n \rightarrow \infty} 1 \text{ for all } \theta_1 > \theta_0.
+\end{split}
+$$
+
+
+### Power example: Consistency for asymptotically normal test statistics with nuisance parameters
+
+Say we have rejection region
+$$
+\frac{\sqrt n (T_n - \theta_0)}{S_n} > z_{\alpha}
+$$
+We know 
+$$
+\begin{split}
+\sqrt n(T_n - \theta) &\xrightarrow D N\Big(0, \sigma^2(\theta,\eta) \Big) \text{ for all } \theta \text{ and } \eta\\
+S^2_n &\text{ is a consistent estimator of } \sigma^2(\theta,\eta)
+\end{split}
+$$
+
+Then, for some alternative $\theta_1$, we have the power function
+$$
+\begin{split}
+\beta_n(\theta_1) &= P\Bigg(\frac{\sqrt n (T_n - \theta_0)}{S_n} > z_{\alpha} \Bigg) \\
+&= P\Big({\sqrt n (T_n -\theta_1 + \theta_1 - \theta_0)} > z_{\alpha}{S_n} \Big) \\
+&= P\Big({\sqrt n (T_n -\theta_1)} > z_{\alpha}{S_n} -\sqrt n(\theta_1 - \theta_0) \Big) \\
+\text{If } \theta_1 &> \theta_0, \text{ then} \\
+&\lim_{n \rightarrow \infty} z_{\alpha}{S_n} -\sqrt n(\theta_1 - \theta_0) = -\infty \\
+&\text{Because } \sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta,\eta) \Big) \text{ for all } \theta \text{ and } \eta, \\
+&\lim_{n \rightarrow \infty} P\Big({\sqrt n (T_n -\theta_1)} > z_{\alpha}{S_n} -\sqrt n(\theta_1 - \theta_0) \Big) = 1.  \text{ Hence, } \\
+\beta_n(\theta_1) &\xrightarrow{n \rightarrow \infty} 1 \text{ for all } \theta_1 > \theta_0.
+\end{split}
+$$
+
+
+## Asymptotic power approximation and sample size
+
+For a given alternative $\theta_1$ and sample size $n$, we can write 
+$$
+\begin{split}
+\theta_1 &= \theta_0 + \frac{\Delta}{\sqrt n} \\
+\Delta &= \sqrt n(\theta_1 - \theta_0)
+\end{split}
+$$
+
+An approximation of the power for the alternative $\theta_1$ is then given by
+
+$$
+\begin{split}
+\beta_n(\theta_1) &\approx \Phi \Bigg(\frac{\sqrt n(\theta_1 - \theta_1)}{\sigma(\theta_0)} - z_{\alpha} \Bigg) \\
+&= \Phi \Bigg(\frac{\Delta}{\sigma(\theta_0)} - z_{\alpha} \Bigg) \\
+\end{split}
+$$
+
+And the minimum required sample size is given by
+
+$$
+n \ge \frac{(z_{\alpha} + z_{1 -\beta})^2}{(\theta_1 - \theta_0)^2}\sigma^2(\theta_0)
+$$
+
+### Asymptotic power approximation: Derivation and example
+
+Say we have rejection region 
+$$
+\begin{split}
+&\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} > z_{\alpha} \\
+\beta_n(\theta) &= P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0) } > z_{\alpha}  \Bigg) \\
+&\text{Define a local alternative } \theta_1 \\
+\theta_1 &= \theta_0 + \frac{\Delta}{\sqrt n} \Leftrightarrow \Delta =\sqrt{n}(\theta_1 - \theta_0) \\
+\beta_n(\theta) &= P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_1 + \theta_1 - \theta_0)}{\sigma(\theta_0) } > z_{\alpha}  \Bigg) \\
+&= P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_1)}{\sigma(\theta_0) } > z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}  \Bigg) \\
+&\text{We know}\\
+&\sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta) \Big) \text{ for all } \theta \text{ and } \\
+&\frac{\sqrt n(T_n - \theta)}{\sigma(\theta)} \xrightarrow D N\Big(0, 1 \Big) \text{ for all } \theta \\
+&\text{We can also see that that} \\
+\lim_{n \rightarrow \infty } \theta_1 &= \lim_{n \rightarrow \infty }\theta_0 + \frac{\Delta}{\sqrt n} \\
+&= \theta_0 \\
+&\text{If } \sigma^2(\theta) \text{ is continous, then} \\
+&\sigma^2(\theta_1) \rightarrow \sigma^2(\theta_0) \text{ when } \theta_1 \rightarrow \theta_0\\
+&\text{Thus, when } \theta_1 \xrightarrow{n \rightarrow \infty} \theta_0, \\
+&\frac{\sqrt n(T_n - \theta_1)}{\sigma(\theta_0) } \xrightarrow D N(0,1) \\
+\end{split}
+$$
+
+We have obtained the asymptotic power of the test,
+$$
+\begin{split}
+\beta_n(\theta_1) &\xrightarrow{n \rightarrow \infty} P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_1)}{\sigma(\theta_0) } > z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}  \Bigg) \\
+&= P_\theta\Bigg(Z > z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}  \Bigg) \\
+&= 1 - P_\theta\Bigg(Z \le z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}   \Bigg) \\
+&= 1 - \Phi\Bigg(z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}   \Bigg) \\
+&= \Phi\Bigg( \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)} - z_{\alpha}   \Bigg) \\
+&= \Phi\Bigg( \frac{\Delta}{\sigma(\theta_0)} - z_{\alpha}   \Bigg)
+\end{split}
+$$
+
+### Asymptotic power approximation: Bernoulli example
+
+Suppose iid $Y_i \sim$ Bernoulli($p$). For $T_n = \bar Y$, we have, by the CLT,
+$$
+\begin{split}
+\frac{\sqrt n(T_n - p)}{\sqrt{p(1 - p)}} &\xrightarrow D N(0,1)\\
+\sigma^2(p) = p(1 - p) &\text{ is continuous}
+\end{split}
+$$
+
+Then, the approximate power for the test $H_0: p \le p_0$ versus $H_a: p > p_0$ against a fixed alternative $p_1$ equals
+$$
+\begin{split}
+\beta_n(p_1) &\approx \Phi\Bigg( \frac{\sqrt n(p_1 - p_0)}{\sigma(p_0)} - z_{\alpha}   \Bigg) \\
+&=\Phi\Bigg( \frac{\sqrt n(p_1 - p_0)}{\sqrt{p_0(1 - p_0)}} - z_{\alpha}   \Bigg) \\
+\end{split}
+$$
+
+## Asymptotic equivalence 
+
+If the rejection regions of two tests correspond to $V_n > u_{\alpha}$ and $V'_n > u_{\alpha}$, then the tests will be asymptotically equivalent if
+$$
+P(V_n > u_{\alpha}, V'n \le u_{\alpha}) +P(V_n \le u_{\alpha}, V'n > u_{\alpha}) \rightarrow 0 \text{ when } n \rightarrow \infty
+$$
+That is, as $n \rightarrow \infty$, the probability of the two tests giving discordant results goes to zero. 

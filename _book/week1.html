@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistical Inference - 1&nbsp; Point estimation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./week2.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Inference</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#maximum-likelihood-estimation" id="toc-maximum-likelihood-estimation" class="nav-link active" data-scroll-target="#maximum-likelihood-estimation"> <span class="header-section-number">1.1</span> Maximum likelihood estimation</a>
+  <ul class="collapse">
+  <li><a href="#example-exponential-distribution" id="toc-example-exponential-distribution" class="nav-link" data-scroll-target="#example-exponential-distribution"> <span class="header-section-number">1.1.1</span> Example: Exponential distribution</a></li>
+  <li><a href="#example-poisson-distribution" id="toc-example-poisson-distribution" class="nav-link" data-scroll-target="#example-poisson-distribution"> <span class="header-section-number">1.1.2</span> Example: Poisson distribution</a></li>
+  <li><a href="#example-zero-inflated-poisson-model" id="toc-example-zero-inflated-poisson-model" class="nav-link" data-scroll-target="#example-zero-inflated-poisson-model"> <span class="header-section-number">1.1.3</span> Example: Zero-inflated Poisson model</a></li>
+  <li><a href="#example-normal-distribution" id="toc-example-normal-distribution" class="nav-link" data-scroll-target="#example-normal-distribution"> <span class="header-section-number">1.1.4</span> Example: Normal distribution</a></li>
+  <li><a href="#example-censored-exponential-distribution" id="toc-example-censored-exponential-distribution" class="nav-link" data-scroll-target="#example-censored-exponential-distribution"> <span class="header-section-number">1.1.5</span> Example: Censored exponential distribution</a></li>
+  <li><a href="#example-right-censored-distribution" id="toc-example-right-censored-distribution" class="nav-link" data-scroll-target="#example-right-censored-distribution"> <span class="header-section-number">1.1.6</span> Example: Right-censored distribution</a></li>
+  <li><a href="#neyman-scott-problem" id="toc-neyman-scott-problem" class="nav-link" data-scroll-target="#neyman-scott-problem"> <span class="header-section-number">1.1.7</span> Neyman Scott Problem</a></li>
+  </ul></li>
+  <li><a href="#distributions-of-transformed-data" id="toc-distributions-of-transformed-data" class="nav-link" data-scroll-target="#distributions-of-transformed-data"> <span class="header-section-number">1.2</span> Distributions of transformed data</a></li>
+  <li><a href="#score-vector" id="toc-score-vector" class="nav-link" data-scroll-target="#score-vector"> <span class="header-section-number">1.3</span> Score vector</a>
+  <ul class="collapse">
+  <li><a href="#example-score-vector-for-exponential-distribution" id="toc-example-score-vector-for-exponential-distribution" class="nav-link" data-scroll-target="#example-score-vector-for-exponential-distribution"> <span class="header-section-number">1.3.1</span> Example: Score vector for Exponential distribution</a></li>
+  <li><a href="#example-score-vector-for-poisson-distribution" id="toc-example-score-vector-for-poisson-distribution" class="nav-link" data-scroll-target="#example-score-vector-for-poisson-distribution"> <span class="header-section-number">1.3.2</span> Example: Score vector for Poisson distribution</a></li>
+  <li><a href="#example-score-vector-for-normal-distribution" id="toc-example-score-vector-for-normal-distribution" class="nav-link" data-scroll-target="#example-score-vector-for-normal-distribution"> <span class="header-section-number">1.3.3</span> Example: Score vector for Normal distribution</a></li>
+  </ul></li>
+  <li><a href="#fisher-information-matrix-and-large-sample-variance" id="toc-fisher-information-matrix-and-large-sample-variance" class="nav-link" data-scroll-target="#fisher-information-matrix-and-large-sample-variance"> <span class="header-section-number">1.4</span> Fisher information matrix and large-sample variance</a>
+  <ul class="collapse">
+  <li><a href="#multivariate-fisher-information" id="toc-multivariate-fisher-information" class="nav-link" data-scroll-target="#multivariate-fisher-information"> <span class="header-section-number">1.4.1</span> Multivariate Fisher information</a></li>
+  <li><a href="#example-fisher-information-matrix-for-exponential-distribution" id="toc-example-fisher-information-matrix-for-exponential-distribution" class="nav-link" data-scroll-target="#example-fisher-information-matrix-for-exponential-distribution"> <span class="header-section-number">1.4.2</span> Example: Fisher information matrix for Exponential distribution</a></li>
+  <li><a href="#example-fisher-information-matrix-for-poisson-distribution" id="toc-example-fisher-information-matrix-for-poisson-distribution" class="nav-link" data-scroll-target="#example-fisher-information-matrix-for-poisson-distribution"> <span class="header-section-number">1.4.3</span> Example: Fisher information matrix for Poisson distribution</a></li>
+  <li><a href="#example-fisher-information-for-normal-distribution" id="toc-example-fisher-information-for-normal-distribution" class="nav-link" data-scroll-target="#example-fisher-information-for-normal-distribution"> <span class="header-section-number">1.4.4</span> Example: Fisher information for Normal Distribution</a></li>
+  <li><a href="#example-fisher-information-for-poisson-regression" id="toc-example-fisher-information-for-poisson-regression" class="nav-link" data-scroll-target="#example-fisher-information-for-poisson-regression"> <span class="header-section-number">1.4.5</span> Example: Fisher information for Poisson regression</a></li>
+  <li><a href="#example-fisher-information-for-gamma-distribution" id="toc-example-fisher-information-for-gamma-distribution" class="nav-link" data-scroll-target="#example-fisher-information-for-gamma-distribution"> <span class="header-section-number">1.4.6</span> Example: Fisher information for Gamma distribution</a></li>
+  </ul></li>
+  <li><a href="#cramer-rao-inequality" id="toc-cramer-rao-inequality" class="nav-link" data-scroll-target="#cramer-rao-inequality"> <span class="header-section-number">1.5</span> Cramer-Rao inequality</a>
+  <ul class="collapse">
+  <li><a href="#example-cramer-rao-lower-bound-for-poisson-distribution" id="toc-example-cramer-rao-lower-bound-for-poisson-distribution" class="nav-link" data-scroll-target="#example-cramer-rao-lower-bound-for-poisson-distribution"> <span class="header-section-number">1.5.1</span> Example: Cramer-Rao Lower bound for Poisson Distribution</a></li>
+  </ul></li>
+  <li><a href="#newton-raphson-method" id="toc-newton-raphson-method" class="nav-link" data-scroll-target="#newton-raphson-method"> <span class="header-section-number">1.6</span> Newton-Raphson method</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="maximum-likelihood-estimation" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="maximum-likelihood-estimation"><span class="header-section-number">1.1</span> Maximum likelihood estimation</h2>
+<p>The likelihood function corresponds to the density of all observed data as a function of <span class="math inline">\(\theta\)</span>, evaluated at the effective observations <span class="math inline">\(x_1, ..., x_n\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+L(\theta|x_1, ..., x_n) &amp;= f_{X_1, X_2, ..., X_n}(x_1, x_2, ..., x_n | \theta) \\
+\text{Assuming that the data are} &amp;\text{ independent and have the same distribition function (iid),} \\
+f_{X_1, X_2, ..., X_n}(x_1, x_2, ..., x_n | \theta) &amp;= \prod_{i = 1}^n f_{X_i}(x_i;\theta)
+\end{split}
+\]</span></p>
+<p>A sensible choice for <span class="math inline">\(\theta\)</span> is the one for which the observed data are most likely,</p>
+<p><span class="math display">\[
+\hat \theta = \text{argmax}_\theta L(\theta|x_1, ..., x_n)
+\]</span></p>
+<p>Because maximizing <span class="math inline">\(L(\theta)\)</span> is not obvious, we often instead maximize the loglikelihood, which (assuming iid) simplifies to</p>
+<p><span class="math display">\[
+\begin{split}
+\ell(\theta | x_1 , ..., x_n) &amp;= \ln L(\theta | x_1 , ..., x_n) \\
+&amp;= \ln \prod_{i = 1}^n f_{X_i}(x_i;\theta) \\
+&amp;= \sum_{i = 1}^n \ln f_{X_i}(x_i;\theta) \\
+\hat \theta &amp;= \text{argmax}_\theta \sum_{i = 1}^n \ln f_{X_i}(x_i;\theta)
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+<section id="example-exponential-distribution" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="example-exponential-distribution"><span class="header-section-number">1.1.1</span> Example: Exponential distribution</h3>
+<p>How likely is it to survive 120 days or more? We have</p>
+<p><span class="math display">\[
+\begin{split}
+X &amp;\sim \text{Exp}(\theta) \\
+f_X(x) &amp;= \theta\exp(-\theta x) \\
+F_X(x) &amp;= 1 - \exp(-\theta x) \\
+P(X \ge 120) &amp;= 1 - P(X \le 120) \\
+&amp;= 1 - F_X(120)\\
+&amp;=1- 1 + \exp(-120\theta) \\
+&amp;= \exp(-120\theta) \\
+F_X(x) &amp;= 1 - \exp(-\theta x) \\
+f_X(x) &amp;= \frac{d}{dx} F_X(x) \\
+&amp;= -\exp(-\theta x)\cdot-\theta \\
+&amp;= \theta\exp(-\theta x) \\
+L(\theta) &amp;= \prod_{i = 1}^n \theta\exp(-\theta x_i) \\
+&amp;= \theta^n \prod_{i = 1}^n \exp(-\theta x_i) \\
+&amp;= \theta^n \exp\Big(\sum_{i = 1}^n -\theta x_i\Big) \\
+\ell(\theta) &amp;= n\ln\theta + \sum_{i = 1}^n -\theta x_i \\
+&amp;= n\ln\theta -\theta\sum_{i = 1}^n x_i \\
+\frac{d}{d\theta}\ell(\theta) &amp;= \frac{n}{\theta} -\sum_{i = 1}^n x_i =0 \\
+\frac{n}{\hat\theta} &amp;= \sum_{i = 1}^n x_i \\
+\hat \theta &amp;= \frac{n}{\displaystyle \sum_{i = 1}^n x_i} = \frac{1}{\bar X_n}
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+<p>Now, due to the invariance property of the MLE, we can estimate the probability to survive 120 days as <span class="math inline">\(\displaystyle P(Y \ge 120) = \exp(-120\hat \theta)\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+\hat \theta &amp;= \frac{1}{\bar X_n} \\
+g(\theta) &amp;= \exp(-\theta y) \\
+g(\theta)_\text{MLE} &amp;= g(\hat \theta) \\
+&amp;= \exp(-\hat \theta y)
+\end{split}
+\]</span></p>
+</section>
+<section id="example-poisson-distribution" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="example-poisson-distribution"><span class="header-section-number">1.1.2</span> Example: Poisson distribution</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>No.&nbsp;of movements</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Counts</td>
+<td>182</td>
+<td>41</td>
+<td>12</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Assuming a Poisson distribution, show that the MLE equals 0.358.</p>
+<p><strong>Plan of action</strong></p>
+<ol type="1">
+<li>Determine the Distribution function <span class="math display">\[f_{X_i}(x_i;\theta)\]</span></li>
+<li>Construct the Likelihood function <span class="math display">\[L(\theta|x_1, ..., x_n) =  \prod_{i = 1}^n f_{X_i}(x_i;\theta)\]</span></li>
+<li>Construct the Loglikelihood function <span class="math display">\[LL(\theta|x_1, ..., x_n) = \ln \prod_{i = 1}^n f_{X_i}(x_i;\theta) =   \sum_{i = 1}^n \ln f_{X_i}(x_i;\theta)\]</span></li>
+<li>Take the derivative of the Loglikelihood function, and set to zero, to maximize it</li>
+</ol>
+<p>We have</p>
+<p><span class="math display">\[
+\begin{split}
+f_{X_i}(x_i;\lambda) &amp;= e^{-\lambda}\frac{\lambda^{x_i}}{x_i!}  \\
+L(\lambda|x_1, ..., x_n) &amp;=  \prod_{i = 1}^n f_{X_i}(x_i;\lambda) \\
+&amp;=  \prod_{i = 1}^n e^{-\lambda}\frac{\lambda^{x_i}}{x_i!} \\
+\ell(\lambda) &amp;= \sum_{i = 1}^n -\lambda + x_i\ln\lambda -\ln(x_i!)\\
+\frac{d}{d\lambda} \ell(\lambda) &amp;= \sum_{i = 1}^n -1 + \frac{x_i}{\lambda} \\
+&amp;= -n + \frac{1}{\lambda}\sum_{i = 1}^n x_i =0 \\
+&amp;\Rightarrow  \frac{1}{\hat \lambda}\sum_{i = 1}^n x_i = n \\
+\hat \lambda &amp;= \frac{\sum_{i = 1}^n x_i}{n} = \bar X_n \\
+&amp;= \frac{41 + 24 + 6 + 8 + 7}{240} \\
+&amp;= \frac{86}{240} \approx .358
+\end{split}
+\]</span></p>
+</section>
+<section id="example-zero-inflated-poisson-model" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="example-zero-inflated-poisson-model"><span class="header-section-number">1.1.3</span> Example: Zero-inflated Poisson model</h3>
+<p><span class="math display">\[
+\begin{split}
+f_X(x) &amp;= pI(x = 0) + (1 - p)e^{-\lambda} \frac{\lambda^x}{x!} \\
+&amp;=\begin{cases}
+p + (1-p)e^{-\lambda} &amp; \text{ for } x = 0 \\
+(1-p)e^{-\lambda}\frac{\lambda^x}{x!} &amp; \text{ for } x &gt; 0
+\end{cases} \\
+&amp;\text{Combining this expression, we get} \\
+f_X(x) &amp;= \Big(p + (1-p)e^{-\lambda}\Big)^{I(x = 0)} \Big((1-p)e^{-\lambda}\frac{\lambda^x}{x!}\Big)^{I(x &gt; 0)} \\
+L(p, \lambda) &amp;= \prod_{i = 1}^n f_{X_i}(x_i) \\
+&amp;= \prod_{i = 1}^n \Big(p + (1-p)e^{-\lambda}\Big)^{I(x_i = 0)} \Big((1-p)e^{-\lambda}\frac{\lambda^{x_i}}{x_i!}\Big)^{I(x_i &gt; 0)} \\
+\ell(p, \lambda) &amp;= \sum_{i = 1}^n I(x_i=0)\ln\Big(p + (1-p)e^{-\lambda}\Big) \\ &amp;~+ I(x_i &gt; 0)\Big[\ln(1 - p) -\lambda +x_i\ln\lambda -\ln(x_i!) \Big] \\
+\frac{d}{dp} \ell(p,\lambda) &amp;=\sum_{i = 1}^n \frac{I(x_i=0)(1 -e^{-\lambda})}{\Big(p + (1-p)e^{-\lambda}\Big)}
+- \frac{I(x_i &gt;0)}{(1 - p)} \\
+&amp;= \sum_{i: x_i = 0} \frac{1 -e^{-\lambda}}{p + (1-p)e^{-\lambda}} + \sum_{i: x_i &gt; 0} \frac{-1}{(1-p)} \\
+\frac{d}{d\lambda} \ell(p,\lambda) &amp;=\sum_{i = 1}^n \frac{I(x_i =0)(1 - p)(-e^{-\lambda})}{\Big(p + (1-p)e^{-\lambda}\Big)}
++ I(x_i &gt; 0)\Big[-1 + \frac{x_i}{\lambda}\Big] \\
+&amp;= \sum_{i: x_i = 0}\frac{(1 - p)(-e^{-\lambda})}{p + (1-p)e^{-\lambda}} + \sum_{i: x_i &gt; 0} -1 + \frac{x_i}{\lambda}
+\end{split}
+\]</span></p>
+</section>
+<section id="example-normal-distribution" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="example-normal-distribution"><span class="header-section-number">1.1.4</span> Example: Normal distribution</h3>
+<p><span class="math display">\[
+\begin{split}
+f_{X_i}(x_i; \mu,\sigma^2) &amp;= \frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(x_i - \mu)^ 2}{2\sigma^ 2}\Big] \\
+L(\mu, \sigma^2 | x_1, ..., x_n) &amp;= \prod_{i = 1}^n f_{X_i}(x_i; \mu,\sigma^2) \\
+&amp;= \prod_{i = 1}^n \frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(x_i - \mu)^ 2}{2\sigma^ 2}\Big] \\
+&amp;= \frac{1}{(2\pi\sigma^2)^{n/2}} \exp\Big[\sum_{i = 1}^n-\frac{(x_i - \mu)^2}{2\sigma^2}\Big] \\
+\ell(\mu, \sigma^2 | x_1, ..., x_n) &amp;= \ln \Big( (2\pi\sigma^2)^{-n/2}  \exp\Big[\sum_{i = 1}^n-\frac{(x_i - \mu)^ 2}{2\sigma^ 2}\Big] \Big) \\
+&amp;= \ln\Big( (2\pi\sigma^2)^{-n/2} \Big) + \sum_{i = 1}^n-\frac{(x_i - \mu)^ 2}{2\sigma^2} \\
+&amp;= -n/2\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+\frac{dl}{d\mu} &amp;= - \frac{1}{2\sigma^2} \cdot 2 \cdot -1 \sum_{i = 1}^n (x_i - \mu) \\
+&amp;= \frac{1}{\sigma^2} \sum_{i = 1}^n (x_i - \mu) \\
+&amp;=  \frac{1}{\sigma^2} \Big[(\sum_{i = 1}^n x_i) -n\mu  \Big] = 0 \\
+&amp;\Rightarrow \Big(\sum_{i = 1}^n x_i\Big) -n\hat\mu = 0 \\
+&amp;\Rightarrow n\hat\mu = \sum_{i = 1}^n x_i \\
+\hat \mu &amp;= \frac{1}{n} \sum_{i = 1}^n x_i \\
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\frac{dl}{d\sigma^2} &amp;= -n/2\frac{2\pi}{2\pi\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+&amp;= \frac{-n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n{(x_i - \mu)^ 2} = 0 \\
+&amp;\Rightarrow \frac{n}{2\sigma^2} = \frac{1}{2\sigma^4} \sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+&amp;\Rightarrow \frac{n}{2} = \frac{1}{2\sigma^2}  \sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+\hat\sigma^2 &amp;= \frac{1}{n}  \sum_{i = 1}^n{(x_i - \hat \mu)^ 2}
+\end{split}
+\]</span></p>
+</section>
+<section id="example-censored-exponential-distribution" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" class="anchored" data-anchor-id="example-censored-exponential-distribution"><span class="header-section-number">1.1.5</span> Example: Censored exponential distribution</h3>
+<p>Suppose we have the following days to failure:</p>
+<p><span class="math display">\[Y = [2, &gt; 72, 51, &gt;60, 33, 27, 14, 24, 4, &gt;21]\]</span></p>
+<p>Suppose also that the data follow an exponential distribution with parameter <span class="math inline">\(\lambda\)</span>. We have two groups: uncensored observations (<span class="math inline">\(\delta_i = 1\)</span>) and censored observations (<span class="math inline">\(\delta_i = 0\)</span>). For the first group (uncensored), we have <span class="math inline">\(Y_i \sim \text{Exponential}(\lambda)\)</span>. For the second group (censored), we have <span class="math inline">\(1 - F_{R_i}(R_i) = 1 - (1 - \exp(-\lambda R_i))\)</span>. Thus, Y is a random variable with distribution function</p>
+<p><span class="math display">\[
+\begin{split}
+f_{Y_i}(y_i; \lambda)
+&amp;= \begin{cases}
+\lambda e^{-\lambda y_i} &amp; ~~~~~~~~~~~~\text{ for } \delta_i = 1 \\
+e^{-\lambda R_i} &amp;  ~~~~~~~~~~~~\text{ for } \delta_i = 0 \text{ and censoring time } R_i
+\end{cases}
+\end{split}
+\]</span></p>
+<p>Combining this expression, we get</p>
+<p><span class="math display">\[
+\begin{split}
+f_{Y_i }(y_i ; \lambda)&amp;= \Big(\lambda e^{-\lambda y_i} \Big)^{\delta_i}\Big(1 - (1 - e^{-\lambda R_i})  \Big)^{1 -\delta_i} \\
+&amp;= \Big(\lambda e^{-\lambda y_i} \Big)^{\delta_i}\Big(e^{-\lambda R_i}  \Big)^{1 -\delta_i} \\
+L(\lambda|y_i,..., y_n) &amp;= \prod_{i = 1}^n f_{Y_i}(y_i ; \lambda) \\
+&amp;= \prod_{i = 1}^n \Big(\lambda e^{-\lambda y_i} \Big)^{\delta_i}\Big(e^{-\lambda R_i}  \Big)^{1 -\delta_i} \\
+&amp;= \prod_{i = 1}^n \lambda^{\delta_i} \exp\Big({-\lambda y_i\delta_i}\Big)\exp\Big({-\lambda R_i(1-\delta_i)}\Big) \\
+&amp;= \prod_{i = 1}^n \lambda^{\delta_i}\exp\Big({-\lambda(y_i\delta_i + R_i(1 - \delta_i)}\Big) \\
+\ell(\lambda) &amp;= \sum_{i = 1}^n \delta_i\ln\lambda -\lambda\Big(y_i\delta_i + R_i(1 - \delta_i)\Big) \\
+\frac{d}{d\lambda}\ell(\lambda) &amp;= \sum_{i = 1}^n \frac{\delta_i}{\lambda} -\Big(y_i\delta_i + R_i(1 - \delta_i)\Big) \\
+&amp;= \sum_{i = 1}^n \frac{\delta_i}{\lambda} -y_i\delta_i - R_i(1 - \delta_i) = 0 \\
+\sum_{i = 1}^n \frac{\delta_i}{\lambda} &amp;= \sum_{i = 1}^n y_i\delta_i + R_i(1 - \delta_i) \\
+\frac{1}{\lambda} \sum_{i = 1}^n \delta_i &amp;= \sum_{i = 1}^n y_i\delta_i + R_i(1 - \delta_i) \\
+\hat \lambda &amp;= \frac{\sum_{i = 1}^n\delta_i}{\sum_{i = 1}^ny_i\delta_i + R_i(1 - \delta_i)} \\
+&amp;= \frac{7}{308} \approx 0.0227
+\end{split}
+\]</span></p>
+<p>Thus, the maximum likelihood estimate for the censored data equals the number of uncensored observations divided by the sum of all <span class="math inline">\(Y_i\)</span> (for <span class="math inline">\(\delta_i = 1\)</span>) and all censoring times <span class="math inline">\(R_i\)</span> (for <span class="math inline">\(\delta_i = 0\)</span>).</p>
+<div style="page-break-after: always;"></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>yi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">51</span>, <span class="dv">33</span>, <span class="dv">27</span>, <span class="dv">14</span>, <span class="dv">24</span>, <span class="dv">4</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ri <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">60</span>, <span class="dv">21</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#analytical solution</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>lambda_hat <span class="ot">&lt;-</span> <span class="fu">length</span>(yi)<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">c</span>(yi,ri))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>lambda_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02272727</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#numerical solution</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>negloglik <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda){</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>(<span class="fu">sum</span>(<span class="fu">log</span>(lambda) <span class="sc">-</span> lambda<span class="sc">*</span>yi) <span class="sc">+</span> <span class="fu">sum</span>(<span class="sc">-</span>lambda<span class="sc">*</span>ri))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nlm</span>(negloglik, <span class="at">p =</span> .<span class="dv">03</span>)<span class="sc">$</span>estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0227273</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="example-right-censored-distribution" class="level3" data-number="1.1.6">
+<h3 data-number="1.1.6" class="anchored" data-anchor-id="example-right-censored-distribution"><span class="header-section-number">1.1.6</span> Example: Right-censored distribution</h3>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with distribution function <span class="math inline">\(F_X(x)\)</span> and density function <span class="math inline">\(f_X(x)\)</span>. Consider the following random variable <span class="math inline">\(Y\)</span>, and obtain its CDF and PDF</p>
+<p><span class="math display">\[
+\begin{split}
+Y &amp;= \begin{cases}
+X &amp; \text{if } X &lt; a \\
+a &amp; \text{if } X \ge a
+\end{cases} \\
+\end{split}
+\]</span></p>
+<p>This is a right-censored version of <span class="math inline">\(X\)</span> at <span class="math inline">\(x = a\)</span>. We have</p>
+<p><span class="math display">\[
+\begin{split}
+\text{For } X &amp;&lt; a, \text{ or, equivalently, } Y &lt; a, \\
+F_Y(y) &amp;= P(Y \le y) \\&amp;= P(X \le y) \\&amp;= F_X(y) \\
+f_Y(y) &amp;= f_X(x) \\&amp;= f_X(y) \\
+\text{For } X &amp;\ge a , \text{ or, equivalently, } Y = a, \\
+F_Y(y) &amp;= F_Y(a) \\ &amp;= P(Y \le a) \\&amp;= 1 \\
+f_Y(y) &amp;= P(Y = a) \\
+&amp;= 1 - P(Y &lt; a) \\
+&amp;= 1 - P(X &lt; a ) \\
+&amp;= 1 - P(X \le a ) \\
+&amp;= 1 - F_X(a). \text{ Thus, } \\
+f_Y(y) &amp;= \begin{cases}
+f_X(y) &amp; \text{if } y &lt; a \\
+1 - F_X(a) &amp; \text{if } y = a
+\end{cases} \\
+&amp;= f_X(y)^{I(y &lt; a)}\Big[1 - F_X(a)\Big]^{I(y = a)}
+\\
+F_Y(y)&amp;= \begin{cases}
+F_X(y) &amp; ~~~~~~~\text{if } y &lt; a \\
+1 &amp; ~~~~~~~\text{if } y = a \\
+\end{cases} \\
+&amp;= F_X(y)^{I(y &lt; a)} 1^{I(y = a)}
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+<p>Suppose we have iid data <span class="math inline">\(X_1, ..., X_n\)</span>, with <span class="math inline">\(X_i \sim N(\mu, 1)\)</span>. Derive equations for the MLE <span class="math inline">\(\hat\mu\)</span> of <span class="math inline">\(\mu\)</span> based on the censored data <span class="math inline">\(Y_1, ..., Y_n\)</span>. We have</p>
+<p><span class="math display">\[
+\begin{split}
+f_{Y_i}(y_i) &amp;= f_{X_i}(y_i)^{I(y_i &lt; a)}\Big[1 - F_{X_i}(a)\Big]^{I(y_i = a)} \\
+f_{X_i}(x_i) &amp;=\frac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(x_i - \mu)^2}{2\sigma^2}\Bigg) \\
+&amp;= \frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(x - \mu)^2\Big] \\
+F_{X_i}(x_i) &amp;=\Phi\Big(\frac{x_i - \mu}{\sigma}\Big)\\
+&amp;= \Phi(x_i - \mu) \\
+L(\mu) &amp;= \prod_{i = 1}^n f_{X_i}(y_i)^{I(y_i &lt; a)}\Big[1 - F_{X_i}(a)\Big]^{I(y_i = a)} \\
+&amp;=\prod_{i = 1}^n \Bigg(\frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(y_i - \mu)^2\Big]\Bigg)^{I(y_i &lt; a)}\Big[1 - \Phi(a - \mu)\Big]^{I(y_i = a)} \\
+&amp;\text{Because } 1 - \Phi(x) \equiv \Phi(-x), \\
+&amp;=\prod_{i = 1}^n \Bigg(\frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(y_i - \mu)^2\Big]\Bigg)^{I(y_i &lt; a)}\Big[\Phi(\mu - a)\Big]^{I(y_i = a)} \\
+\ell(\mu) &amp;= \sum_{i = 1}^n I(y_i &lt; a) \ln \Bigg(\frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(y_i - \mu)^2\Big] \Bigg) + I(y_i = a)\ln\Big[\Phi(\mu - a)\Big] \\
+&amp;=\sum_{i = 1}^n I(y_i &lt; a)\Bigg(\ln\Big[ \frac{1}{\sqrt{2\pi}} \Big] - \frac{1}{2}(y_i - \mu)^2 \Bigg)+ I(y_i = a)\ln\Big[\Phi(\mu - a)\Big] \\
+\frac{d}{d\mu} \ell(\mu) &amp;=\sum_{i = 1}^n I(y_i &lt; a) (y_i - \mu) + I(y_i = a) \frac{f_X(\mu - a)}{\Phi(\mu - a)}
+\end{split}
+\]</span></p>
+<p>Numerically calculate the MLe for a sample of size <span class="math inline">\(n = 100\)</span> with <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(a = 1\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>xi <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xi) <span class="co">#the MLE based on the full data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.11307</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>yi <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(xi <span class="sc">&lt;</span> a, xi, a)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#numerical solution</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>negloglik <span class="ot">&lt;-</span> <span class="cf">function</span>(mu){</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Negative log likelihood expression</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">I</span>(yi <span class="sc">&lt;</span> a)<span class="sc">*</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(yi <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(xi <span class="sc">&gt;=</span> a)<span class="sc">*</span><span class="fu">log</span>(<span class="fu">pnorm</span>(mu <span class="sc">-</span> a)))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">nlm</span>(negloglik, <span class="at">p =</span> <span class="sc">-</span>.<span class="dv">03</span>)<span class="sc">$</span>estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.09055336</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="neyman-scott-problem" class="level3" data-number="1.1.7">
+<h3 data-number="1.1.7" class="anchored" data-anchor-id="neyman-scott-problem"><span class="header-section-number">1.1.7</span> Neyman Scott Problem</h3>
+<p>Suppose we collect 2 measurements <span class="math inline">\(Y_{i1}\)</span> and <span class="math inline">\(Y_{i2}\)</span> for each of <span class="math inline">\(n\)</span> subjects, with iid <span class="math inline">\(Y_{ij}, i = 1, ..., n, j = 1,2, Y_{ij} \sim N(\mu_i, \sigma^2)\)</span> (i.e., same variance <span class="math inline">\(\sigma^2\)</span> but individual-specific means <span class="math inline">\(\mu_i\)</span>). We are interested in estimating <span class="math inline">\(\sigma^2\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+f_{Y_{ij}}(y_{ij}) &amp;=\begin{cases}
+N(\mu_i, \sigma^2) &amp; \text{ for } j = 1 \\
+N(\mu_i, \sigma^2) &amp; \text{ for } j = 2
+\end{cases} \\
+&amp;= \Big(\frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big]\Big)^{I(j = 1)} \\
+&amp;~~~~~\Big(\frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big]\Big)^{I(j = 2)} \\
+&amp; = \prod_{j = 1}^2 \frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big] \\
+&amp;= \frac{1}{2\pi\sigma^2} \prod_{j = 1}^2 \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big] \\
+&amp;= \frac{1}{2\pi\sigma^2}\exp\Big[ \sum_{j = 1}^2-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big] \\
+&amp;= \frac{1}{2\pi\sigma^2}\exp\Big[- \frac{1}{2\sigma^ 2} \sum_{j = 1}^2  {(y_{ij} - \mu_i)^ 2}\Big] \\
+&amp;= \frac{1}{2\pi\sigma^2}\exp\Big[- \frac{1}{2\sigma^ 2} \Big({(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2}\Big)  \Big] \\
+L(\mu_i, \sigma^2) &amp;= \prod_{i = 1}^n \frac{1}{2\pi\sigma^2} \exp\Big[- \frac{1}{2\sigma^ 2} \Big({(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2}\Big) \Big] \\
+&amp;= \frac{1}{(2\pi\sigma^2)^n} \exp\Big[\sum_{i = 1}^n- \frac{1}{2\sigma^ 2} \Big({(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2}\Big)  \Big] \\
+&amp;= \frac{1}{(2\pi\sigma^2)^n} \exp\Big[- \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \Big] \\
+l (\mu_i, \sigma^2)&amp;= \ln\Big((2\pi\sigma^2)^{-n}\Big) - \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+&amp;= -n\ln(2\pi\sigma^2) - \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\text{For a single individual, we have} \\
+l (\mu_i, \sigma^2)&amp;= -n\ln(2\pi\sigma^2) - \frac{1}{2\sigma^ 2} \Big( {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \Big) \\
+\frac{d}{d\mu_i} l (\mu_i, \sigma)&amp;= - \frac{1}{2\sigma^ 2}\Big( -2{(y_{i1} - \mu_i)}  - {2(y_{i2} - \mu_i)} \Big) \\
+&amp;= \frac{-\Big( -2{(y_{i1} - \mu_i)}  - {2(y_{i2} - \mu_i)} \Big)}{2\sigma^ 2} \\
+&amp;= \frac{2(y_{i1} - \mu_i) + 2(y_{i2} - \mu_i)}{2\sigma^ 2} \\
+&amp;= \frac{(y_{i1} - \mu_i) + (y_{i2} - \mu_i)}{\sigma^ 2} \\
+&amp;= \frac{y_{i1} + y_{i2} - 2\mu_i}{\sigma^2} = 0 \\
+&amp;\Rightarrow 2\mu_i = y_{i1} + y_{i2} \\
+\hat{\mu_i} &amp;= \frac{y_{i1} + y_{i2}}{2}
+\end{split}
+\]</span></p>
+<p>To estimate <span class="math inline">\(\sigma^2\)</span>, we plug in <span class="math inline">\(\hat \mu_i\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+\ell(\mu_i, \sigma^2)&amp;= -n\ln(2\pi\sigma^2) - \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+\frac{d}{d\sigma^2} \ell(\mu_i, \sigma^2)&amp;= \frac{-n2\pi}{2\pi\sigma^2} + \frac{1}{2\sigma^4}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+&amp;\Rightarrow \frac{1}{2\sigma^4} \sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} =\frac{n}{\sigma^2} \\
+&amp;\Rightarrow\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} =\frac{2n\sigma^4}{\sigma^2} \\
+\hat \sigma^2 &amp;= \frac{1}{2n} \sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+&amp;=  \frac{1}{2n} \sum_{i = 1}^n {\Big(\frac{y_{i1} - y_{i2}}{2}\Big)^ 2} + {\Big(\frac{y_{i1} - y_{i2}}{2}\Big)^ 2} \\
+&amp;= \frac{1}{2n}\sum_{i = 1}^n 2{\Big(\frac{y_{i1} - y_{i2}}{2}\Big)^ 2} \\
+&amp;= \frac{1}{n}\sum_{i = 1}^n{\Big(\frac{1}{2}({y_{i1} - y_{i2}})\Big)^ 2} \\
+&amp;= \frac{1}{n}\sum_{i = 1}^n\frac{1}{4} \Big({y_{i1} - y_{i2}}\Big)^ 2 \\
+&amp;= \frac{1}{4n}\sum_{i = 1}^n{\Big({y_{i1} - y_{i2}}\Big)^ 2}
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+<p><span class="math inline">\(\hat \sigma^2\)</span> is a biased estimator for <span class="math inline">\(\sigma^2\)</span>. We have</p>
+<p><span class="math display">\[
+\begin{split}
+E\Big[\hat \sigma^2\Big] &amp;=E \Bigg[\frac{1}{4n}\sum_{i = 1}^n\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+&amp;= \frac{1}{4n} E \Bigg[\sum_{i = 1}^n\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+&amp;=\frac{1}{4n} \sum_{i = 1}^nE \Bigg[\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+\text{Let } Z &amp;= Y_{i1} - Y_{12}. \text{ Then, }\\
+E[Z] &amp;= E\Big[Y_{i1} - Y_{12}\Big] \\
+&amp;= E[Y_{i1}] - E[Y_{i2}] \\
+&amp;= \mu_i - \mu_i = 0. \\
+\text{Var}[Z] &amp;=  E[Z^2] - \Big(E[Z]\Big)^2 \\
+&amp;= E[Z^2] \\
+&amp;= E\Big[(Y_{i1} - Y_{i2})^2\Big] \\
+&amp;= \text{Var}\Big[Y_{i1} - Y_{i2}\Big] \\
+\text{Because } Y_{i1} &amp;\perp \!\!\! \perp Y_{i2}, \\
+\text{Var}\Big[Y_{i1} - Y_{i2}\Big] &amp;= \text{Var}[Y_{i1}] +  \text{Var}[- Y_{i2}] \\
+&amp;= \text{Var}[Y_{i1}] +  \text{Var}[Y_{i2}] \\
+&amp;= 2\sigma^2. \text{ Thus, } \\
+E\Big[\hat \sigma^2\Big] &amp;= \frac{1}{4n} \sum_{i = 1}^nE \Bigg[\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+&amp;= \frac{1}{4n} \sum_{i = 1}^n 2\sigma^2 \\
+&amp;= \frac{2n\sigma^2}{4n} \\
+&amp;= \frac{\sigma^2}{2}
+\end{split}
+\]</span></p>
+<p>The bias remains even if <span class="math inline">\(n\)</span> tends to infinity: the MLE of <span class="math inline">\(\sigma^2\)</span> is inconsistent. Solution: transform the data, such that their distribution is independent of the nuisance parameters. The likelihood of these transformed data is called a <strong>marginal likelihood</strong>, because it averages away some of the information in the data. It results in a <strong>marginal</strong> or <strong>restricted MLE</strong>.</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Let } V_i &amp;= \frac{Y_{i1}  - Y_{i2}}{\sqrt 2}. \text{ Then, } \\
+E[V_i] &amp;= E\Bigg[\frac{Y_{i1}  - Y_{i2}}{\sqrt 2}\Bigg] \\
+&amp;= \frac{1}{\sqrt 2} E\Big[Y_{i1}  - Y_{i2}\Big] = 0. \\
+\text{Var}[V_i] &amp;= E[V_i^2] - \Big(E[V_i]\Big)^2 \\
+&amp;=E[V_i^2] \\
+&amp;= E\Bigg[\Bigg(\frac{Y_{i1}  - Y_{i2}}{\sqrt 2}\Bigg)^2\Bigg] \\
+&amp;= E\Bigg[\frac{(Y_{i1}  - Y_{i2})^2}{2}\Bigg] \\
+&amp;= \frac{1}{2} E \Big[({Y_{i1} - Y_{i2}})^ 2 \Big] \\
+&amp;= \frac{2\sigma^2}{2} \\
+&amp;= \sigma^2. \\
+\text{Thus, } V_i &amp;\sim N(0, \sigma^2) \\
+\hat \sigma^2 &amp;= \frac{1}{n} \sum_{i = 1}^n \Big(V_i - E[V_i]\Big)^2 \\
+&amp;= \frac{1}{n} \sum_{i = 1}^n V_i^2 \\
+&amp;= \frac{1}{n} \sum_{i = 1}^n \frac{(Y_{i1} - Y_{i2})^2}{2} \\
+&amp;= \frac{1}{2n} \sum_{i = 1}^n (Y_{i1} - Y_{i2})^2 \\
+E[\hat \sigma^2] &amp;= E\Bigg[\frac{1}{n} \sum_{i = 1}^n V_i^2\Bigg] \\
+&amp;=  \frac{1}{n} \sum_{i = 1}^n E\Big[V_i^2\Big] \\
+&amp;=  \frac{1}{n} \sum_{i = 1}^n \sigma^2 \\
+&amp;= \sigma^2.
+\end{split}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span>; mu <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">1</span>); y2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((y1 <span class="sc">-</span> y2)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">4</span><span class="sc">*</span>n) <span class="co">#biased mle of sigma^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4470173</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((y1 <span class="sc">-</span> y2)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>n)  <span class="co">#restricted/marginal mle of sigma^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8940345</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="distributions-of-transformed-data" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="distributions-of-transformed-data"><span class="header-section-number">1.2</span> Distributions of transformed data</h2>
+<p>Let X be a random variable with a known distribution and Y a function of X. Then, <span class="math inline">\(Y = h(X)\)</span>, <span class="math inline">\(X = h^{-1}(Y)\)</span>, and we can use the chain rule to obtain the PDF of <span class="math inline">\(Y\)</span>.</p>
+<p>For <span class="math inline">\(h(X)\)</span> <strong>strictly increasing</strong>, we have</p>
+<p><span class="math display">\[\displaystyle f_Y(y) = f_X\Big(h^{-1}(y)\Big) \frac{d}{dy} \Big[h^{-1}(y)\Big]\]</span></p>
+<p><strong>Derivation</strong></p>
+<p><span class="math display">\[
+\begin{split}
+F_Y(y) &amp;= P\Big(h(X) \le y\Big) \\
+&amp;= P\Big(X \le h^{-1}(y)\Big) \\
+&amp;= F_X\Big(h^{-1}(y) \Big) \\
+f_Y(y) &amp;= \frac{d}{dy} F_X\Big(h^{-1}(y) \Big) \\
+&amp;= f_X\Big(h^{-1}(y) \Big) \frac{d}{dy} \Big[h^{-1}(y)  \Big] \\
+\end{split}
+\]</span></p>
+<p>For example, let <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> and <span class="math inline">\(Y = e^X\)</span>. Then,</p>
+<p><span class="math display">\[
+\begin{split}
+f_X(x) &amp;= \dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(x - \mu)^2}{2\sigma^2}\Bigg)\\
+Y &amp;= h(X) = e^X \\
+X &amp;= h^{-1}(Y) = \ln Y \\
+f_Y(y) &amp;= f_X\Big(h^{-1}(y)\Big)  \frac{d}{dy} \Big[ h^{-1}(y) \Big] \\
+&amp;= f_X(\ln y)  \frac{d}{dy} \Big[ \ln y \Big]\\
+&amp;= f_X(\ln y) \cdot \frac{1}{y} \\
+&amp;= \dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(\ln y - \mu)^2}{2\sigma^2}\Bigg) \cdot \frac{1}{y} \\
+&amp;= \dfrac{1}{y\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(\ln y  - \mu)^2}{2\sigma^2}\Bigg) \\
+&amp;\text{This is } \text{the lognormal distribution:} \\
+&amp;Y \sim \text{LN}(\mu, \sigma^2)
+\end{split}
+\]</span></p>
+<p>To obtain <span class="math inline">\(h^{-1}(y)\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+F_Y(y) &amp;= P(Y \le y) \\
+&amp;= P(e^X \le y) \\
+&amp;= P(X \le \ln y) \\
+&amp;= F_X(\ln y) \\
+h^{-1}(y) &amp;= \ln y
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+<p>For <span class="math inline">\(h(X)\)</span> <strong>strictly decreasing</strong>, we note that if a continuous function is increasing on its interval, then its inverse is also increasing and continuous. Similarly, if a continuous function <span class="math inline">\(h(X)\)</span> is decreasing on its interval, then its inverse <span class="math inline">\(h^{-1}(Y)\)</span> is also decreasing and continuous (and, consequently, the derivative of both <span class="math inline">\(h(X)\)</span> and <span class="math inline">\(h^{-1}(Y)\)</span> will be negative). We have:</p>
+<p><span class="math display">\[
+\begin{split}
+f_Y(y) &amp;= -f_X\Big(h^{-1}(y)\Big) \frac{d}{dy} \Big[ h^{-1}(y) \Big] \\
+&amp;= f_X\Big(h^{-1}(y) \Big)   \Bigg| \frac{d}{dy} \Big[h^{-1}(y)  \Big]\Bigg|
+\end{split}
+\]</span></p>
+<p><strong>Derivation</strong></p>
+<p><span class="math display">\[
+\begin{split}
+F_Y(y) &amp;= P(Y \le y) \\
+&amp;=P\Big(h(X) \le y\Big) \\
+&amp;= P\Big(X \ge h^{-1}(y)\Big) \\
+&amp;= 1 - P\Big(X \le h^{-1}(y)\Big) \\
+&amp;= 1 - F_X\Big(h^{-1}(y) \Big) \\
+f_Y(y) &amp;= \frac{d}{dy} \Bigg[1 - F_X\Big(h^{-1}(y) \Big) \Bigg] \\
+&amp;= -\frac{d}{dy} F_X\Big(h^{-1}(y) \Big) \\
+&amp;= -f_X\Big(h^{-1}(y) \Big) \cdot \frac{d}{dy} \Big[h^{-1}(y)  \Big] \\
+\text{Because } h(X) &amp;\text{ is strictly decreasing, } h^{-1}(y) \text{ is also decreasing and thus } \frac{d}{dy} \Big[h^{-1}(y) \Big]  &lt; 0. \\
+\Rightarrow f_Y(y) &amp;=  f_X\Big(h^{-1}(y) \Big) \cdot -\frac{d}{dy} \Big[h^{-1}(y)  \Big] \\
+&amp;= f_X\Big(h^{-1}(y) \Big) \Bigg| \frac{d}{dy} \Big[h^{-1}(y)  \Big] \Bigg| \\
+\end{split}
+\]</span></p>
+<p>For example, let <span class="math inline">\(Y = h(X) = -e^X\)</span>. Then,</p>
+<p><span class="math display">\[
+\begin{split}
+Y &amp;= -e^X = h(X) \\
+-Y &amp;=e^X \\
+X &amp;= \ln(-Y) = h^{-1}(Y) \\
+f_Y(y) &amp;= f_X\Big(h^{-1}(y) \Big)   \Bigg| \frac{d}{dy} \Big[h^{-1}(y)  \Big]\Bigg| \\
+&amp;= f_X\Big(\ln(-y) \Big)   \Bigg| \frac{d}{dy} \Big[\ln(-y)  \Big]\Bigg| \\
+&amp;= f_X\Big(\ln(-y) \Big) \Bigg| \frac{-1}{-y} \Bigg| \\
+&amp;= \Bigg|\frac{1}{y} \Bigg|f_X\Big(\ln(-y)\Big) \\
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="score-vector" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="score-vector"><span class="header-section-number">1.3</span> Score vector</h2>
+<p>We have the loglikelihood based on data <strong>for a single subject</strong> <span class="math inline">\(X_i\)</span>:</p>
+<p><span class="math display">\[\ell_i(\theta) = \ln f_X(X_i;\theta) = \ln L_i(\theta)\]</span></p>
+<p>The score vector is the derivative of the loglikelihood based on data for a single subject <span class="math inline">\(X_i\)</span>:</p>
+<p><span class="math display">\[S_i(\theta) \equiv \frac{\partial \ell_i(\theta)}{\partial \theta} = \frac{\partial \ln L_i(\theta)}{\partial \theta}\]</span></p>
+<p>The MLE is obtained by solving <span class="math inline">\(\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0\)</span>.</p>
+<p>To obtain the MLE from the score vector, follow these steps:</p>
+<p><span class="math display">\[
+\begin{split}
+\text{ For a } &amp;\text{single subject } X_i, \\
+L_i(\theta | X_i) &amp;= f_X(X_i; \theta) \\
+\ell_i(\theta) &amp;= \ln f_X(X_i; \theta) \\
+S_i(\theta) &amp;= \frac{\partial \ell_i(\theta)}{\partial \theta} \\
+\text{To obtain} &amp;\text{ the MLE,  solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\theta) &amp;= 0 \\
+\end{split}
+\]</span></p>
+<p>A key property of the score statistic is, for any <span class="math inline">\(\theta\)</span>, and assuming regularity conditions that allow interchanging the derivative and integral:</p>
+<p><span class="math display">\[
+E_\theta \Big[S_i(\theta)\Big] = 0
+\]</span></p>
+<p>Thus, the solution <span class="math inline">\(\hat \theta\)</span> to <span class="math inline">\(\displaystyle\frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0\)</span> will be close to the population value, which solves <span class="math inline">\(\displaystyle E_\theta \Big[S_i(\theta)\Big] = 0\)</span>. We use this fact later to show that:</p>
+<ul>
+<li>MLEs are unbiased in large samples</li>
+<li>MLEs converge to the truth as more data are collected</li>
+</ul>
+<section id="example-score-vector-for-exponential-distribution" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="example-score-vector-for-exponential-distribution"><span class="header-section-number">1.3.1</span> Example: Score vector for Exponential distribution</h3>
+<p><span class="math display">\[
+\begin{split}
+X &amp;\sim \text{Exp}(\theta) \\
+f_X(x) &amp;= \theta\exp(-\theta x) \\
+&amp;\text{ For a single subject } X_i, \\
+L_i(\theta | X_i) &amp;= f_X(X_i; \theta) \\
+&amp;= \theta \exp (-\theta X_i) \\
+\ell_i(\theta) &amp;= \ln f_X(X_i; \theta) \\
+&amp;=\ln \theta -\theta X_i \\
+S_i(\theta) &amp;= \frac{\partial \ell_i(\theta)}{\partial \theta} \\
+&amp;= \frac{1}{\theta} - X_i \\
+\text{To obtain the } &amp;\text{MLE, we solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\theta) &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{1}{\theta} - X_i &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{1}{\theta} &amp;= \frac{1}{n} \sum_{i = 1}^n X_i \\
+\frac{1}{n} \cdot \frac{n}{\theta}  &amp;=\frac{1}{n} \sum_{i = 1}^n X_i \\
+\frac{1}{\theta}&amp;=\frac{1}{n} \sum_{i = 1}^n X_i \\
+\hat \theta &amp;= \frac{1}{\bar X_n}
+\end{split}
+\]</span></p>
+</section>
+<section id="example-score-vector-for-poisson-distribution" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="example-score-vector-for-poisson-distribution"><span class="header-section-number">1.3.2</span> Example: Score vector for Poisson distribution</h3>
+<p><span class="math display">\[
+\begin{split}
+X &amp;\sim \text{Po}(\theta)\\
+f_X(x) &amp;= \frac{\theta^x}{x!} e^{-\theta}\\
+\text{ For a } &amp;\text{single subject } X_i, \\
+L_i(\theta | X_i) &amp;= f_X(X_i; \theta) \\
+&amp;= \frac{\theta^{X_i}}{X_i!} e^{-\theta} \\
+\ell_i(\theta) &amp;= \ln f_X(X_i; \theta) \\
+&amp;= X_i\ln\theta  -\theta - \ln X_i!  \\
+S_i(\theta) &amp;= \frac{\partial \ell_i(\theta)}{\partial \theta} \\
+&amp;= \frac{X_i}{\theta} -1\\
+\text{To obtain} &amp;\text{ the MLE,  solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\theta) &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n  \frac{X_i}{\theta} -1 &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n  \frac{X_i}{\theta} - \frac{1}{n} \sum_{i = 1}^n 1 &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n  \frac{X_i}{\theta} &amp;= \frac{1}{n} \sum_{i = 1}^n 1 \\
+\frac{1}{\theta} \frac{1}{n} \sum_{i = 1}^n X_i &amp;= \frac{n}{n} \\
+\frac{1}{\theta} \frac{1}{n} \sum_{i = 1}^n X_i &amp;= 1 \\
+\hat \theta &amp;=  \frac{1}{n} \sum_{i = 1}^n X_i \\
+&amp;= \bar X_n
+\end{split}
+\]</span></p>
+</section>
+<section id="example-score-vector-for-normal-distribution" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="example-score-vector-for-normal-distribution"><span class="header-section-number">1.3.3</span> Example: Score vector for Normal distribution</h3>
+<p><span class="math display">\[
+\begin{split}
+X &amp;\sim N(\mu, \sigma^2)\\
+\text{ For a } &amp;\text{single subject } X_i, \\
+L_i(\theta | X_i) &amp;= f_X(X_i; \theta) \\
+&amp;= \dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(X_i - \mu)^2}{2\sigma^2}\Bigg) \\
+\ell_i(\theta) &amp;= \ln f_X(X_i; \theta) \\
+&amp;= -\ln\sigma-\ln\sqrt{2\pi} - \frac{(X_i - \mu)^2}{2\sigma^2}\\
+S_i(\mu) &amp;= \frac{\partial \ell_i(\theta)}{\partial \mu} \\
+&amp;= -\frac{1}{2\sigma^2} \cdot 2(X_i-\mu) \cdot -1 \\
+&amp;= \frac{2(X_i - \mu)}{2\sigma^2}\\
+&amp;= \frac{X_i - \mu}{\sigma^2}\\
+\text{To obtain} &amp;\text{ the MLE for } \mu, \text{ solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\mu) &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{X_i - \mu}{\sigma^2} &amp;= 0   \\
+\frac{1}{\sigma^2} \frac{1}{n} \sum_{i = 1}^n X_i - \mu &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n X_i - \mu &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n X_i &amp;= \frac{1}{n} \sum_{i = 1}^n \mu \\
+\frac{1}{n} \sum_{i = 1}^n X_i &amp;= \frac{n\mu}{\mu} = \mu \\
+\Rightarrow \hat \mu &amp;= \bar X_n \\
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\text{Rewrite } \ell_i(\theta) &amp;= -\ln\sigma-\ln\sqrt{2\pi} - \frac{(X_i - \mu)^2}{2} \cdot \frac{1}{\sigma^2} \\
+&amp;=  -\ln\sigma-\ln\sqrt{2\pi} - \frac{(X_i - \mu)^2}{2} \cdot \sigma^{-2} \\
+S_i(\sigma) &amp;= \frac{\partial \ell_i(\theta)}{\partial \sigma} \\
+&amp;= -\frac{1}{\sigma} - \frac{(X_i - \mu)^2}{2} \cdot -2\sigma^{-3} \\
+&amp;= -\frac{1}{\sigma} + \frac{(X_i - \mu)^2}{\sigma^3} \\
+&amp;= \frac{1}{\sigma} \Bigg(-1 +  \frac{(X_i - \mu)^2}{\sigma^2} \Bigg) \\
+\text{Equivalently, } S_i(\sigma^2) &amp;= -\frac{1}{2\sigma^2} + \frac{(X_i - \mu)^2}{2\sigma^4}  \\
+\text{To obtain} &amp;\text{ the MLE for } \sigma \text{ and } \sigma^2, \text{ solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\sigma) &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{1}{\sigma} \Bigg(-1 +  \frac{(X_i - \mu)^2}{\sigma^2} \Bigg) &amp;= 0 \\
+\frac{1}{\sigma}  \frac{1}{n} \sum_{i = 1}^n -1 +  \frac{(X_i - \mu)^2}{\sigma^2} &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n -1 +  \frac{(X_i - \mu)^2}{\sigma^2} &amp;= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{(X_i - \mu)^2}{\sigma^2} &amp;=  \frac{1}{n} \sum_{i = 1}^n 1 \\
+&amp;= \frac{n}{n} = 1\\
+\frac{1}{\sigma^2} \frac{1}{n} \sum_{i = 1}^n  (X_i - \mu)^2 &amp;= 1 \\
+\hat{\sigma^2} &amp;=\frac{1}{n} \sum_{i = 1}^n  (X_i - \mu)^2
+\end{split}
+\]</span></p>
+<p>Thus, we have obtained the score vector for a single individual and the (total) score:</p>
+<p><span class="math display">\[
+\begin{split}
+S_i(\mu,\sigma) &amp;=
+\begin{Bmatrix}
+\dfrac{X_i - \mu}{\sigma^2}  \\
+-\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \\
+\end{Bmatrix} \\
+S(\mu,\sigma) &amp;=
+\begin{Bmatrix}
+\displaystyle \sum_{i = 1}^n \dfrac{X_i - \mu}{\sigma^2}  \\
+\displaystyle \sum_{i = 1}^n  -\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \\
+\end{Bmatrix} \\
+\end{split}
+\]</span></p>
+</section>
+</section>
+<section id="fisher-information-matrix-and-large-sample-variance" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="fisher-information-matrix-and-large-sample-variance"><span class="header-section-number">1.4</span> Fisher information matrix and large-sample variance</h2>
+<p>There are two equivalent definitions/ways of obtaining the Fisher information matrix</p>
+<p><span class="math display">\[
+\begin{split}
+I_1(\theta) &amp;= - E\Bigg[\frac{\partial}{\partial \theta} S_i(\theta) \Bigg] \\
+&amp;= - E\Bigg[\frac{\partial^2}{\partial \theta^2}  \ln f_X(X_i;\theta) \Bigg] \\
+I_1(\theta) &amp;= E\Bigg[ \Big\{S_i(\theta)\Big\}^2 \Bigg] \\
+&amp;=E\Bigg[ \Big\{  \frac{\partial}{\partial \theta} \ln f_X(X_i;\theta)\Big\}^2 \Bigg]
+\end{split}
+\]</span></p>
+<p>When the model is correct, assuming regularity conditions that allow interchanging the derivatives and integral, then</p>
+<p><span class="math display">\[
+\text{Var}_\theta \Big[ S_i(\theta) \Big] = - E_\theta\Bigg[\frac{\partial}{\partial \theta} S_i (\theta) \Bigg] \equiv I(\theta)
+\]</span></p>
+<p><strong>Distribution of the MLE in large samples</strong></p>
+<p>In large samples, the MLE is normal with large-sample variance (in the univariate case) or large-sample covariance matrix (in the multivariate case)</p>
+<p><span class="math display">\[
+\text{Var}(\hat \theta) = \frac{1}{nI(\theta)}
+\]</span></p>
+<p>The <strong>total Fisher information</strong> equals <span class="math inline">\(\displaystyle nI(\theta)\)</span>.</p>
+<section id="multivariate-fisher-information" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="multivariate-fisher-information"><span class="header-section-number">1.4.1</span> Multivariate Fisher information</h3>
+<p>In the multivariate parameter case, the Fisher information matrix <span class="math inline">\(I(\theta)\)</span> is the matrix of second derivatives of the log likelihood for a single individual, with elements</p>
+<p><span class="math display">\[
+I_{jk}(\theta) = - E_\theta \Bigg[\frac{\partial^2}{\partial\theta_j\partial\theta_k} \ell_i(\theta) \Bigg]
+\]</span></p>
+<p>The large sample variance of the MLE for a parameter <span class="math inline">\(\theta\)</span> when the other parameter <span class="math inline">\(\eta\)</span> is known equals <span class="math inline">\(\displaystyle \Big(n I_{\theta\theta}\Big)^{-1}\)</span>.</p>
+<p>When the other parameter <span class="math inline">\(\eta\)</span> is unknown, we have the Fisher information</p>
+<p><span class="math display">\[\displaystyle I^*_{\theta\theta} = I_{\theta\theta} - \Big[ I_{\theta\eta} \cdot I^{-1}_{\eta\eta} \cdot I_{\eta\theta} \Big] = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}}\]</span></p>
+<p>Then, we have the large sample variance of the MLE for <span class="math inline">\(\theta\)</span> with the other parameter unknown: <span class="math inline">\(\displaystyle \Big(n I^*_{\theta\theta}\Big)^{-1}\)</span>. And we have the total information <span class="math inline">\(nI^*_{\theta\theta}\)</span>.</p>
+<p>Note that, when the off-diagonal elements (<span class="math inline">\(I_{\theta\eta}\)</span> and <span class="math inline">\(I_{\eta\theta}\)</span>) equal zero, then the large sample variance of the MLe for <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\eta\)</span> with the other parameter unknown will necessarily equal the large sample variance of the MLE for <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\eta\)</span> with the other parameter known. That is:</p>
+<p><span class="math display">\[\displaystyle I^*_{\theta\theta} = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}} = I_{\theta\theta} - \dfrac{0}{I_{\eta\eta}} = I_{\theta\theta} \]</span></p>
+</section>
+<section id="example-fisher-information-matrix-for-exponential-distribution" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="example-fisher-information-matrix-for-exponential-distribution"><span class="header-section-number">1.4.2</span> Example: Fisher information matrix for Exponential distribution</h3>
+<section id="approach-1" class="level4" data-number="1.4.2.1">
+<h4 data-number="1.4.2.1" class="anchored" data-anchor-id="approach-1"><span class="header-section-number">1.4.2.1</span> Approach 1</h4>
+<p><span class="math display">\[
+\begin{split}
+X &amp;\sim \text{Exp}(\theta) \\
+S_i(\theta) &amp;= \frac{1}{\theta} - X_i \\
+&amp;= \theta^{-1} - X_i \\
+I_\theta &amp;= - E_\theta\Bigg[\frac{\partial}{\partial \theta} S_i (\theta) \Bigg] \\
+&amp;= - E_\theta \Big[-\theta^{-2} \Big]\\
+&amp;= -E_\theta \Big[-\frac{1}{\theta^2}\Big] \\
+&amp;= E_\theta \Big[\frac{1}{\theta^2}\Big] \\
+&amp;= \frac{1}{\theta^2} \\
+nI_\theta &amp;= \frac{n}{\theta^2}, \text{the total Fisher information }\\
+\text{We have the MLE } \hat \theta &amp;= \frac{1}{\bar X_n} \text{ and } \\
+\text{Var}(\hat \theta) &amp;= \frac{1}{nI(\theta)}, \text{the large-sample variance} \\
+&amp;= \frac{1}{n} \cdot \theta^2 \\
+&amp;= \frac{\theta^2}{n}
+\end{split}
+\]</span></p>
+</section>
+<section id="approach-2" class="level4" data-number="1.4.2.2">
+<h4 data-number="1.4.2.2" class="anchored" data-anchor-id="approach-2"><span class="header-section-number">1.4.2.2</span> Approach 2</h4>
+<p>We have</p>
+<p><span class="math display">\[
+\begin{split}
+E[X] &amp;= \frac{1}{\theta} \\
+\text{Var}[X] &amp;= \frac{1}{\theta^2} \\
+I_1(\theta) &amp;= E\Big[ \{S_i(\theta)\}^2 \Big] \\
+&amp;= E\Big[\Big(\frac{1}{\theta} - X \Big)^2 \Big] \\
+&amp;= E\Big[\frac{1}{\theta^2} - 2\frac{X}{\theta} + X^2 \Big] \\
+&amp;= \frac{1}{\theta^2} - \frac{2}{\theta}E[X] + E[X^2] \\
+&amp;= \frac{1}{\theta^2} - \frac{2}{\theta^2} + \text{Var}[X] + (E[X])^2\\
+&amp;= \frac{1}{\theta^2} - \frac{2}{\theta^2} + \frac{1}{\theta^2} + \frac{1}{\theta^2} \\
+&amp;= \frac{1}{\theta^2}\\
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="example-fisher-information-matrix-for-poisson-distribution" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="example-fisher-information-matrix-for-poisson-distribution"><span class="header-section-number">1.4.3</span> Example: Fisher information matrix for Poisson distribution</h3>
+<section id="approach-1-1" class="level4" data-number="1.4.3.1">
+<h4 data-number="1.4.3.1" class="anchored" data-anchor-id="approach-1-1"><span class="header-section-number">1.4.3.1</span> Approach 1</h4>
+<p><span class="math display">\[
+\begin{split}
+X &amp;\sim \text{Poisson}(\theta) \\
+S_i(\theta) &amp;=  \frac{X_i}{\theta} -1\\
+I_\theta &amp;= - E_\theta\Bigg[\frac{\partial}{\partial \theta} S_i (\theta) \Bigg] \\
+&amp;= - E_\theta\Bigg[\frac{\partial}{\partial \theta} \frac{X_i}{\theta} -1\Bigg] \\
+&amp;= - E_\theta\Bigg[\frac{\partial}{\partial \theta} X_i \cdot \theta^{-1} -1\Bigg] \\
+&amp;= - E_\theta \Big[X_i \cdot -\theta^{-2} \Big]\\
+&amp;= -E_\theta \Big[-\frac{X_i}{\theta^2}\Big] \\
+&amp;= E_\theta \Big[\frac{X_i}{\theta^2}\Big] \\
+&amp;= \frac{E_\theta[X_i]}{\theta^2} \\
+&amp;= \frac{\theta}{\theta^2}\\
+&amp;= \frac{1}{\theta} \\
+nI(\theta) &amp;= \frac{n}{\theta}, \text{ the total Fisher information}\\
+\text{We have the MLE } \hat \theta &amp;= \bar X_n \text{ and } \\
+\text{Var}(\hat \theta) &amp;= \frac{1}{nI(\theta)}, \text{ the large-sample variance} \\
+&amp;= \frac{\theta}{n}
+\end{split}
+\]</span></p>
+</section>
+<section id="approach-2-1" class="level4" data-number="1.4.3.2">
+<h4 data-number="1.4.3.2" class="anchored" data-anchor-id="approach-2-1"><span class="header-section-number">1.4.3.2</span> Approach 2</h4>
+<p><span class="math display">\[
+\begin{split}
+E[X] &amp;= \text{Var}[X] = \theta \\
+I_1(\theta) &amp;= E\Big[ \{S_i(\theta)\}^2 \Big] \\
+&amp;= E\Big[ \Big(\frac{X}{\theta} - 1 \Big)^2 \Big] \\
+&amp;= E\Big[\frac{X^2}{\theta^2} - 2\frac{X}{\theta} + 1 \Big] \\
+&amp;= \frac{1}{\theta^2}E[X^2] -\frac{2}{\theta}E[X] + 1\\
+&amp;= \frac{1}{\theta^2} \Big(\text{Var}[X] + \{E[X]\}^2 \Big) -\frac{2\theta}{\theta} + 1 \\
+&amp;= \frac{1}{\theta^2} \Big(\theta + \theta^2 \Big) -2+1 \\
+&amp;=\frac{1}{\theta} + 1- 1 \\
+&amp;= \frac{1}{\theta}
+\end{split}
+\]</span></p>
+</section>
+</section>
+<section id="example-fisher-information-for-normal-distribution" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="example-fisher-information-for-normal-distribution"><span class="header-section-number">1.4.4</span> Example: Fisher information for Normal Distribution</h3>
+<p><span class="math display">\[
+\begin{split}
+S_i(\mu,\sigma) &amp;=
+\begin{Bmatrix}
+\displaystyle\frac{\partial}{\partial \mu} \ell_i(\mu, \sigma)  \\
+\displaystyle\frac{\partial}{\partial \sigma} \ell_i(\mu, \sigma) \\
+\end{Bmatrix} \\
+&amp;=
+\begin{Bmatrix}
+\dfrac{X_i - \mu}{\sigma^2}  \\
+-\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \\
+\end{Bmatrix} \\
+I_{jk}(\theta) &amp;= - E_\theta \Bigg[\frac{\partial^2}{\partial\theta_j\partial\theta_k} \ell_i(\theta) \Bigg] \\
+I_{11}(\theta) &amp;= - E_\theta \Bigg[\frac{\partial}{\partial\mu}\frac{\partial}{\partial\mu} \ell_i(\theta) \Bigg]\\
+&amp;=- E_\theta \Bigg[\frac{\partial}{\partial\mu} \dfrac{X_i - \mu}{\sigma^2} \Bigg]\\
+&amp;=- E_\theta \Bigg[\frac{\partial}{\partial\mu} \dfrac{X_i}{\sigma^2} - \dfrac{\mu}{\sigma^2}  \Bigg]\\
+&amp;=- E_\theta \Bigg[-\frac{1}{\sigma^2}  \Bigg]  \\
+&amp;= E_\theta \Bigg[\frac{1}{\sigma^2}  \Bigg]  \\
+&amp;= \frac{1}{\sigma^2} \\
+I_{21}(\theta) = I_{12}(\theta) &amp;= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}\frac{\partial}{\partial\mu} \ell_i(\theta) \Bigg]\\
+&amp;= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}\dfrac{X_i - \mu}{\sigma^2} \Bigg] \\
+&amp;= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}(X_i - \mu) \cdot \sigma^{-2} \Bigg] \\
+&amp;= - E_\theta \Bigg[(X_i - \mu) \cdot -2\sigma^{-3} \Bigg] \\
+&amp;= - E_\theta \Bigg[-\frac{2(X_i - \mu)}{\sigma^3}  \Bigg] \\
+&amp;=  E_\theta \Bigg[\frac{2(X_i - \mu)}{\sigma^3}  \Bigg] \\
+&amp;=  \frac{2}{\sigma^3}E_\theta \Big[X_i - \mu \Big] \\
+&amp;= \frac{2}{\sigma^3} \Big[E_\theta[X_i] - \mu \Big] \\
+&amp;= \frac{2}{\sigma^3} \Big[\mu - \mu \Big] = 0 \\
+I_{22}(\theta) &amp;= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}\frac{\partial}{\partial\sigma} \ell_i(\theta) \Bigg]\\
+&amp;= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}-\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \Bigg]\\
+&amp;= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}-\sigma^{-1} + (X_i - \mu)^2 \cdot \sigma^{-3} \Bigg]\\
+&amp;= - E_\theta \Bigg[\frac{1}{\sigma^2} + (X_i - \mu)^2 \cdot -3\sigma^{-4} \Bigg]\\
+&amp;= - E_\theta \Bigg[\frac{1}{\sigma^2} + (X_i - \mu)^2 \cdot \frac{-3}{\sigma^4}  \Bigg]\\
+&amp;= -\frac{1}{\sigma^2} - E_\theta \Bigg[ (X_i - \mu)^2 \cdot \frac{-3}{\sigma^4}  \Bigg]\\
+&amp;= -\frac{1}{\sigma^2} + \frac{3}{\sigma^4}E_\theta \Big[ (X_i - \mu)^2   \Big]\\
+&amp;= -\frac{1}{\sigma^2} + \frac{3}{\sigma^4}E_\theta \Bigg[ \Big(X_i - E[X_i]\Big)^2   \Bigg]\\
+&amp;= -\frac{1}{\sigma^2} + \frac{3}{\sigma^4}\text{Var}[X]\\
+&amp;= -\frac{1}{\sigma^2} + \frac{3\sigma^2}{\sigma^4}\\
+&amp;= \frac{3}{\sigma^2} - \frac{1}{\sigma^2} \\
+&amp;= \frac{2}{\sigma^2} \\
+\end{split}
+\]</span></p>
+<p>Thus, we have obtained</p>
+<p><span class="math display">\[
+\begin{split}
+\text{The Fisher information matrix } I(\theta) &amp;=
+\begin{bmatrix}
+\displaystyle \frac{1}{\sigma^2} &amp; 0 \\
+0 &amp; \displaystyle \frac{2}{\sigma^2}\\
+\end{bmatrix} \\
+\text{The total Fisher information matrix } nI(\theta) &amp;=
+\begin{bmatrix}
+\displaystyle \frac{n}{\sigma^2} &amp; 0 \\
+0 &amp; \displaystyle \frac{2n}{\sigma^2}\\
+\end{bmatrix} \\
+\text{The large-sample covariance matrix } \frac{1}{nI(\theta)} &amp;=
+\begin{bmatrix}
+\displaystyle \frac{\sigma^2}{n} &amp; 0 \\
+0 &amp; \displaystyle \frac{\sigma^2}{2n}\\
+\end{bmatrix} \\
+\end{split}
+\]</span></p>
+<p>Because the off-diagonal elements of the Fisher information matrix equal <span class="math inline">\(0\)</span>, we can immediately infer that the large sample variance of <span class="math inline">\(\hat \mu\)</span> equals <span class="math inline">\(\dfrac{\sigma^2}{n}\)</span> regardless of whether <span class="math inline">\(\sigma\)</span> is known; the large sample variance of <span class="math inline">\(\hat \sigma^2\)</span> equals <span class="math inline">\(\dfrac{\sigma^2}{2n}\)</span> regardless of whether <span class="math inline">\(\sigma\)</span> is known.</p>
+</section>
+<section id="example-fisher-information-for-poisson-regression" class="level3" data-number="1.4.5">
+<h3 data-number="1.4.5" class="anchored" data-anchor-id="example-fisher-information-for-poisson-regression"><span class="header-section-number">1.4.5</span> Example: Fisher information for Poisson regression</h3>
+<p><span class="math display">\[
+\begin{split}
+S_i(\beta_0,\beta_1) &amp;=
+\begin{Bmatrix}
+\displaystyle\frac{\partial}{\partial \beta_0} \ell_i(\mu, \sigma)  \\
+\displaystyle\frac{\partial}{\partial \beta_1} \ell_i(\mu, \sigma) \\
+\end{Bmatrix} \\
+&amp;=
+\begin{Bmatrix}
+Y - \exp(\beta_0 + \beta_1X)  \\
+XY - X\exp(\beta_0 + \beta_1X) \\
+\end{Bmatrix} \\
+I_{11}(\theta)&amp;= -E\Bigg[ \frac{\partial}{\partial \beta_0} Y - \exp(\beta_0 + \beta_1X) \Bigg] \\
+&amp;= - E\Big[-\exp(\beta_0 + \beta_1X) \Big] \\
+&amp;= E\Big[\exp(\beta_0 + \beta_1X) \Big] \\
+I_{22}(\theta)&amp;= -E\Bigg[ \frac{\partial}{\partial \beta_1} XY - X\exp(\beta_0 + \beta_1X) \Bigg] \\
+&amp;= - E\Big[-X^2\exp(\beta_0 + \beta_1X) \Big] \\
+&amp;= E\Big[X^2\exp(\beta_0 + \beta_1X) \Big] \\
+I_{12}(\theta) = I_{21}(\theta)&amp;= -E\Bigg[ \frac{\partial}{\partial \beta_1} Y - \exp(\beta_0 + \beta_1X) \Bigg] \\
+&amp;= -E\Big[-X\exp(\beta_0 + \beta_1X) \Big] \\
+&amp;= E\Big[X\exp(\beta_0 + \beta_1X) \Big] \\
+\end{split}
+\]</span></p>
+<p>We have obtained the Fisher information matrix,</p>
+<p><span class="math display">\[
+\begin{split}
+I(\theta) &amp;=
+\begin{bmatrix}
+E\Big[\exp(\beta_0 + \beta_1X) \Big] &amp; E\Big[X\exp(\beta_0 + \beta_1X) \Big] \\
+E\Big[X\exp(\beta_0 + \beta_1X) \Big] &amp; E\Big[X^2\exp(\beta_0 + \beta_1X) \Big]\\
+\end{bmatrix} \\
+\text{if } \beta_0 \text{ is known, } I_{\beta_1\beta_1} &amp;=E\Big[X^2\exp(\beta_0 + \beta_1X) \Big]\\
+\text{Var}(\hat \beta_1) &amp;= \frac{1}{nE\Big[X^2\exp(\beta_0 + \beta_1X) \Big]} \\
+\text{if } \beta_0 \text{ is unknown, } I^*_{\beta_1\beta_1} &amp;= I_{\beta_1\beta_1} - \frac{(I_{\beta_0\beta_1})^2}{I_{\beta_0\beta_0}}\\
+&amp;= E\Big[X^2\exp(\beta_0 + \beta_1X) \Big] - \frac{E[X\exp(\beta_0 + \beta_1X)]^2}{E[\exp(\beta_0 + \beta_1X)]}
+\\
+\text{Var}(\hat \beta_1) &amp;= \frac{1}{n} \Bigg(E\Big[X^2\exp(\beta_0 + \beta_1X) \Big] - \frac{E[X\exp(\beta_0 + \beta_1X)]^2}{E[\exp(\beta_0 + \beta_1X)]}\Bigg)^{-1}
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="example-fisher-information-for-gamma-distribution" class="level3" data-number="1.4.6">
+<h3 data-number="1.4.6" class="anchored" data-anchor-id="example-fisher-information-for-gamma-distribution"><span class="header-section-number">1.4.6</span> Example: Fisher information for Gamma distribution</h3>
+<p>If both the shape <span class="math inline">\(\alpha\)</span> and rate <span class="math inline">\(\lambda\)</span> are unknown for iid gamma variates <span class="math inline">\(X_i \sim\)</span> Ga(<span class="math inline">\(\alpha, \lambda\)</span>), the Fisher information for <span class="math inline">\(\theta = (\alpha, \lambda)\)</span> is</p>
+<p><span class="math display">\[
+\begin{split}
+I(\theta) &amp;= \begin{bmatrix}
+\psi'(\alpha) &amp; -\lambda^{-1} \\
+-\lambda^{-1} &amp; \alpha\lambda^{-2}
+\end{bmatrix} \text{ where }\\
+\ell_i(\theta) &amp;= \alpha \ln(\lambda) + (\alpha - 1)\ln X-\lambda X -\ln \Gamma(\alpha)
+\end{split}
+\]</span></p>
+<p>NB: <span class="math inline">\(\psi'(\alpha)\)</span> is the trigamma function (the second derivative of the log of <span class="math inline">\(\Gamma(\alpha)\)</span>).</p>
+<p>Above, we used the shape-rate form of the Gamma distribution. If, instead, we use the shape-scale form(<span class="math inline">\(\alpha, \beta\)</span>) with <span class="math inline">\(\alpha\)</span> known, we have</p>
+<p><span class="math display">\[
+\begin{split}
+\ell(\beta) &amp;= -n\ln\Gamma(\alpha) -n\alpha\ln\beta + (a - 1)\sum_{i = 1}^n \ln x_i - \frac{\sum_{i = 1}^n x_i}{\beta} \\
+S(\beta) &amp;= \frac{n\alpha}{\beta^2}\Bigg(\frac{\sum_{i = 1}^n x_i}{n\alpha} -\beta \Bigg)
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="cramer-rao-inequality" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="cramer-rao-inequality"><span class="header-section-number">1.5</span> Cramer-Rao inequality</h2>
+<p><strong>Minimum Variance Unbiased Estimators (MVUE) for</strong> <span class="math inline">\(\theta\)</span>: An unbiased estimator (for every <span class="math inline">\(\theta\)</span>) whose variance is no larger than that of any other unbiased estimator.</p>
+<p><strong>Cramer-Rao information inequality for univariate parameters</strong></p>
+<p>Let <span class="math inline">\(W(\pmb X)\)</span> be an unbiased estimator of a scalar parameter <span class="math inline">\(\tau(\theta)\)</span>. Then</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Var}\{W(\pmb X)\} &amp;\ge \frac{\{\frac{\partial}{\partial\theta} \tau(\theta)\}^2}{nI(\theta)} \\
+\text{Var}\{W(\pmb X)\} &amp;\ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)}
+\end{split}
+\]</span></p>
+<p><strong>Cramer-Rao information inequality for multivariate parameters</strong></p>
+<p>Let <span class="math inline">\(W(\pmb X)\)</span> be an unbiased estimator of a multivariate parameter <span class="math inline">\(\tau(\theta)\)</span>.</p>
+<p><span class="math display">\[
+\text{Var}\{W(\pmb X)\} \ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^t} {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}}  \frac{1}{nI(\theta)}
+\]</span></p>
+<p>For unbiased estimators of <span class="math inline">\(\tau(\theta)\)</span>, the Cramer-Rao inequality provides <strong>a lower bound for the variance</strong>.</p>
+<p>For unbiased estimators <span class="math inline">\(W(\pmb X)\)</span> of <span class="math inline">\(\tau(\theta)\)</span> (i.e., a <strong>function of</strong> <span class="math inline">\(\theta\)</span>), we have</p>
+<p><span class="math display">\[
+\text{Var}\{W(\pmb X)\} \ge \underbrace{{\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)}}_{\text{Cramer-Rao Lower Bound}}
+\]</span></p>
+<p>For unbiased estimators <span class="math inline">\(W(\pmb X)\)</span> of <span class="math inline">\(\theta\)</span>, we have</p>
+<p><span class="math display">\[\text{Var}\{W(\pmb X)\} \ge \underbrace{\frac{1}{nI(\theta)}}_{\text{CRLB}}\]</span></p>
+<p>MLEs are Best Asymptotically Normal (i.e., asymptotically efficient): The MLE has a limiting normal distribution with the Cramer-Rao lower bound as variance. That is,</p>
+<p><span class="math display">\[\text{Var}(\hat \theta)= \frac{1}{nI(\theta)}\]</span></p>
+<section id="example-cramer-rao-lower-bound-for-poisson-distribution" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="example-cramer-rao-lower-bound-for-poisson-distribution"><span class="header-section-number">1.5.1</span> Example: Cramer-Rao Lower bound for Poisson Distribution</h3>
+<p>Given a sample <span class="math inline">\(X_1, ..., X_n\)</span> from the Poisson distribution with density</p>
+<p><span class="math display">\[
+f(x; \theta) = e^{-\theta} \frac{\theta^x}{x!}
+\]</span></p>
+<p>with <span class="math inline">\(\theta\)</span> unknown and <span class="math inline">\(x \in \mathbb{R}\)</span>. We know that <span class="math inline">\(E[X] = \text{Var}[X] = \theta\)</span>. Find the MLE of <span class="math inline">\(\theta\)</span>, the Fisher information and the corresponding large-sample variance of the MLE, and the Cramer-Rao lower bound for any unbiased estimator of <span class="math inline">\(e^{-\theta}\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+\hat \theta &amp;= \bar X_n \\
+I(\theta) &amp;= \frac{1}{\theta}  \\
+nI(\theta) &amp;= \frac{n}{\theta}  \\
+\frac{1}{nI(\theta)} &amp;= \frac{\theta}{n} = \text{Var}(\hat \theta) \\
+\text{Var}\{W(\pmb X)\} &amp;\ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)} \\
+\text{Var}\{W(\pmb X)\} &amp;\ge {\Big\{\frac{\partial}{\partial\theta} e^{-\theta}\Big\}^2} \frac{\theta}{n} \\
+\text{Var}\{W(\pmb X)\} &amp;\ge {\Big\{-e^{-\theta}\Big\}^2} \frac{\theta}{n} \\
+\text{Var}\{W(\pmb X)\} &amp;\ge e^{-2\theta} \frac{\theta}{n} \\
+\text{Var}\{W(\pmb X)\} &amp;\ge \frac{\theta e^{-2\theta}}{n} \\
+\end{split}
+\]</span></p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="newton-raphson-method" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="newton-raphson-method"><span class="header-section-number">1.6</span> Newton-Raphson method</h2>
+<p>The NR method is an iterative application of</p>
+<p><span class="math display">\[x_{n + 1} = x_n - f(x_n)/f'(x_n)\]</span></p>
+<p>For example, let <span class="math inline">\(f(x) = x^2\)</span>. Our goal is to solve <span class="math inline">\(f(x) = 0\)</span>. Then,</p>
+<p><span class="math display">\[
+\begin{split}
+f(x) &amp;= x^2 \\
+f'x &amp;= 2x\\
+x_{n + 1} &amp;= x_n - f(x_n)/f'(x_n) \\
+&amp;= x_n - \frac{x_n^2}{2x_n} \\
+&amp;= x_n - \frac{1}{2}x_n \\
+&amp;= \frac{x_n}{2}
+\end{split}
+\]</span></p>
+<p>Thus, we see that the iteration converges towards 0, the solution to <span class="math inline">\(f(x) = x^2 = 0\)</span>.</p>
+<p>Our goal is to find the solution to <span class="math inline">\(\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0\)</span>. We have</p>
+<p><span class="math display">\[
+\begin{split}
+f(\theta) &amp;= \frac{1}{n} \sum_{i = 1}^n S_i(\theta) \\
+f'(\theta) &amp;= \frac{1}{n} \sum_{i = 1}^n \frac{\partial}{\partial \theta} S_i(\theta)\\
+\theta_{n + 1} &amp;= \theta_n - f(\theta_n)/f'(\theta_n) \\
+&amp;= \theta_n - \dfrac{\frac{1}{n} \sum_{i = 1}^n S_i(\theta_n)}{\frac{1}{n} \sum_{i = 1}^n \frac{\partial}{\partial \theta} S_i(\theta_n)}
+\end{split}
+\]</span></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./week2.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

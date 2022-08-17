@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistical Inference - 5&nbsp; Confidence intervals</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./exercises.html" rel="next">
+<link href="./week4.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Inference</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week5.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#duality-between-test-statistics-and-confidence-sets" id="toc-duality-between-test-statistics-and-confidence-sets" class="nav-link active" data-scroll-target="#duality-between-test-statistics-and-confidence-sets"> <span class="header-section-number">5.1</span> Duality between test statistics and confidence sets</a></li>
+  <li><a href="#example-obtaining-a-confidence-interval-by-inverting-the-t-test" id="toc-example-obtaining-a-confidence-interval-by-inverting-the-t-test" class="nav-link" data-scroll-target="#example-obtaining-a-confidence-interval-by-inverting-the-t-test"> <span class="header-section-number">5.2</span> Example: Obtaining a confidence interval by inverting the t-test</a></li>
+  <li><a href="#interval-estimators-based-on-pivots" id="toc-interval-estimators-based-on-pivots" class="nav-link" data-scroll-target="#interval-estimators-based-on-pivots"> <span class="header-section-number">5.3</span> Interval estimators based on pivots</a></li>
+  <li><a href="#example-confidence-interval-based-on-the-t-pivot" id="toc-example-confidence-interval-based-on-the-t-pivot" class="nav-link" data-scroll-target="#example-confidence-interval-based-on-the-t-pivot"> <span class="header-section-number">5.4</span> Example: Confidence interval based on the T pivot</a></li>
+  <li><a href="#example-confidence-interval-for-sigma2-based-on-a-pivot" id="toc-example-confidence-interval-for-sigma2-based-on-a-pivot" class="nav-link" data-scroll-target="#example-confidence-interval-for-sigma2-based-on-a-pivot"> <span class="header-section-number">5.5</span> Example: Confidence interval for <span class="math inline">\(\sigma^2\)</span> based on a pivot</a></li>
+  <li><a href="#example-asymptotic-confidence-coefficient" id="toc-example-asymptotic-confidence-coefficient" class="nav-link" data-scroll-target="#example-asymptotic-confidence-coefficient"> <span class="header-section-number">5.6</span> Example: Asymptotic confidence coefficient</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>An interval estimate of a parameter <span class="math inline">\(\theta\)</span> is any pair of functions <span class="math inline">\(L(\pmb x)\)</span> and <span class="math inline">\(U(\pmb x)\)</span> of a sample <span class="math inline">\(\pmb x\)</span> that satisfy <span class="math inline">\(L(\pmb x) \le U(\pmb x)\)</span> for all <span class="math inline">\(\pmb x \in \chi\)</span>. <span class="math inline">\([L(\pmb X), U(\pmb X)]\)</span> is called a random interval, confidence interval, or confidence set.</p>
+<p>The coverage probability of an interval estimator <span class="math inline">\([L(\pmb X), U(\pmb X)]\)</span> of a parameter <span class="math inline">\(\theta\)</span> is the probability <span class="math inline">\(P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)\)</span>. The confidence coefficient/level of an interval estimator <span class="math inline">\([L(\pmb X), U(\pmb X)]\)</span> of a parameter <span class="math inline">\(\theta\)</span> is the infimum of the coverage probabilities <span class="math inline">\(\inf_\theta P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)\)</span>.</p>
+<p>Note: in the probability statement <span class="math inline">\(P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)\)</span>, <span class="math inline">\(\theta\)</span> is fixed and <span class="math inline">\(\pmb X\)</span> is random: the probability statement refers to <span class="math inline">\(\pmb X\)</span>, not <span class="math inline">\(\theta\)</span>.</p>
+<section id="duality-between-test-statistics-and-confidence-sets" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="duality-between-test-statistics-and-confidence-sets"><span class="header-section-number">5.1</span> Duality between test statistics and confidence sets</h2>
+<p>For a level <span class="math inline">\(\alpha\)</span> test with rejection region <span class="math inline">\(R(\theta_0)\)</span>, <span class="math inline">\(C(\pmb X) = \Big[\theta_0: \pmb X \notin R(\theta_0) \Big]\)</span> is a <span class="math inline">\(1 - \alpha\)</span> confidence set. Thus, we can always obtain the confidence set <span class="math inline">\(C(\pmb X)\)</span> by inverting a test.</p>
+<p>For a <span class="math inline">\(1 - \alpha\)</span> confidence set <span class="math inline">\(C(\pmb X)\)</span>, <span class="math inline">\(R(\theta_0) = \Big[\pmb X : \theta_0 \notin C(\pmb X) \Big]\)</span> is the rejection region of a level <span class="math inline">\(\alpha\)</span> test.</p>
+</section>
+<section id="example-obtaining-a-confidence-interval-by-inverting-the-t-test" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="example-obtaining-a-confidence-interval-by-inverting-the-t-test"><span class="header-section-number">5.2</span> Example: Obtaining a confidence interval by inverting the t-test</h2>
+<p>The <em>t</em>-test for <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \mu \ne \mu_0\)</span> rejects <span class="math inline">\(H_0\)</span> if</p>
+<p><span class="math display">\[
+\Bigg| \frac{\bar X - \mu_0}{S/\sqrt n} \Bigg| &gt; t_{n-1, \frac{\alpha}{2}}
+\]</span></p>
+<p>This is an <span class="math inline">\(\alpha\)</span> level test. Derive the appropriate confidence <span class="math inline">\(1 - \alpha\)</span> interval. We have</p>
+<p><span class="math display">\[
+\begin{split}
+R(\mu_0) &amp;= \Bigg[\pmb x:  \Bigg| \frac{\bar x - \mu_0}{s/\sqrt n} \Bigg| &gt; t_{n-1, \frac{\alpha}{2}}\Bigg] \\
+&amp;=\Bigg[\pmb x:   \frac{\bar x - \mu_0}{s/\sqrt n} &gt; t_{n-1, \frac{\alpha}{2}} ~\text{ or }~ -\Bigg(\frac{\bar x - \mu_0}{s/\sqrt n} \Bigg) &gt; t_{n-1, \frac{\alpha}{2}}  \Bigg] \\
+&amp;=\Bigg[\pmb x:   {\bar x - \mu_0} &gt; t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} ~\text{ or }~ \frac{\bar x - \mu_0}{s/\sqrt n}  &lt; -t_{n-1, \frac{\alpha}{2}}  \Bigg] \\
+&amp;=\Bigg[\pmb x:   {\bar x} &gt; \mu_0 + t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} ~\text{ or }~ {\bar x}  &lt; \mu_0 -t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}  \Bigg] \\
+C(\pmb x) &amp;= \Big[\mu_0: \pmb x \notin R(\mu_0) \Big] \\
+&amp;= \Bigg[\mu_0:   {\bar x} \le \mu_0 + t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} ~\text{ and }~ {\bar x}  \ge \mu_0 -t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}  \Bigg] \\
+&amp;= \Bigg[\mu_0:   {\bar x} - t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} \le \mu_0  ~\text{ and }~ {\bar x} +t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}  \ge \mu_0   \Bigg] \\
+&amp;= \Bigg[\mu_0:   {\bar x} - t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} \le \mu_0  ~\text{ and }~ \mu_0  \le{\bar x} +t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}    \Bigg] \\
+&amp;= \Bigg[\mu_0:   {\bar x} - t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} \le \mu_0  \le{\bar x} +t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}    \Bigg] \\
+&amp;\text{We have obtained the } 1- \alpha \text{ confidence interval}\\
+C(\pmb X) &amp;= \Bigg[{\bar X} - t_{n-1, \frac{\alpha}{2}}\frac{S}{\sqrt n}, {\bar X} +t_{n-1, \frac{\alpha}{2}}\frac{S}{\sqrt n} \Bigg]
+\end{split}
+\]</span></p>
+</section>
+<section id="interval-estimators-based-on-pivots" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="interval-estimators-based-on-pivots"><span class="header-section-number">5.3</span> Interval estimators based on pivots</h2>
+<p>A random variable <span class="math inline">\(Q(\pmb X,\theta)\)</span> is a pivotal quantity (or pivot) if the distribution of <span class="math inline">\(Q(\pmb X, \theta)\)</span> is independent of all parameters. If <span class="math inline">\(\pmb X \sim F(\pmb x | \theta)\)</span> then <span class="math inline">\(Q(\pmb X, \theta)\)</span> given <span class="math inline">\(\theta\)</span> has the same distribution for all values of <span class="math inline">\(\theta\)</span>. A pivot that is also a statistic (a function of the observed data <span class="math inline">\(\pmb X\)</span>) is called an ancillary statistic.</p>
+<p>For example, the distribution of the <span class="math inline">\(T\)</span> statistic <span class="math inline">\(Q(\pmb X, \mu, \sigma^2) =\displaystyle T = \frac{\bar X - \mu}{S/\sqrt n} \sim t_{n-1}\)</span> does not depend on the parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>. Thus, <span class="math inline">\(T\)</span> is a pivotal quantity, and using the pivot <span class="math inline">\(T \sim t_{n-1}\)</span> , we have</p>
+<p><span class="math display">\[P\Big(-t_{n-1,\frac{\alpha}{2}}  \le T \le t_{n-1,\frac{\alpha}{2}} \Big) = 1-\alpha\]</span></p>
+<p>If <span class="math inline">\(Q(\pmb X, \theta)\)</span> is a pivot, we can find numbers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> such that</p>
+<p><span class="math display">\[P_\theta\Big(a \le Q(\pmb X,\theta) \le b \Big) \ge 1 - \alpha\]</span></p>
+<p>Then, <span class="math display">\[C(\pmb x) = \Big[\theta: a \le Q(\pmb x, \theta) \le b \Big]\]</span> and <span class="math inline">\(C(\pmb X)\)</span> is a <span class="math inline">\(1 - \alpha\)</span> confidence set for <span class="math inline">\(\theta\)</span>.</p>
+<p>If <span class="math inline">\(Q(\pmb x, \theta)\)</span> is an increasing function of <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(C(\pmb x)\)</span> has the form <span class="math display">\[Q^{-1}(\pmb x, a) \le \theta \le Q^{-1}(\pmb x, b)\]</span></p>
+<p>If <span class="math inline">\(Q(\pmb x, \theta)\)</span> is a decreasing function of <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(C(\pmb x)\)</span> has the form <span class="math display">\[Q^{-1}(\pmb x, b) \le \theta \le Q^{-1}(\pmb x, a)\]</span></p>
+</section>
+<section id="example-confidence-interval-based-on-the-t-pivot" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="example-confidence-interval-based-on-the-t-pivot"><span class="header-section-number">5.4</span> Example: Confidence interval based on the T pivot</h2>
+<p>Using the pivot <span class="math display">\[T = \frac{\bar X - \mu}{S/\sqrt n} \sim t_{n-1},\]</span></p>
+<p>we have that</p>
+<p><span class="math display">\[
+P\Big(-t_{n-1,\frac{\alpha}{2}} \le T \le t_{n-1,\frac{\alpha}{2}} \Big) = 1 - \alpha
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+\begin{split}
+P\Big(-t_{n-1,\frac{\alpha}{2}} \le T \le t_{n-1,\frac{\alpha}{2}} \Big)
+&amp;= P\Big(-t_{n-1,\frac{\alpha}{2}} \le \frac{\bar X - \mu}{S/\sqrt n}\le t_{n-1,\frac{\alpha}{2}} \Big) \\
+&amp;=P\Big(-t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \le {\bar X - \mu}\le t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \Big) \\
+&amp;=P\Big(-\bar X -t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \le { - \mu}\le -\bar X + t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \Big) \\
+&amp;=P\Big(\bar X +t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \ge { \mu}\ge \bar X - t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \Big) \\
+&amp;=P\Big(\bar X - t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \le { \mu}\le  \bar X +t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n}  \Big) \\
+&amp;= 1 - \alpha
+\end{split}
+\]</span></p>
+<p>We have obtained a <span class="math inline">\(1 - \alpha\)</span> confidence interval</p>
+<p><span class="math display">\[
+\Big[\bar X - t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n},~ \bar X +t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n}  \Big]
+\]</span></p>
+</section>
+<section id="example-confidence-interval-for-sigma2-based-on-a-pivot" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="example-confidence-interval-for-sigma2-based-on-a-pivot"><span class="header-section-number">5.5</span> Example: Confidence interval for <span class="math inline">\(\sigma^2\)</span> based on a pivot</h2>
+<p>We have iid <span class="math inline">\(X_i \sim N(\mu,\sigma^2)\)</span>. Since <span class="math inline">\((n-1)S^2/\sigma^2 \sim \chi^2_{n-1}\)</span>, we can find a <span class="math inline">\(1-\alpha\)</span> confidence interval for <span class="math inline">\(\sigma^2\)</span> by choosing <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> such that</p>
+<p><span class="math display">\[
+P\Bigg(a \le \frac{(n-1)S^2}{\sigma^2} \le b \Bigg) = P(a \le \chi^2_{n-1} \le b) = 1 - \alpha
+\]</span></p>
+<p>This leads to a <span class="math inline">\(1 - \alpha\)</span> confidence interval for <span class="math inline">\(\sigma^2\)</span>:</p>
+<p><span class="math display">\[
+\Bigg[\frac{(n-1)S^2}{b}, \frac{(n-1)S^2}{a}   \Bigg]
+\]</span></p>
+<p>Typically, we spread the probability equally over the two endpoints:</p>
+<p><span class="math display">\[
+P(a \le \chi^2_{n-1} \le b) = P(-\chi^2_{n-1,\alpha/2} \le \chi^2_{n-1} \le \chi^2_{n-1,\alpha/2})
+\]</span></p>
+</section>
+<section id="example-asymptotic-confidence-coefficient" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="example-asymptotic-confidence-coefficient"><span class="header-section-number">5.6</span> Example: Asymptotic confidence coefficient</h2>
+<p>We have iid <span class="math inline">\(X_i \sim N(\mu, \sigma^2)\)</span> and rejection region</p>
+<p><span class="math display">\[
+\Bigg| \frac{\sqrt n (\bar X - \mu_0)}{S}  \Bigg| &gt; z_{\alpha/2}
+\]</span></p>
+<p>This test has asymptotic level <span class="math inline">\(\alpha\)</span>. An <strong>asymptotic</strong> <span class="math inline">\(1 - \alpha\)</span> confidence interval is given by</p>
+<p><span class="math display">\[
+\Big[\bar X - z_{\alpha/2}\frac{S}{\sqrt n},~  \bar X + z_{\alpha/2}\frac{S}{\sqrt n}\Big]
+\]</span></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./week4.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./exercises.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

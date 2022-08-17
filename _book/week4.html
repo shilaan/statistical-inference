@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistical Inference - 4&nbsp; Hypothesis testing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./week5.html" rel="next">
+<link href="./week3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Inference</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week4.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-note-on-notation-z_alpha-t_alpha-chi2_alpha" id="toc-a-note-on-notation-z_alpha-t_alpha-chi2_alpha" class="nav-link active" data-scroll-target="#a-note-on-notation-z_alpha-t_alpha-chi2_alpha"> <span class="header-section-number">4.1</span> A note on notation (<span class="math inline">\(z_\alpha\)</span>, <span class="math inline">\(t_\alpha\)</span>, <span class="math inline">\(\chi^2_\alpha\)</span>)</a></li>
+  <li><a href="#wald-score-and-lr-test-statistic-simple-null" id="toc-wald-score-and-lr-test-statistic-simple-null" class="nav-link" data-scroll-target="#wald-score-and-lr-test-statistic-simple-null"> <span class="header-section-number">4.2</span> Wald, Score, and LR test statistic: Simple null</a>
+  <ul class="collapse">
+  <li><a href="#example-test-statistics-for-normaltheta1" id="toc-example-test-statistics-for-normaltheta1" class="nav-link" data-scroll-target="#example-test-statistics-for-normaltheta1"> <span class="header-section-number">4.2.1</span> Example: Test statistics for Normal(<span class="math inline">\(\theta,1\)</span>)</a></li>
+  <li><a href="#example-test-statistics-for-normalmu-sigma2-with-sigma2-known" id="toc-example-test-statistics-for-normalmu-sigma2-with-sigma2-known" class="nav-link" data-scroll-target="#example-test-statistics-for-normalmu-sigma2-with-sigma2-known"> <span class="header-section-number">4.2.2</span> Example: Test statistics for Normal(<span class="math inline">\(\mu, \sigma^2\)</span>) with <span class="math inline">\(\sigma^2\)</span> known</a></li>
+  </ul></li>
+  <li><a href="#wald-test-simple-null-h_0-theta-theta_0" id="toc-wald-test-simple-null-h_0-theta-theta_0" class="nav-link" data-scroll-target="#wald-test-simple-null-h_0-theta-theta_0"> <span class="header-section-number">4.3</span> Wald test: Simple null <span class="math inline">\((H_0: \theta = \theta_0)\)</span></a>
+  <ul class="collapse">
+  <li><a href="#multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0" id="toc-multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0" class="nav-link" data-scroll-target="#multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0"> <span class="header-section-number">4.3.1</span> Multi-parameter formulation: Simple null (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>)</a></li>
+  <li><a href="#h_0-theta-theta_0-vs.-h_a-theta-ne-theta_0" id="toc-h_0-theta-theta_0-vs.-h_a-theta-ne-theta_0" class="nav-link" data-scroll-target="#h_0-theta-theta_0-vs.-h_a-theta-ne-theta_0"> <span class="header-section-number">4.3.2</span> <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \theta \ne \theta_0\)</span></a></li>
+  <li><a href="#h_0-theta-theta_0-vs.-h_a-theta-theta_0" id="toc-h_0-theta-theta_0-vs.-h_a-theta-theta_0" class="nav-link" data-scroll-target="#h_0-theta-theta_0-vs.-h_a-theta-theta_0"> <span class="header-section-number">4.3.3</span> <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \theta &lt; \theta_0\)</span></a></li>
+  <li><a href="#h_0-theta-theta_0-vs.-h_a-theta-theta_0-1" id="toc-h_0-theta-theta_0-vs.-h_a-theta-theta_0-1" class="nav-link" data-scroll-target="#h_0-theta-theta_0-vs.-h_a-theta-theta_0-1"> <span class="header-section-number">4.3.4</span> <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \theta &gt; \theta_0\)</span></a></li>
+  <li><a href="#example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0" id="toc-example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0" class="nav-link" data-scroll-target="#example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0"> <span class="header-section-number">4.3.5</span> Example: Bernoulli test of <span class="math inline">\(H_0: p = p_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; p_0\)</span></a></li>
+  </ul></li>
+  <li><a href="#score-lagrange-multiplier-test-simple-null-h_0-theta-theta_0" id="toc-score-lagrange-multiplier-test-simple-null-h_0-theta-theta_0" class="nav-link" data-scroll-target="#score-lagrange-multiplier-test-simple-null-h_0-theta-theta_0"> <span class="header-section-number">4.4</span> Score (Lagrange Multiplier) test: Simple null <span class="math inline">\((H_0: \theta = \theta_0)\)</span></a>
+  <ul class="collapse">
+  <li><a href="#multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-1" id="toc-multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-1" class="nav-link" data-scroll-target="#multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-1"> <span class="header-section-number">4.4.1</span> Multi-parameter formulation: Simple null (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>)</a></li>
+  <li><a href="#example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-1" id="toc-example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-1" class="nav-link" data-scroll-target="#example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-1"> <span class="header-section-number">4.4.2</span> Example: Bernoulli test of <span class="math inline">\(H_0: p = p_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; p_0\)</span></a></li>
+  </ul></li>
+  <li><a href="#likelihood-ratio-test-simple-null-h_0-theta-theta_0" id="toc-likelihood-ratio-test-simple-null-h_0-theta-theta_0" class="nav-link" data-scroll-target="#likelihood-ratio-test-simple-null-h_0-theta-theta_0"> <span class="header-section-number">4.5</span> Likelihood ratio test: Simple null (<span class="math inline">\(H_0: \theta = \theta_0\)</span>)</a>
+  <ul class="collapse">
+  <li><a href="#multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-2" id="toc-multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-2" class="nav-link" data-scroll-target="#multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-2"> <span class="header-section-number">4.5.1</span> Multi-parameter formulation: Simple null (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>)</a></li>
+  <li><a href="#example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-2" id="toc-example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-2" class="nav-link" data-scroll-target="#example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-2"> <span class="header-section-number">4.5.2</span> Example: Bernoulli test of <span class="math inline">\(H_0: p = p_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; p_0\)</span></a></li>
+  <li><a href="#example-poisson-distribution" id="toc-example-poisson-distribution" class="nav-link" data-scroll-target="#example-poisson-distribution"> <span class="header-section-number">4.5.3</span> Example: Poisson distribution</a></li>
+  </ul></li>
+  <li><a href="#composite-null-hypotheses-h_0-pmb-theta_1-pmb-theta_10" id="toc-composite-null-hypotheses-h_0-pmb-theta_1-pmb-theta_10" class="nav-link" data-scroll-target="#composite-null-hypotheses-h_0-pmb-theta_1-pmb-theta_10"> <span class="header-section-number">4.6</span> Composite null hypotheses (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>)</a>
+  <ul class="collapse">
+  <li><a href="#partitioning-the-information-matrix" id="toc-partitioning-the-information-matrix" class="nav-link" data-scroll-target="#partitioning-the-information-matrix"> <span class="header-section-number">4.6.1</span> Partitioning the information matrix</a></li>
+  <li><a href="#wald-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" id="toc-wald-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" class="nav-link" data-scroll-target="#wald-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters"> <span class="header-section-number">4.6.2</span> Wald test: Composite null (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>) with unknown parameter(s)</a></li>
+  <li><a href="#score-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" id="toc-score-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" class="nav-link" data-scroll-target="#score-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters"> <span class="header-section-number">4.6.3</span> Score test: Composite null (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>) with unknown parameter(s)</a></li>
+  <li><a href="#likelihood-ratio-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" id="toc-likelihood-ratio-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" class="nav-link" data-scroll-target="#likelihood-ratio-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters"> <span class="header-section-number">4.6.4</span> Likelihood ratio test: Composite null (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>) with unknown parameter(s)</a></li>
+  </ul></li>
+  <li><a href="#example-normality-with-unknown-variance-t-test" id="toc-example-normality-with-unknown-variance-t-test" class="nav-link" data-scroll-target="#example-normality-with-unknown-variance-t-test"> <span class="header-section-number">4.7</span> Example: Normality with unknown variance (t-test)</a></li>
+  <li><a href="#power-function-and-consistency-of-tests" id="toc-power-function-and-consistency-of-tests" class="nav-link" data-scroll-target="#power-function-and-consistency-of-tests"> <span class="header-section-number">4.8</span> Power function and consistency of tests</a>
+  <ul class="collapse">
+  <li><a href="#power-example-nmu-sigma2-with-sigma2-known" id="toc-power-example-nmu-sigma2-with-sigma2-known" class="nav-link" data-scroll-target="#power-example-nmu-sigma2-with-sigma2-known"> <span class="header-section-number">4.8.1</span> Power example: <span class="math inline">\(N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\sigma^2\)</span> known</a></li>
+  <li><a href="#power-example-nmu-sigma2-with-mu-and-sigma2-unknown-t-test" id="toc-power-example-nmu-sigma2-with-mu-and-sigma2-unknown-t-test" class="nav-link" data-scroll-target="#power-example-nmu-sigma2-with-mu-and-sigma2-unknown-t-test"> <span class="header-section-number">4.8.2</span> Power example: <span class="math inline">\(N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> unknown (t-test)</a></li>
+  <li><a href="#power-example-consistency-for-asymptotically-normal-test-statistics" id="toc-power-example-consistency-for-asymptotically-normal-test-statistics" class="nav-link" data-scroll-target="#power-example-consistency-for-asymptotically-normal-test-statistics"> <span class="header-section-number">4.8.3</span> Power example: Consistency for asymptotically normal test statistics</a></li>
+  <li><a href="#power-example-consistency-for-asymptotically-normal-test-statistics-with-nuisance-parameters" id="toc-power-example-consistency-for-asymptotically-normal-test-statistics-with-nuisance-parameters" class="nav-link" data-scroll-target="#power-example-consistency-for-asymptotically-normal-test-statistics-with-nuisance-parameters"> <span class="header-section-number">4.8.4</span> Power example: Consistency for asymptotically normal test statistics with nuisance parameters</a></li>
+  </ul></li>
+  <li><a href="#asymptotic-power-approximation-and-sample-size" id="toc-asymptotic-power-approximation-and-sample-size" class="nav-link" data-scroll-target="#asymptotic-power-approximation-and-sample-size"> <span class="header-section-number">4.9</span> Asymptotic power approximation and sample size</a>
+  <ul class="collapse">
+  <li><a href="#asymptotic-power-approximation-derivation-and-example" id="toc-asymptotic-power-approximation-derivation-and-example" class="nav-link" data-scroll-target="#asymptotic-power-approximation-derivation-and-example"> <span class="header-section-number">4.9.1</span> Asymptotic power approximation: Derivation and example</a></li>
+  <li><a href="#asymptotic-power-approximation-bernoulli-example" id="toc-asymptotic-power-approximation-bernoulli-example" class="nav-link" data-scroll-target="#asymptotic-power-approximation-bernoulli-example"> <span class="header-section-number">4.9.2</span> Asymptotic power approximation: Bernoulli example</a></li>
+  </ul></li>
+  <li><a href="#asymptotic-equivalence" id="toc-asymptotic-equivalence" class="nav-link" data-scroll-target="#asymptotic-equivalence"> <span class="header-section-number">4.10</span> Asymptotic equivalence</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="a-note-on-notation-z_alpha-t_alpha-chi2_alpha" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="a-note-on-notation-z_alpha-t_alpha-chi2_alpha"><span class="header-section-number">4.1</span> A note on notation (<span class="math inline">\(z_\alpha\)</span>, <span class="math inline">\(t_\alpha\)</span>, <span class="math inline">\(\chi^2_\alpha\)</span>)</h2>
+<p>A note on notation: <span class="math inline">\(z_{\alpha} = \Phi^{-1}(1-\alpha)\)</span>. For example, when <span class="math inline">\(\alpha = 0.05, z_{\alpha} \approx 1.64\)</span>. We have <span class="math inline">\(P(Z \le z_\alpha) = 1- \alpha\)</span> and <span class="math inline">\(P(Z &gt; z_\alpha) = \alpha\)</span>.</p>
+<ul>
+<li><span class="math inline">\(z_\alpha\)</span> satisfies <span class="math inline">\(P(Z &gt; z_\alpha) = \alpha\)</span>, where <span class="math inline">\(Z \sim N(0,1)\)</span></li>
+<li><span class="math inline">\(-z_\alpha = z_{1 - \alpha}\)</span> satisfies <span class="math inline">\(P(Z \le z_\alpha) = \alpha\)</span>, where <span class="math inline">\(Z \sim N(0,1)\)</span></li>
+<li><span class="math inline">\(t_{n-1,\alpha}\)</span> satisfies <span class="math inline">\(P(T_{n-1} &gt;t_{n-1,\alpha}) = \alpha\)</span>, where <span class="math inline">\(T_{n-1} \sim t_{n=1}\)</span></li>
+<li><span class="math inline">\(-t_{n-1,\alpha} = t_{n-1,1 -\alpha}\)</span> satisfies <span class="math inline">\(P(T_{n-1} \le t_{n-1,\alpha}) = \alpha\)</span>, where <span class="math inline">\(T_{n-1} \sim t_{n-1}\)</span></li>
+<li><span class="math inline">\(\chi^2_{r, \alpha}\)</span> satisfies <span class="math inline">\(P(\chi^2_r &gt; \chi^2_{r,\alpha}) = \alpha\)</span>, where <span class="math inline">\(\chi^2_p\)</span> is a chi-squared random variable with <em>p</em> degrees of freedom.</li>
+<li><span class="math inline">\(-\chi^2_{r, \alpha} = \chi^2_{r, 1-\alpha}\)</span> satisfies <span class="math inline">\(P(\chi^2_r \le \chi^2_{r,\alpha}) = \alpha\)</span>, where <span class="math inline">\(\chi^2_p\)</span> is a chi-squared random variable with <em>p</em> degrees of freedom.</li>
+</ul>
+</section>
+<section id="wald-score-and-lr-test-statistic-simple-null" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="wald-score-and-lr-test-statistic-simple-null"><span class="header-section-number">4.2</span> Wald, Score, and LR test statistic: Simple null</h2>
+<p>Suppose we want to test <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \theta \ne \theta_0\)</span>. We can use the following test statistics (which are asymptotically equivalent):</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Wald: }T_W &amp;= \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\Big\{nI_1(\hat \theta_{\text MLE})\Big\}^{-1}} \\
+&amp;= \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\text{Var}(\hat \theta_{\text{MLE}})} \\
+&amp;= nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2   \\
+\text{Score: } T_S &amp;= \frac{\Big[S_n(\theta_0)\Big]^2}{nI_1(\theta_0)}\\
+\text{Likelihood ratio: } T_{LR} &amp;= -2\Big\{\ell(\theta_0) - \ell(\hat \theta_{\text{MLE}}) \Big\} \\
+&amp;=  2\Big\{\ell(\hat \theta_{\text{MLE}}) - \ell(\theta_0)  \Big\} \\
+&amp;= -2\ln\Bigg\{\frac{L(\theta_0)}{L(\hat \theta_{\text{MLE}})} \Bigg\} \\
+&amp;=  2\ln\Bigg\{\frac{ L(\hat \theta_{\text{MLE}})}{L(\theta_0)} \Bigg\}
+\end{split}
+\]</span></p>
+<section id="example-test-statistics-for-normaltheta1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="example-test-statistics-for-normaltheta1"><span class="header-section-number">4.2.1</span> Example: Test statistics for Normal(<span class="math inline">\(\theta,1\)</span>)</h3>
+<p>Let iid <span class="math inline">\(Y_i \sim N(\theta,1)\)</span> and <span class="math inline">\(H_0: \theta = \theta_0\)</span>. Obtain the three test statistics.</p>
+<p><span class="math display">\[
+\begin{split}
+L(\theta) &amp;= \prod_{i = 1}^n \frac{1}{\sqrt{2\pi}} \exp\Bigg(-\frac{1}{2}(Y_i - \theta)^2 \Bigg) \\
+&amp;= (2\pi)^{-n/2} \exp\Big(-\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta)^2\Big) \\
+\ell(\theta) &amp;= -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta)^2 \\
+S_n(\theta) &amp;= \frac{d}{d\theta} \ell(\theta) \\
+&amp;= \sum_{i = 1}^n Y_i - \theta = 0 \\
+\Rightarrow n\theta &amp;= \sum_{i = 1}^n Y_i \\
+\hat \theta_{\text{MLE}} &amp;= \frac{1}{n} \sum_{i = 1}^n Y_i = \bar Y \\
+I_1(\theta) &amp;= - E\Big[\frac{\partial}{\partial\theta}  S_i(\theta) \Big] \\
+&amp;= - E\Big[\frac{\partial}{\partial\theta}  Y_i - \theta \Big] \\
+&amp;= -E[-1] \\
+&amp;=1 \\
+T_W &amp;= (\hat \theta_{\text{MLE}} - \theta_0)^2 \cdot nI_1(\hat \theta_{\text{MLE}}) \\
+&amp;= n(\bar Y - \theta_0)^2 \\
+\ell(\theta_0) &amp;=  -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 \\
+\ell(\hat \theta_{\text{MLE}}) &amp;=  -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 \\
+T_{LR} &amp;= 2\Big\{\ell(\hat \theta_{\text{MLE}}) - \ell(\theta_0)  \Big\} \\
+&amp;= 2\Big\{-n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 - \Big( -n/2\ln(2\pi)  -\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2\Big)  \Big\} \\
+&amp;= 2\Big\{-\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 + \frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 \Big\} \\
+&amp;= 2\Big\{\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 -\frac{1}{2} \sum_{i = 1}^n (Y_i - \bar Y)^2 \Big\} \\
+&amp;= 2\Big\{\frac{1}{2} \sum_{i = 1}^n (Y_i - \theta_0)^2 -(Y_i - \bar Y)^2 \Big\} \\
+&amp;=  \sum_{i = 1}^n (Y_i - \theta_0)^2 -(Y_i - \bar Y)^2 \\
+&amp;= \sum_{i = 1}^n Y_i^2 - 2\theta_0Y_i + \theta_0^2 - (Y_i^2 - 2\bar YY_i + \bar Y^2) \\
+&amp;=\sum_{i = 1}^n - 2\theta_0Y_i + \theta_0^2 + 2\bar YY_i - \bar Y^2 \\
+&amp;= -2\theta_0\sum_{i = 1}^n Y_i +n\theta_0^2 + 2\bar Y\sum_{i=1}^n Y_i -n\bar Y ^2 \\
+&amp;= -2\theta_0n\bar Y +n\theta_0^2 + 2\bar Yn\bar Y -n\bar Y ^2 \\
+&amp;= n\Big(-2\theta_0\bar Y +\theta_0^2 + 2\bar Y^2 -\bar Y ^2 \Big) \\
+&amp;= n\Big( \bar Y ^2 -2\theta_0\bar Y +\theta_0^2  \Big) \\
+&amp;= n\Big(\bar Y - \theta_0 \Big)^2 \\
+T_S &amp;= \frac{\Big[S_n(\theta_0)\Big]^2}{nI_1(\theta_0)}\\
+&amp;= \frac{\Big[S_n(\theta_0)\Big]^2}{n} \\
+&amp;= \frac{1}{n} \Bigg({\sum_{i = 1}^n Y_i - \theta_0}\Bigg)^2 \\
+&amp;= \frac{1}{n} \Big(n\bar Y - n\theta_0 \Big)^2 \\
+&amp;= \frac{1}{n} \Big(n(\bar Y - \theta_0) \Big)^2 \\
+&amp;= \frac{n^2}{n} (\bar Y - \theta_0)^2 \\
+&amp;= n(\bar Y - \theta_0)^2
+\end{split}
+\]</span></p>
+</section>
+<section id="example-test-statistics-for-normalmu-sigma2-with-sigma2-known" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="example-test-statistics-for-normalmu-sigma2-with-sigma2-known"><span class="header-section-number">4.2.2</span> Example: Test statistics for Normal(<span class="math inline">\(\mu, \sigma^2\)</span>) with <span class="math inline">\(\sigma^2\)</span> known</h3>
+<p>Now, let iid <span class="math inline">\(Y_i \sim N(\mu,\sigma^2)\)</span> with <span class="math inline">\(\sigma^2\)</span> known and <span class="math inline">\(H_0: \mu = \mu_0\)</span>. Obtain the three test statistics.</p>
+<p><span class="math display">\[
+\begin{split}
+\ell(\mu) &amp;= -n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu)^2 \\
+S_n(\mu) &amp;= \frac{1}{\sigma^2}\sum_{i = 1}^n Y_i - \mu = 0 \\
+\hat \mu_{\text{MLE}} &amp;= \frac{1}{n} \sum_{i = 1}^n Y_i = \bar Y \\
+I_1(\mu) &amp;= - E\Big[\frac{\partial}{\partial\mu}  S_i(\mu) \Big] \\
+&amp;= - E\Big[\frac{\partial}{\partial\mu}  \frac{1}{\sigma^2} \Big(Y_i - \mu \Big) \Big] \\
+&amp;= -E\Big[-\frac{1}{\sigma^2}\Big] \\
+&amp;=\frac{1}{\sigma^2}\\
+T_W &amp;= (\hat \mu_{\text{MLE}} - \mu_0)^2 \cdot nI_1(\hat \mu_{\text{MLE}}) \\
+&amp;= \frac{n(\bar Y - \mu_0)^2}{\sigma^2} \\
+\ell(\mu_0) &amp;= -n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\ell(\hat \mu_{\text{MLE}}) &amp;= -n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \bar Y)^2 \\
+T_{LR} &amp;= 2\Big\{\ell(\hat \mu_{\text{MLE}}) - \ell(\mu_0)  \Big\} \\
+&amp;= 2\Big\{-n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \bar Y)^2 - \\ &amp;~~~~~~~~~\Big(-n/2\ln(2\pi\sigma^2)  -\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 \Big)  \Big\} \\
+&amp;= 2\Big\{\frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 -(Y_i - \bar Y)^2 \Big\} \\
+&amp;=  \frac{1}{\sigma^2}\sum_{i = 1}^n (Y_i - \mu_0)^2 -(Y_i - \bar Y)^2 \\
+&amp;= \frac{n(\bar Y - \mu_0)^2}{\sigma^2} \\
+T_S &amp;= \frac{\Big[S_n(\mu_0)\Big]^2}{nI_1(\mu_0)}\\
+&amp;=  \Big(\frac{1}{\sigma^2}\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \frac{1}{nI_1(\mu_0)} \\
+&amp;=  \Big(\frac{1}{\sigma^2}\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \frac{\sigma^2}{n} \\
+&amp;=  \frac{\sigma^2}{n\sigma^4}\Big(\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \\
+&amp;=  \frac{1}{n\sigma^2}\Big(\sum_{i = 1}^n Y_i - \mu_0 \Big)^2 \\
+&amp;=  \frac{n^2}{n\sigma^2}\Big(Y_i - \mu_0 \Big)^2 \\
+&amp;= \frac{n(\bar Y - \mu_0)^2}{\sigma^2} \\
+\end{split}
+\]</span></p>
+<p>Now, say we want to test <span class="math inline">\(H_0: \mu \le \mu_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \mu &gt; \mu_0\)</span>. We have obtained the T-statistic <span class="math display">\[T_W = T_S = T_{LR} =  \frac{n(\bar Y - \mu_0)^2}{\sigma^2}\]</span></p>
+<p>We reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(T &gt; \chi^2_{1,\alpha}\)</span>. For example, when <span class="math inline">\(\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84\)</span>. This is equivalent to rejecting <span class="math inline">\(H_0\)</span> if <span class="math inline">\(Z &gt; z_{\alpha}\)</span>, where <span class="math inline">\(z_\alpha\)</span> satisfies <span class="math inline">\(P(Z \ge z_\alpha) = \alpha\)</span> and <span class="math display">\[Z = \sqrt T = \frac{\bar Y - \mu_0}{\sigma/\sqrt n}\]</span></p>
+</section>
+</section>
+<section id="wald-test-simple-null-h_0-theta-theta_0" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="wald-test-simple-null-h_0-theta-theta_0"><span class="header-section-number">4.3</span> Wald test: Simple null <span class="math inline">\((H_0: \theta = \theta_0)\)</span></h2>
+<p>Let <span class="math inline">\(Y_i\)</span> be iid with density <span class="math inline">\(f(y | \theta)\)</span>. Consider a simple null hypothesis <span class="math inline">\(H_0: \theta = \theta_0\)</span>. Suppose that <span class="math inline">\(\hat \theta_{\text{MLE}}\)</span> is a consistent root of the likelihood equation. Then,</p>
+<p><span class="math display">\[
+\begin{split}
+\sqrt{n}(\hat \theta_{\text{MLE}} - \theta) &amp;\xrightarrow{D} N\Bigg(0, \frac{1}{I_1(\theta)}\Bigg) \\
+Z_W =\sqrt{nI_1(\theta)}(\hat \theta_{\text{MLE}} - \theta) &amp;\xrightarrow{D} N(0, 1)
+\end{split}
+\]</span></p>
+<p>If <span class="math inline">\(nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)\)</span> converges in probability to 1 as <span class="math inline">\(n \rightarrow \infty\)</span>, then <span class="math display">\[T_W = Z^2_W =nI_1(\theta)(\hat \theta_{\text{MLE}} -\theta)^2 \xrightarrow{D} \chi_1^2 \text{ under } H_0,\]</span> and we reject the null hypothesis is <span class="math inline">\(T_W &gt; \chi^2_{1,\alpha}\)</span>, where <span class="math inline">\(\chi^2_{1,\alpha} = Q(1 - \alpha)\)</span> and <span class="math inline">\(Q\)</span> is the quantile function associated with the <span class="math inline">\(\chi^2\)</span> distribution. For example, when <span class="math inline">\(\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84\)</span>.</p>
+<section id="multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0"><span class="header-section-number">4.3.1</span> Multi-parameter formulation: Simple null (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>)</h3>
+<p>The more general vector-formulation of the Wald statistic (including a possible alternative formulation) is given by</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\hat{\pmb\theta}_{\text{MLE}} \xrightarrow{D} N\Big({\pmb\theta}_0, \Big[\pmb I_T(\pmb \theta_0) \Big]^{-1}\Big) \\
+&amp;\sqrt{\pmb I_T(\pmb \theta_0)} (\hat{\pmb\theta}_{\text{MLE}} - \pmb \theta_0) \xrightarrow{D} N\Big({\pmb\theta}_0,  \mathbb{1}_b \Big) \\
+&amp;(1) ~T_W = (\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0)^T \{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}(\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0) \xrightarrow{D} \chi^2_b \\
+&amp;\text{Reject if }   T_W &gt; \chi^2_{b,\alpha} \\
+&amp;(2) ~T_W' = (\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0)^T \{\pmb I_T({\pmb \theta}_0)\}(\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0) \xrightarrow{D} \chi^2_b \\
+&amp;\text{Reject if }   T'_W &gt; \chi^2_{b,\alpha}
+\end{split}
+\]</span></p>
+</section>
+<section id="h_0-theta-theta_0-vs.-h_a-theta-ne-theta_0" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="h_0-theta-theta_0-vs.-h_a-theta-ne-theta_0"><span class="header-section-number">4.3.2</span> <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \theta \ne \theta_0\)</span></h3>
+<p>There are two possible forms for the Wald test, depending on whether we plug <span class="math inline">\(\theta_0\)</span> or <span class="math inline">\(\hat \theta_{\text{MLE}}\)</span> into the Fisher information matrix. If <span class="math inline">\(nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)\)</span> converges in probability to 1 as <span class="math inline">\(n \rightarrow \infty\)</span>, we have the following rejection rules at significance level <span class="math inline">\(\alpha\)</span> for a two-sided test against <span class="math inline">\(Ha: \theta \ne \theta_0\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\text{First approach (plug in } \hat\theta_{\text{MLE}}): \text{Under } H_0,\\
+&amp;T_W = nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&amp;Z_W = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&amp;\text{Reject } H_0 \text{ if, equivalently, } \\
+&amp;(1) ~Z_W &gt; z_{\alpha/2}, \text{ or } Z_W &lt; -z_{\alpha/2}~; \\
+&amp;(2)~\hat \theta_{\text{MLE}} &lt; \theta_0 -\frac{z_{\alpha/2}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}}, \text{ or }  \hat \theta_{\text{MLE}} &gt; \theta_0 +\frac{z_{\alpha/2}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}} \\\\
+&amp;\text{Second approach (plug in } \theta_0): \text{Under } H_0,\\
+&amp;T_W' = nI_1( \theta_0)(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&amp;Z_W' = \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&amp;\text{Reject } H_0 \text{ if, equivalently, } \\
+&amp;(1) ~Z'_W &gt; z_{\alpha/2}, \text{ or } Z'_W &lt; -z_{\alpha/2}~; \\
+&amp;(2)~\hat \theta_{\text{MLE}} &lt; \theta_0 -\frac{z_{\alpha/2}}{\sqrt{nI_1( \theta_0)}}, \text{ or }  \hat \theta_{\text{MLE}} &gt; \theta_0 +\frac{z_{\alpha/2}}{\sqrt{nI_1( \theta_0)}} \\
+\end{split}
+\]</span></p>
+</section>
+<section id="h_0-theta-theta_0-vs.-h_a-theta-theta_0" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="h_0-theta-theta_0-vs.-h_a-theta-theta_0"><span class="header-section-number">4.3.3</span> <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \theta &lt; \theta_0\)</span></h3>
+<p>If <span class="math inline">\(nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)\)</span> converges in probability to 1 as <span class="math inline">\(n \rightarrow \infty\)</span>, we have, for a one-sided test against <span class="math inline">\(H_a: \theta &lt; \theta_0\)</span>,</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\text{First approach (plug in } \hat\theta_{\text{MLE}}): \text{Under } H_0,\\
+&amp;T_W = nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&amp;Z_W = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&amp;\text{Reject } H_0 \text{ if, equivalently, } \\
+&amp;Z_W  = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) &lt;- z_{\alpha}, \text{ or }\\
+&amp;\hat \theta_{\text{MLE}} &lt; \theta_0 -\frac{z_{\alpha}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}}\\\\
+&amp;\text{Second approach (plug in } \theta_0): \text{Under } H_0,\\
+&amp;T_W' = nI_1( \theta_0)(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&amp;Z_W' = \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&amp;\text{Reject } H_0 \text{ if, equivalently, } \\
+&amp;Z'_W  =  \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) &lt;- z_{\alpha}, \text{ or }\\
+&amp;\hat \theta_{\text{MLE}} &lt; \theta_0 -\frac{z_{\alpha}}{\sqrt{nI_1( \theta_0)}}\\
+\end{split}
+\]</span></p>
+</section>
+<section id="h_0-theta-theta_0-vs.-h_a-theta-theta_0-1" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="h_0-theta-theta_0-vs.-h_a-theta-theta_0-1"><span class="header-section-number">4.3.4</span> <span class="math inline">\(H_0: \theta = \theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \theta &gt; \theta_0\)</span></h3>
+<p>If <span class="math inline">\(nI_1(\hat \theta_{\text{MLE}})/nI_1(\theta_0)\)</span> converges in probability to 1 as <span class="math inline">\(n \rightarrow \infty\)</span>, we have, for a one-sided test against <span class="math inline">\(H_a: \theta &gt; \theta_0\)</span>,</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\text{First approach (plug in } \hat\theta_{\text{MLE}}): \text{Under } H_0,\\
+&amp;T_W = nI_1(\hat \theta_{\text{MLE}})(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&amp;Z_W = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&amp;\text{Reject } H_0 \text{ if, equivalently, } \\
+&amp;Z_W  = \sqrt{nI_1(\hat \theta_{\text{MLE}})}(\hat \theta_{\text{MLE}} - \theta_0) &gt; z_{\alpha}, \text{ or }\\
+&amp;\hat \theta_{\text{MLE}} &gt; \theta_0 +\frac{z_{\alpha}}{\sqrt{nI_1(\hat \theta_{\text{MLE}})}}\\\\
+&amp;\text{Second approach (plug in } \theta_0): \text{Under } H_0,\\
+&amp;T_W' = nI_1( \theta_0)(\hat \theta_{\text{MLE}} -\theta_0)^2 \xrightarrow{D} \chi_1^2  \\
+&amp;Z_W' = \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) \xrightarrow{D} N(0, 1) \\
+&amp;\text{Reject } H_0 \text{ if, equivalently, } \\
+&amp;Z'_W  =  \sqrt{nI_1( \theta_0)}(\hat \theta_{\text{MLE}} - \theta_0) &gt; z_{\alpha}, \text{ or }\\
+&amp;\hat \theta_{\text{MLE}} &gt; \theta_0 +\frac{z_{\alpha}}{\sqrt{nI_1( \theta_0)}}\\
+\end{split}
+\]</span></p>
+</section>
+<section id="example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0"><span class="header-section-number">4.3.5</span> Example: Bernoulli test of <span class="math inline">\(H_0: p = p_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; p_0\)</span></h3>
+<p>We have iid <span class="math inline">\(Y_i \sim\)</span> Bernoulli(<span class="math inline">\(p\)</span>). Consider a simple null hypothesis <span class="math inline">\(H_0: p = p_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; p_0\)</span>. Derive <span class="math inline">\(\ell(p), S_n(p), \hat p_{\text{MLE}}\)</span>, and <span class="math inline">\(I_T(p)\)</span>. From this, derive two expressions for the Wald test.</p>
+<p><span class="math display">\[
+\begin{split}
+E[Y_i] &amp;= p \\
+L(p) &amp;= \prod_{i = 1}^n p^{Y_i} (1-p)^{1 - Y_i} \\
+\ell(p) &amp;= \sum_{i = 1}^n Y_i\ln p + (1-Y_i)\ln(1-p) \\
+S_n(p) = \frac{d\ell(p)}{dp} &amp;= \sum_{i = 1}^n \frac{Y_i}{p} - \frac{1-Y_i}{1 - p} = 0 \\
+\sum_{i = 1}^n \frac{Y_i}{p} &amp;= \sum_{i = 1}^n \frac{1-Y_i}{1 - p} \\
+\frac{1}{p}\sum_{i = 1}^n {Y_i} &amp;= \frac{1}{{1 - p}}\sum_{i = 1}^n {1-Y_i} \\
+\frac{1 - p}{p} &amp;= \frac{\sum_{i = 1}^n {1-Y_i}}{\sum_{i = 1}^n {Y_i}} \\
+\frac{1}{p} - 1 &amp;= \frac{n}{\sum_{i = 1}^n Y_i} - 1 \\
+\frac{1}{p} &amp;= \frac{n}{\sum_{i = 1}^n Y_i} \\
+\hat p_{\text{MLE}} &amp;= \frac{1}{n} \sum_{i = 1}^n Y_i = \bar Y \\
+I_1(p) &amp;= - E\Big[\frac{\partial}{\partial p} S_i(p) \Big] \\
+&amp;= - E\Big[\frac{\partial}{\partial p} {Y_i} \cdot{p}^{-1} - (1-Y_i) \cdot(1 - p)^{-1} \Big]\\
+&amp;= - E\Big[ {Y_i} \cdot-{p}^{-2} - (1-Y_i) \cdot-(1 - p)^{-2} \cdot -1 \Big]\\
+&amp;= - E\Big[ -\frac{Y_i}{{p}^{2}} - \frac{1-Y_i}{(1 - p)^{2}}  \Big]\\
+&amp;= E\Big[ \frac{Y_i}{{p}^{2}} + \frac{1-Y_i}{(1 - p)^{2}}  \Big]\\
+&amp;= \frac{1}{p^2}E[ {Y_i}] + \frac{1}{(1-p)^2} E[{1-Y_i}]  \\
+&amp;= \frac{p}{p^2} + \frac{1-p}{(1-p)^2} \\
+&amp;= \frac{1}{p} + \frac{1}{1-p} \\
+&amp;= \frac{1 -p}{p(1-p)} + \frac{p}{p(1-p)} \\
+&amp;= \frac{1}{p(1 - p)} \\
+I_T(p) = nI_1(p) &amp;= \frac{n}{p(1 - p)} \\\\
+\text{Under } H_0&amp;, \sqrt{nI_1(p)}(\hat p_{\text{MLE}} - p) \xrightarrow{D} N(0, 1) \\
+(1) \text{ Based on } Z_W &amp;=  \sqrt{nI_1(\hat p_{\text{MLE}})}(\hat p_{\text{MLE}} - p_0) \xrightarrow{D} N(0, 1), \\
+\text{Reject } H_0 \text{ if } Z_W &amp;= \frac{\sqrt n (\hat p_{\text{MLE}} - p_0)}{\sqrt{\hat p_{\text{MLE}}(1 - \hat p_{\text{MLE}})}}  &gt; z_{\alpha} \\
+(2) \text{ Based on } Z'_W &amp;=  \sqrt{nI_1( p_0)}(\hat p_{\text{MLE}} - p_0) \xrightarrow{D} N(0, 1), \\
+\text{Reject } H_0 \text{ if } Z'_W &amp;= \frac{\sqrt n (\hat p_{\text{MLE}} - p_0)}{\sqrt{ p_0(1 -  p_0)}}  &gt; z_{\alpha} \\
+\end{split}
+\]</span></p>
+</section>
+</section>
+<section id="score-lagrange-multiplier-test-simple-null-h_0-theta-theta_0" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="score-lagrange-multiplier-test-simple-null-h_0-theta-theta_0"><span class="header-section-number">4.4</span> Score (Lagrange Multiplier) test: Simple null <span class="math inline">\((H_0: \theta = \theta_0)\)</span></h2>
+<p><span class="math display">\[
+\begin{split}
+T_S = \frac{[S_n(\theta_0)]^2}{nI_1(\theta_0)}~ &amp;\xrightarrow{D} \chi^2_1 \\
+\text{Reject } H_0 \text{ if } T_S &amp;&gt; \chi^2_{1, \alpha} \\
+Z_S = \frac{S_n(\theta_0)}{\sqrt{nI_1(\theta_0)}}~ &amp;\xrightarrow{D} N(0,1) \\
+\text{Reject } H_0 \text{ if } Z_S &amp;&gt; z_{\alpha} \\
+\end{split}
+\]</span></p>
+<section id="multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-1" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-1"><span class="header-section-number">4.4.1</span> Multi-parameter formulation: Simple null (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>)</h3>
+<p>Under <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[
+\begin{split}
+T_S = \pmb S_n(\pmb \theta_0)^T [\pmb I_T(\pmb \theta_0)]^{-1} \pmb S_n(\pmb \theta_0) &amp;\xrightarrow {D} \chi^2_b \\
+[\pmb I_T(\pmb \theta_0)]^{-1/2} \pmb S_n(\pmb \theta_0) &amp;\xrightarrow {D} N(\pmb 0, \mathbb{1}_b)
+\end{split}
+\]</span></p>
+</section>
+<section id="example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-1" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-1"><span class="header-section-number">4.4.2</span> Example: Bernoulli test of <span class="math inline">\(H_0: p = p_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; p_0\)</span></h3>
+<p>Return to the example above. What is the Score test statistic?</p>
+<p><span class="math display">\[
+\begin{split}
+T_S &amp;= \frac{[S_n(\theta_0)]^2}{nI_1(\theta_0)} \\
+&amp;= \Bigg(\sum_{i = 1}^n \frac{Y_i}{p_0} - \frac{1-Y_i}{1 - p_0}\Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&amp;= \Bigg(\sum_{i = 1}^n \frac{Y_i(1 - p_0)}{p_0(1 - p_0)} - \frac{p_0(1-Y_i)}{p_0(1 - p_0)}\Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&amp;= \Bigg(\sum_{i = 1}^n \frac{Y_i - Y_ip_0}{p_0(1 - p_0)} - \frac{p_0 -Y_ip_0}{p_0(1 - p_0)}\Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&amp;= \Bigg(\sum_{i = 1}^n \frac{Y_i - p_0}{p_0(1 - p_0)} \Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&amp;=  \Bigg(\frac{n\bar Y - np_0}{p_0(1 - p_0)} \Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&amp;= \Bigg(n \frac{(\bar Y - p_0)}{p_0(1 - p_0)} \Bigg)^2 \Bigg(\frac{p_0(1 - p_0)}{n} \Bigg) \\
+&amp;= \frac{n^2}{n} \frac{(\bar Y - p_0)^2}{p_0^2(1 - p_0)^2} \Big(p_0(1 - p_0)\Big) \\
+&amp;= \frac{n(\bar Y - p_0)^2}{p_0(1 - p_0)} \\
+Z_S &amp;= \sqrt{T_S} \\ &amp;=   \frac{\sqrt n(\bar Y - p_0)}{\sqrt{p_0(1 - p_0)}} \\
+&amp;= Z'_W
+\end{split}
+\]</span></p>
+</section>
+</section>
+<section id="likelihood-ratio-test-simple-null-h_0-theta-theta_0" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="likelihood-ratio-test-simple-null-h_0-theta-theta_0"><span class="header-section-number">4.5</span> Likelihood ratio test: Simple null (<span class="math inline">\(H_0: \theta = \theta_0\)</span>)</h2>
+<p><span class="math display">\[
+\begin{split}
+T_{LR} = 2\Big\{ \ell(\hat \theta_{MLE}) - \ell(\theta_0) \Big\} &amp;\xrightarrow{D} \chi^2_1 \text{ under } H_0, \text{ as } n \rightarrow \infty \\
+\text{Reject } H_0 \text{ if } T_{LR} &amp;&gt; \chi^2_{1, \alpha}
+\end{split}
+\]</span></p>
+<p>We have the following equivalent definitions:</p>
+<p><span class="math display">\[
+\begin{split}
+T_{LR} &amp;= -2\Big\{\ell(\theta_0) - \ell(\hat \theta_{\text{MLE}})\Big\} \\
+&amp;= 2\Big\{\ell(\hat \theta_{\text{MLE}}) -\ell(\theta_0) \Big\} \\
+&amp;= -2\ln\Bigg\{\frac{L(\theta_0)}{L(\hat \theta_{\text{MLE}})}\Bigg\} \\
+&amp;= 2\ln\Bigg\{\frac{L(\hat \theta_{\text{MLE}})}{L(\theta_0)}\Bigg\}
+\end{split}
+\]</span></p>
+<section id="multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-2" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="multi-parameter-formulation-simple-null-h_0-pmb-theta-pmb-theta_0-2"><span class="header-section-number">4.5.1</span> Multi-parameter formulation: Simple null (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>)</h3>
+<p><span class="math display">\[T_{LR} = 2\Big\{ \ell(\hat {\pmb \theta}_{MLE}) - \ell(\pmb\theta_0) \Big\} \xrightarrow{D} \chi^2_b \text{ under } H_0, \text{ as } n \rightarrow \infty\]</span></p>
+<p>The distribution of <span class="math inline">\(T_{LR}\)</span> converges to a <span class="math inline">\(\chi^2_r\)</span> distribution as <span class="math inline">\(n \rightarrow \infty\)</span>, where the degrees of freedom <span class="math inline">\(r\)</span> are given by the difference between the number of free parameters specified by <span class="math inline">\(\pmb \theta \in \Theta_0\)</span> (the <span class="math inline">\(H_0\)</span>-restricted parameter space) and the number of free parameters specified by <span class="math inline">\(\pmb \theta \in \Theta\)</span> (the entire parameter space).</p>
+<p>We reject <span class="math inline">\(H_0\)</span> iff <span class="math inline">\(T_{LR} &gt; \chi^2_{r, \alpha}\)</span>.</p>
+</section>
+<section id="example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-2" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="example-bernoulli-test-of-h_0-p-p_0-vs.-h_a-p-p_0-2"><span class="header-section-number">4.5.2</span> Example: Bernoulli test of <span class="math inline">\(H_0: p = p_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: p &gt; p_0\)</span></h3>
+<p>Return to the example above. What is the Likelihood ratio test statistic?</p>
+<p><span class="math display">\[
+\begin{split}
+\ell(p) &amp;= \sum_{i = 1}^n Y_i \ln p + (1 - Y_i)\ln(1-p) \\
+T_{LR} &amp;= -2\Big\{\ell(p_0) - \ell(\hat p_{\text{MLE}})\Big\} \\
+&amp;= -2\Big\{ \sum_{i = 1}^n Y_i \ln p_0 + (1 - Y_i)\ln(1-p_0)  - \\
+&amp;~~~~~~~~~~ \Big [ \sum_{i = 1}^n Y_i \ln \hat p_{\text{MLE}} + (1 - Y_i)\ln(1-\hat p_{\text{MLE}})  \Big]\Big\} \\
+&amp;= -2 \Big\{\ln\Big( \frac{p_0}{\hat p_{\text{MLE}}} \Big)  \sum_{i = 1}^n Y_i + \ln\Big( \frac{1 - p_0}{1 - \hat p_{\text{MLE}}} \Big) \sum_{i = 1}^n 1 - Y_i \Big\} \\
+\text{Reject } &amp;H_0 \text{ if } T_{LR} &gt; \chi^2_{1, \alpha}
+\end{split}
+\]</span></p>
+</section>
+<section id="example-poisson-distribution" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="example-poisson-distribution"><span class="header-section-number">4.5.3</span> Example: Poisson distribution</h3>
+<p>Let <span class="math inline">\(X_1, ..., X_n\)</span> be independent random samples from a Poisson distribution with parameter <span class="math inline">\(\lambda\)</span> and define the sum <span class="math inline">\(Y = \sum_{i = 1}^n X_i\)</span>. Construct a confidence interval for <span class="math inline">\(\lambda\)</span> by inverting a LR test statistic testing <span class="math inline">\(H_0: \lambda = \lambda_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \lambda \ne \lambda_0\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+T_{LR} &amp;= -2\ln\Big\{\frac{L(\lambda_0)}{L(\hat \lambda_{\text{MLE}})}\Big\} \\
+L(\lambda | \pmb x) &amp;= \frac{e^{-n\lambda}\lambda^{\sum_ix_i}}{\prod_i x_i!}, \text{with } \hat \lambda_{\text{MLE}} = \bar x \\
+L(\lambda_0) &amp;=\frac{e^{-n\lambda_0}\lambda_0^{\sum_ix_i}}{\prod_i x_i!} \\
+L(\hat \lambda_{\text{MLE}}) &amp;= \frac{e^{-n\bar x}\bar x^{\sum_ix_i}}{\prod_i x_i!} \\
+T_{LR} &amp;= -2\ln\Big\{\frac{L(\lambda_0)}{L(\hat \lambda_{\text{MLE}})}\Big\} \\
+&amp;= -2\ln\Big\{ \frac{e^{-n\lambda_0}\lambda_0^{\sum_ix_i}}{\prod_i x_i!} \cdot \frac{\prod_i x_i!}{e^{-n\bar x}\bar x^{\sum_ix_i}}\Big\} \\
+&amp;=-2\ln\Big\{ \frac{e^{-n\lambda_0}\lambda_0^{\sum_ix_i}}{e^{-n\bar x}\bar x^{\sum_ix_i}}\Big\} \\
+&amp;=-2\ln\Big\{e^{-n\lambda_0 + n\bar x} \Big(\frac{\lambda_0}{\bar x}\Big)^{\sum_i x_i}\Big\} \\
+&amp;= -2\Big\{-n\lambda_0 + n\bar x + \sum_i x_i\ln\Big[\frac{\lambda_0}{\bar x}\Big]\Big\} \\
+&amp;=-2n\Big\{-\lambda_0 + \bar x + \bar x\ln\Big[\frac{\lambda_0}{\bar x}\Big]\Big\} \\
+&amp;=2n\Big\{\lambda_0 - \bar x + \bar x\ln\Big[\frac{\bar x}{\lambda_0}\Big]\Big\} \\
+\text{By }&amp; \text{Wilk's theorem}, \\
+&amp;2n\Big\{\lambda_0 - \bar X + \bar X\ln\Big[\frac{\bar X}{\lambda_0}\Big] \Big\} \sim \chi_1^2
+\end{split}
+\]</span></p>
+</section>
+</section>
+<section id="composite-null-hypotheses-h_0-pmb-theta_1-pmb-theta_10" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="composite-null-hypotheses-h_0-pmb-theta_1-pmb-theta_10"><span class="header-section-number">4.6</span> Composite null hypotheses (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>)</h2>
+<p>Earlier, we defined the test statistics when the null hypothesis is of the form <span class="math inline">\(H_0: \pmb \theta = \pmb\theta_0\)</span>. Note that this restricts the entire parameter vector <span class="math inline">\(\pmb \theta\)</span> (for example, for a normal distribution, we would restrict both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> to <span class="math inline">\(\pmb\theta_0\)</span> under the null). However, we are often interested only in certain components of <span class="math inline">\(\pmb \theta\)</span>. For example, we wish to test <span class="math inline">\(\theta_1 =\mu\)</span>, while leaving <span class="math inline">\(\theta_2 =\sigma^2\)</span> unrestricted.</p>
+<p>In other words, under a simple null hypothesis, all parameters in <span class="math inline">\(\theta\)</span> are specified, i.e.&nbsp;assumed to be known. Under a composite null hypothesis, we can account for parameters that are unknown and leave them unrestricted.</p>
+<section id="partitioning-the-information-matrix" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="partitioning-the-information-matrix"><span class="header-section-number">4.6.1</span> Partitioning the information matrix</h3>
+<p><span class="math display">\[\hat{\pmb I} = \pmb I_T(\hat{\pmb \theta}_{\text{MLE}}) = n \pmb I_1(\hat{\pmb \theta}_{\text{MLE}})\]</span></p>
+<p><span class="math display">\[
+\hat{\pmb I} =
+\begin{bmatrix}
+\hat{\pmb I}_{11} &amp; \hat{\pmb I}_{12} \\
+\hat{\pmb I}_{21} &amp; \hat{\pmb I}_{22} \\
+\end{bmatrix}
+\]</span></p>
+</section>
+<section id="wald-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="wald-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters"><span class="header-section-number">4.6.2</span> Wald test: Composite null (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>) with unknown parameter(s)</h3>
+<p>Consider testing <span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span> versus <span class="math inline">\(H_a: \pmb \theta_1 \ne \pmb \theta_{10}\)</span>.</p>
+<p>Recall that, in the simple null hypothesis (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>) case,</p>
+<p><span class="math display">\[
+T_W = (\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0)^T \{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}(\hat{\pmb\theta}_{\text{MLE}} - {\pmb\theta}_0) \xrightarrow{D} \chi^2_b
+\]</span></p>
+<p>Instead, when we have a composite null hypothesis of the form <span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span> (and thus, we leave at least one parameter <span class="math inline">\(\in \pmb \theta\)</span> unknown under the null), we replace <span class="math inline">\(\{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}\)</span> with</p>
+<p><span class="math display">\[
+\begin{split}
+\Big(\hat{\pmb I}_{11}- \hat{\pmb I}_{12}\Big[\hat{\pmb I}_{22}\Big]^{-1}\hat{\pmb I}_{21} \Big)  &amp;= \Bigg( \hat{\pmb I}_{11}- \frac{\hat{\pmb I}_{12}\hat{\pmb I}_{21}}{\hat{\pmb I}_{22}} \Bigg) \\
+\text{If } \hat{\pmb I}_{12} &amp;\equiv \hat{\pmb I}_{21},\\
+\Big(\hat{\pmb I}_{11}- \hat{\pmb I}_{12}(\hat{\pmb I}_{22})^{-1}\hat{\pmb I}_{21} \Big)  &amp;= \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)
+\end{split}
+\]</span></p>
+<p>Notice the similarity with the Fisher information matrix we formulated earlier, when the other parameter is unknown. In particular, when the other parameter <span class="math inline">\(\eta\)</span> is unknown, we have the Fisher information</p>
+<p><span class="math display">\[I^*_{\theta\theta} = I_{\theta\theta} - \Big[ I_{\theta\eta} \cdot I^{-1}_{\eta\eta} \cdot I_{\eta\theta} \Big] = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}}\]</span></p>
+<p>Putting this all together, we obtain the Wald test statistic for testing the composite null hypothesis <span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span> versus <span class="math inline">\(H_a: \pmb \theta_1 \ne \pmb \theta_{10}\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\text{Under } H_0, \text{ when } n \rightarrow \infty,  \\
+T_W &amp;= (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Big(\hat{\pmb I}_{11}- \hat{\pmb I}_{12}\Big[\hat{\pmb I}_{22}\Big]^{-1}\hat{\pmb I}_{21} \Big)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \\
+&amp;= (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \xrightarrow{D} \chi^2_r
+\end{split}
+\]</span></p>
+</section>
+<section id="score-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="score-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters"><span class="header-section-number">4.6.3</span> Score test: Composite null (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>) with unknown parameter(s)</h3>
+<p>Recall that, in the simple null hypothesis (<span class="math inline">\(H_0: \pmb \theta = \pmb \theta_0\)</span>) case,</p>
+<p><span class="math display">\[
+T_S = \pmb S_n(\pmb \theta_0)^T [\pmb I_T(\pmb \theta_0)]^{-1} \pmb S_n(\pmb \theta_0) \xrightarrow {D} \chi^2_b \\
+\]</span></p>
+<p>The Score statistic <span class="math inline">\(T_S\)</span> for the composite null hypothesis requires calculating the MLE of <span class="math inline">\(\pmb \theta\)</span> under the restriction imposed by <span class="math inline">\(H_0\)</span>. We denote this restricted MLE by <span class="math inline">\(\tilde{\pmb \theta}\)</span>, and obtain the total Fisher information matrix evaluated at the restricted MLE: <span class="math inline">\(\tilde{\pmb I} = \pmb I_T(\tilde{\pmb \theta})\)</span>.</p>
+<p>Putting this all together, we obtain the Score test statistic for testing the composite null hypothesis <span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span> versus <span class="math inline">\(H_a: \pmb \theta_1 \ne \pmb \theta_{10}\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\text{Under } H_0, \text{ when } n \rightarrow \infty,  \\
+T_S &amp;= \pmb S_{1n}(\pmb \theta_{10})^T \Big(\tilde{\pmb I}_{11}- \tilde{\pmb I}_{12}\Big[\tilde{\pmb I}_{22}\Big]^{-1}\tilde{\pmb I}_{21} \Big)^{-1} \pmb S_{1n}(\pmb \theta_{10}) \\
+&amp;= \pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10})
+\xrightarrow {D} \chi^2_r \\
+\end{split}
+\]</span></p>
+</section>
+<section id="likelihood-ratio-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="likelihood-ratio-test-composite-null-h_0-pmb-theta_1-pmb-theta_10-with-unknown-parameters"><span class="header-section-number">4.6.4</span> Likelihood ratio test: Composite null (<span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span>) with unknown parameter(s)</h3>
+<p>We can measure the relative plausibility of <span class="math inline">\(H_1\)</span> to <span class="math inline">\(H_0\)</span> by the log likelihood ratio. To generalize the case of simple hypotheses, assume that <span class="math inline">\(H_0\)</span> specifies <span class="math inline">\(\theta \in \Theta_0\)</span> and <span class="math inline">\(H_1\)</span> specifies <span class="math inline">\(\theta \in \Theta_1\)</span>. Let <span class="math inline">\(\Theta = \Theta_0 \cup \Theta_1\)</span>. We have the simple (<span class="math inline">\(\Lambda\)</span>) and the generalized (<span class="math inline">\(\Lambda^*\)</span>) log-likelihood ratio:</p>
+<p><span class="math display">\[
+\begin{split}
+\text{In the simple case, } \Lambda &amp;=
+\ln\frac{f(X_1, ..., X_n | H_1)}{f(X_1, ..., X_n | H_0)} \\
+\text{In the general case, } \Lambda^*&amp;=
+\ln\frac{\sup_{\theta \in \Theta_1} f(X_1, ..., X_n | \pmb\theta)}{\sup_{\theta \in \Theta_0}f(X_1, ..., X_n | \pmb\theta)} \\  
+&amp;= \ln\frac{\sup_{\theta \in \Theta_1} L(\pmb \theta | \pmb X)}{\sup_{\theta \in \Theta_0} L(\pmb \theta | \pmb X)} \\  
+\end{split}
+\]</span></p>
+<p>We can again use the likelihood ratio statistic</p>
+<p><span class="math display">\[
+\begin{split}
+T_{LR} &amp;=  2\ln\frac{\sup_{\theta \in \Theta} f(X_1, ..., X_n | \pmb \theta)}{\sup_{\theta \in \Theta_0}f(X_1, ..., X_n | \pmb \theta)}  \\
+&amp;= 2\ln\frac{\sup_{\theta \in \Theta} L(\pmb\theta | \pmb X)}{\sup_{\theta \in \Theta_0}L(\pmb\theta | \pmb X)} \\
+&amp;= -2\ln \frac{\sup_{\theta \in \Theta_0}L(\pmb\theta | \pmb X)}{\sup_{\theta \in \Theta} L(\pmb\theta | \pmb X)}   \\
+&amp;= -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\},
+\end{split}
+\]</span></p>
+<p>where <span class="math inline">\(\tilde{\pmb \theta}\)</span> is the restricted MLE under <span class="math inline">\(H_0\)</span> and <span class="math inline">\(\hat{\pmb \theta}\)</span> is the unrestricted MLE.</p>
+<p>Large values of <span class="math inline">\(T_{LR}\)</span> provide stronger evidence against <span class="math inline">\(H_0\)</span>. According to <strong>Wilks Theorem</strong>, when the joint distribution of <span class="math inline">\(X_1, ..., X_n\)</span> depends on <span class="math inline">\(p\)</span> unknown parameters and <span class="math inline">\(p_0\)</span> unknown parameters under <span class="math inline">\(H_0\)</span>, under regularity conditions and assuming <span class="math inline">\(H_0\)</span> is true, the distribution of <span class="math inline">\(T_{LR}\)</span> tends to a <span class="math inline">\(\chi^2\)</span> distribution with degrees of freedom <span class="math inline">\(r = p - p_0\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>. For <em>n</em> large, we compare the value of <span class="math inline">\(T_{LR}\)</span> to the expected values from a <span class="math inline">\(\chi^2_{r}\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Under } H_0, \text{ as } n \rightarrow \infty, \\
+T_{LR} = -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\} &amp;\xrightarrow{D} \chi^2_{r}
+\end{split}
+\]</span></p>
+<p>The critical region for a test with approximate significance level <span class="math inline">\(\alpha\)</span> is given by</p>
+<p><span class="math display">\[
+R = \{\pmb X: T_{LR} \ge \chi^2_{r,\alpha}\}
+\]</span></p>
+<p>In a simple case when we are testing <span class="math inline">\(H_0: \theta = 0\)</span> against <span class="math inline">\(H_a: \theta \ne 0\)</span>, we have <span class="math inline">\(p = 1\)</span>, <span class="math inline">\(p_0 = 0\)</span>, and <span class="math inline">\(\nu = p - p_0 = 1\)</span>. In this case, <span class="math inline">\(\sup_{\theta \in \Omega} L(\theta | \pmb X)\)</span> simplifies to <span class="math inline">\(L(\hat\theta_{\text{MLE}})\)</span>; <span class="math inline">\(\sup_{\theta \in \Theta_0}L(\theta | \pmb X)\)</span> simplifies to <span class="math inline">\(L(\theta_0)\)</span>.</p>
+</section>
+</section>
+<section id="example-normality-with-unknown-variance-t-test" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="example-normality-with-unknown-variance-t-test"><span class="header-section-number">4.7</span> Example: Normality with unknown variance (t-test)</h2>
+<p>We have iid <span class="math inline">\(Y_i \sim N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\sigma^2\)</span> unknown. We want to test <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \mu \ne \mu_0\)</span>. Notice that this is a composite null: we leave <span class="math inline">\(\sigma^2\)</span> unspecified under the null.</p>
+<p>For the Wald statistic, recall that</p>
+<p><span class="math display">\[
+T_W = (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \xrightarrow{D} \chi^2_r
+\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[
+\begin{split}
+{\pmb\theta}_{10} &amp;= \mu_{0} \\
+\hat{\pmb\theta}_1 &amp;= \hat \mu = \bar Y \\
+\text{In the simple case, we } &amp;\text{have the total Fisher information matrix  } \\
+\text{} I_T(\theta) &amp;=
+\begin{bmatrix}
+\displaystyle \frac{n}{\sigma^2} &amp; 0 \\
+0 &amp; \displaystyle \frac{2n}{\sigma^2}\\
+\end{bmatrix} \\
+\text{In the composite case, } &amp;\text{we have } \\
+\pmb I_T(\hat  {\pmb \theta}_{\text{MLE}}) &amp;=
+\begin{bmatrix}
+\displaystyle \frac{n}{s^2} &amp; 0 \\
+0 &amp; \displaystyle \frac{2n}{s^2}\\
+\end{bmatrix}, \text{ where }  \\
+s^2 = \hat \sigma^2 &amp;= \frac{1}{n} \sum_{i = 1}^n (Y_i - \bar Y)^2. \text{ Thus, }\\
+\Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg) &amp;= \frac{n}{s^2} \\
+T_W &amp;= (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \\
+&amp;= (\hat \mu - \mu_0)^T(\frac{n}{s^2})(\hat \mu - \mu_0) \\
+&amp;= (\bar Y - \mu_0)^T(\frac{n}{s^2})(\bar Y - \mu_0) \\
+&amp;= \frac{n(\bar Y - \mu_0)^2}{s^2}
+\end{split}
+\]</span></p>
+<p>For the Score statistic, recall that</p>
+<p><span class="math display">\[
+T_S =\pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10})
+\]</span></p>
+<p>We know</p>
+<p><span class="math display">\[
+\begin{split}
+\pmb I_T(  {\tilde{\pmb \theta}}) &amp;=
+\begin{bmatrix}
+\displaystyle \frac{n}{\tilde \sigma^2} &amp; 0 \\
+0 &amp; \displaystyle \frac{2n}{\tilde \sigma^2}\\
+\end{bmatrix} \\
+\text{Recall that } S_{\mu n}(\mu,\sigma^2) &amp;= \frac{1}{\sigma^2} \sum_{i = 1}^n (Y_i - \mu) \\
+\text{ and }S_{\sigma^2 n}(\mu,\sigma^2) &amp;= \frac{-n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n (Y_i - \mu)^2 \\
+\pmb S_{1n}(\pmb \theta_{10}) &amp;= S_{\mu n}(\mu_0,\tilde{\sigma}^2) \\
+&amp;=\frac{1}{\tilde\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0) \\
+\end{split}
+\]</span></p>
+<p>First, we fix <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\mu_0\)</span> in order to solve <span class="math inline">\(S_{\sigma^2 n}(\mu_0,\sigma^2) = 0\)</span> and obtain <span class="math inline">\(\tilde\sigma^2\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+S_{\sigma^2 n}(\mu_0,\sigma^2) &amp;= \frac{-n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n (Y_i - \mu_0)^2 = 0 \\
+&amp;\Rightarrow  \frac{1}{2\sigma^4} \sum_{i = 1}^n (Y_i - \mu_0)^2 = \frac{n}{2\sigma^2} \\
+&amp;\Rightarrow \frac{2\sigma^2}{2\sigma^4} = \frac{n}{ \sum_{i = 1}^n (Y_i - \mu_0)^2} \\
+\tilde{\sigma}^2 &amp;= \frac{1}{n}\sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\text{Using the identity } \sum_{i = 1}^n (Y_i - \mu_0)^2 &amp;= \sum_{i = 1}^n \Big [(Y_i - \bar Y)^2 + (\bar Y - \mu_0)^2 \Big] \\
+&amp;= \sum_{i = 1}^n (Y_i - \bar Y)^2 +  \sum_{i = 1}^n (\bar Y - \mu_0)^2 \\
+&amp;= n(\bar Y - \mu_0)^2  + \sum_{i = 1}^n (Y_i - \bar Y)^2, \text{ we have} \\    
+\tilde{\sigma}^2 &amp;= \frac{1}{n}\sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+&amp;= \frac{1}{n} \Big[ n(\bar Y - \mu_0)^2  + \sum_{i = 1}^n (Y_i - \bar Y)^2\Big] \\
+&amp;= s^2 + (\bar Y - \mu_0)^2
+\end{split}
+\]</span></p>
+<p>Now,</p>
+<p><span class="math display">\[
+\begin{split}
+\pmb I_T(  {\tilde{\pmb \theta}}) &amp;=
+\begin{bmatrix}
+\displaystyle \frac{n}{\tilde \sigma^2} &amp; 0 \\
+0 &amp; \displaystyle \frac{2n}{\tilde \sigma^2}\\
+\end{bmatrix} \\
+&amp;= \begin{bmatrix}
+\displaystyle \frac{n}{s^2 + (\bar Y - \mu_0)^2} &amp; 0 \\
+0 &amp; \displaystyle \frac{2n}{s^2 + (\bar Y - \mu_0)^2}\\
+\end{bmatrix} \\
+\Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} &amp;= \Bigg(\frac{n}{s^2 + (\bar Y - \mu_0)^2}\Bigg)^{-1} \\
+&amp;= \frac{s^2 + (\bar Y - \mu_0)^2}{n}
+\\
+\pmb S_{1n}(\pmb \theta_{10}) &amp;= S_{\mu n}(\mu_0,\tilde{\sigma}^2) \\
+&amp;=\frac{1}{\tilde\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0) \\
+&amp;= \frac{1}{s^2 + (\bar Y - \mu_0)^2}  \sum_{i = 1}^n (Y_i - \mu_0) \\
+&amp;= \frac{1}{s^2 + (\bar Y - \mu_0)^2} \sum_{i = 1}^n Y_i - \sum_{i = 1}^n \mu_0 \\
+&amp;= \frac{n\bar Y - n\mu_0}{s^2 + (\bar Y - \mu_0)^2} \\
+&amp;= \frac{n(\bar Y - \mu_0)}{s^2 + (\bar Y - \mu_0)^2} \\
+T_S &amp;=\pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10}) \\
+&amp;=  \frac{n(\bar Y - \mu_0)}{s^2 + (\bar Y - \mu_0)^2} \Bigg(\frac{s^2 + (\bar Y - \mu_0)^2}{n} \Bigg) \frac{n(\bar Y - \mu_0)}{s^2 + (\bar Y - \mu_0)^2} \\
+&amp;= \frac{n\Big(s^2 + (\bar Y - \mu_0)^2 \Big) n(\bar Y - \mu_0)^2}{n\Big(s^2 + (\bar Y - \mu_0)^2 \Big)s^2 + (\bar Y - \mu_0)^2}  \\
+&amp;= \frac{n(\bar Y - \mu_0)^2}{s^2 + (\bar Y - \mu_0)^2}
+\end{split}
+\]</span></p>
+<p>For the Likelihood Ratio test statistic, recall that</p>
+<p><span class="math display">\[
+T_{LR} = -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\}
+\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[
+\begin{split}
+\ell(\mu, \sigma^2) &amp;= -n/2\ln(2\pi) - n/2\ln[\sigma^2] - \frac{1}{2\sigma^2} \sum_{i = 1}^n (Y_i - \mu)^2 \\
+\ell(\tilde{\pmb \theta}) &amp;= \ell(\mu_0, \tilde \sigma^2) \\
+&amp;=  -n/2\ln(2\pi) - n/2\ln[\tilde\sigma^2] - \frac{1}{2\tilde\sigma^2} \sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\text{Recall that } \tilde \sigma^2 &amp;=  \frac{1}{n}\sum_{i = 1}^n (Y_i - \mu_0)^2 \\
+\text{Thus, } -\frac{1}{2\tilde\sigma^2} &amp;= -\frac{n}{2\sum_{i = 1}^n (Y_i - \mu_0)^2} \text{ and } \\
+\ell(\tilde{\pmb \theta}) &amp;= -n/2\ln(2\pi) - n/2\ln[\tilde\sigma^2] -\frac{n\sum_{i = 1}^n (Y_i - \mu_0)^2}{2\sum_{i = 1}^n (Y_i - \mu_0)^2}  \\
+&amp;=-n/2\ln(2\pi) - n/2\ln[\tilde\sigma^2] -{n}/{2}\\
+\ell(\hat{\pmb \theta}) &amp;= -n/2\ln(2\pi) - n/2\ln[s^2] - \frac{1}{2s^2} \sum_{i = 1}^n (Y_i - \bar Y)^2  \\
+&amp;= -n/2\ln(2\pi) - n/2\ln[s^2] - \frac{1}{2s^2}  ns^2  \\
+&amp;= -n/2\ln(2\pi) - n/2\ln[s^2] - n/2  \\
+T_{LR} &amp;= -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\} \\
+&amp;= -2\Big[ - n/2\ln[\tilde \sigma^2]  + n/2\ln[s^2] \Big] \\
+&amp;= 2 \Big[n/2\ln[\tilde \sigma^2]  - n/2\ln[s^2] \Big] \\
+&amp;= 2\Big[n/2 \Big(\ln[\tilde \sigma^2]  - \ln[s^2] \Big)  \Big] \\
+&amp;= n \ln \Big(\frac{\tilde \sigma^2}{s^2} \Big) \\
+&amp;= n \ln \Bigg(\frac{s^2 + (\bar Y - \mu_0)^2}{s^2} \Bigg) \\
+&amp;= n \ln \Bigg(1 + \frac{(\bar Y - \mu_0)^2}{s^2} \Bigg)
+\end{split}
+\]</span></p>
+</section>
+<section id="power-function-and-consistency-of-tests" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="power-function-and-consistency-of-tests"><span class="header-section-number">4.8</span> Power function and consistency of tests</h2>
+<p>The power function of a test with rejection region <span class="math inline">\(R\)</span> based on a sample of size <span class="math inline">\(n\)</span> is given by</p>
+<p><span class="math display">\[\beta_n(\pmb \theta) = P_{\pmb \theta}(\pmb Y \in R)\]</span></p>
+<p>If <span class="math inline">\(\pmb \theta \notin \Theta_0\)</span>, <span class="math inline">\(\beta_n(\pmb \theta)\)</span> is the probability of detecting the alternative: <span class="math inline">\(\beta_n(\pmb \theta) =1 - \beta(R)\)</span>.</p>
+<p>If <span class="math inline">\(\pmb \theta \in \Theta_0\)</span>, <span class="math inline">\(\beta_n(\pmb \theta)\)</span> is the Type I error probability: <span class="math inline">\(\beta_n(\pmb \theta) = \alpha(R)\)</span>.</p>
+<p>A sequence of tests is called consistent against a specific alternative <span class="math inline">\(\pmb \theta_1\)</span> if <span class="math inline">\(\beta_n(\pmb \theta_1) \xrightarrow{n \rightarrow \infty} 1\)</span>.</p>
+<p>For example, for a test of <span class="math inline">\(H_0: \theta \le \theta_0\)</span> versus <span class="math inline">\(H_a: \theta &gt; \theta_0\)</span>, say we use a test statistic <span class="math inline">\(T_n\)</span> with rejection region</p>
+<p><span class="math display">\[
+\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} &gt; z_{\alpha}
+\]</span></p>
+<p>Then, the test is consistent against all alternatives <span class="math inline">\(\theta_1 &gt; \theta_0\)</span> if, for all <span class="math inline">\(\theta\)</span>,</p>
+<p><span class="math display">\[
+\begin{split}
+\sqrt{n}(T_n - \theta) &amp;\xrightarrow D N\Big(0, \sigma^2(\theta)\Big) \text{ or, equivalently,} \\
+\frac{\sqrt{n}(T_n - \theta)}{\sigma(\theta)} &amp;\xrightarrow D N(0, 1)
+\end{split}
+\]</span></p>
+<section id="power-example-nmu-sigma2-with-sigma2-known" class="level3" data-number="4.8.1">
+<h3 data-number="4.8.1" class="anchored" data-anchor-id="power-example-nmu-sigma2-with-sigma2-known"><span class="header-section-number">4.8.1</span> Power example: <span class="math inline">\(N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\sigma^2\)</span> known</h3>
+<p>Recall the example in which we obtained the test statistics for <span class="math inline">\(Y_i \sim N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\sigma^2\)</span> known and a simple null hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span>. We obtained</p>
+<p><span class="math display">\[
+\begin{split}
+T_W = T_S = T_{LR} &amp;= \frac{n(\bar Y -\mu_0)^2}{\sigma^2} \\
+\text{We reject } H_0 \text{ if } T_W &amp;&gt; \chi^2_{1,\alpha}\\
+Z_W = Z_S = Z_{LR} &amp;= \frac{\sqrt n(\bar Y -\mu_0)}{\sigma} \\
+&amp; = \frac{\bar Y - \mu_0}{\sigma/\sqrt{n}}\\
+\text{We reject } H_0 \text{ if } Z_W &amp;&gt; z_{\alpha}\\
+\end{split}
+\]</span></p>
+<p>The corresponding power function is</p>
+<p><span class="math display">\[
+\begin{split}
+\beta_n(\mu) &amp;= P_\mu (\pmb Y \in R) \\
+&amp;= P_\mu\Bigg(\frac{\bar Y - \mu_0}{\sigma/\sqrt n} &gt;  z_{\alpha}\Bigg) \\
+&amp;= P_\mu\Bigg(\frac{\bar Y - \mu + \mu - \mu_0}{\sigma/\sqrt n} &gt;  z_{\alpha}\Bigg) \\
+&amp;= P_\mu\Bigg(\frac{\bar Y - \mu}{\sigma/\sqrt n} &gt;  z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n}\Bigg) \\
+\text{Recall that } E[\bar Y] &amp;= \mu; ~\text{Var}[\bar Y] = \sigma^2/n; ~\text{SD}[\bar Y] =\sigma/\sqrt n. \text{ Thus}, \\
+\beta_n(\mu) &amp;= P_\mu \Bigg(Z &gt; z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n} \Bigg)  \\
+&amp;= 1 - P_\mu \Bigg(Z \le z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n} \Bigg) \\
+&amp;= 1 - \Phi\Bigg( z_{\alpha} - \frac{\mu - \mu_0}{\sigma/\sqrt n}\Bigg)\\
+\text{Recall that } 1-\Phi(x) &amp;= \Phi(-x). \text{ Thus, } \\
+\beta_n(\mu) &amp;= \Phi\Bigg(\frac{\mu - \mu_0}{\sigma/\sqrt n} - z_{\alpha} \Bigg) \\
+\end{split}
+\]</span></p>
+<p>Suppose we require a 5% level test with a minimum power of 80% to reject <span class="math inline">\(H_0: \mu = \mu_0\)</span> in favor of <span class="math inline">\(H_a: \mu &gt; \mu_0\)</span> if <span class="math inline">\(\mu \ge \mu_0 + \sigma\)</span>. What is the required sample size?</p>
+<p>Since <span class="math inline">\(\beta_n(\mu_1)\)</span> is increasing in <span class="math inline">\(\mu_1\)</span>, we need to determine <em>n</em> such that <span class="math inline">\(\beta_n(\mu_0 + \sigma) \ge 0.8\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+\beta_n(\mu_1) &amp;= \Phi\Bigg(\frac{\mu_1 - \mu_0}{\sigma/\sqrt n} - z_{\alpha} \Bigg) \\
+\beta_n(\mu_0 +\sigma) &amp;= \Phi\Bigg(\frac{\mu_0 +\sigma - \mu_0}{\sigma/\sqrt n} - z_{\alpha} \Bigg) \\
+&amp;= \Phi(\sqrt n - z_{\alpha}) \\
+&amp;\ge 0.8 \\
+\sqrt n - z_{0.05} &amp;\ge \Phi^{-1}(0.8) \\
+\sqrt n &amp;\ge \Phi^{-1}(0.8)  + \Phi^{-1}(0.95) \\
+n &amp;\ge \Big(\Phi^{-1}(0.8)  + \Phi^{-1}(0.95)\Big)^2 \\
+&amp;\approx 6.18
+\end{split}
+\]</span></p>
+<p>Thus, we need <span class="math inline">\(n = 7\)</span> datapoints.</p>
+</section>
+<section id="power-example-nmu-sigma2-with-mu-and-sigma2-unknown-t-test" class="level3" data-number="4.8.2">
+<h3 data-number="4.8.2" class="anchored" data-anchor-id="power-example-nmu-sigma2-with-mu-and-sigma2-unknown-t-test"><span class="header-section-number">4.8.2</span> Power example: <span class="math inline">\(N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> unknown (t-test)</h3>
+<p>Earlier, we obtained the Wald statistic for a <em>t</em>-test</p>
+<p><span class="math display">\[
+\begin{split}
+T_W &amp;= \frac{n(\bar Y - \mu_0)^2}{S^2} \\
+Z_W &amp;= \frac{\sqrt n(\bar Y - \mu_0)}{S} \\
+\end{split}
+\]</span></p>
+<p>We know, by the CLT,</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\sqrt n(\bar Y - \mu) \xrightarrow D N(0, \sigma^2) \\
+&amp;\frac{\sqrt n(\bar Y - \mu_0)}{\sigma}  \xrightarrow D N(0, 1) \\
+&amp;\text{We also know } S_n \text{ is a } \text{consistent estimator of } \sigma: \\
+&amp;S_n \xrightarrow P \sigma \text{ for } n \rightarrow \infty \\
+&amp;\text{Using } \text{Slutsky's lemma, } \\
+&amp;\frac{\sqrt n(\bar Y - \mu_0)}{S} \xrightarrow{D} N(0,1)
+\end{split}
+\]</span></p>
+<p>Thus, <span class="math inline">\(\displaystyle Z_W = \frac{\sqrt n(\bar Y - \mu_0)}{S} &gt; z_{\alpha}\)</span> is consistent against all alternatives.</p>
+</section>
+<section id="power-example-consistency-for-asymptotically-normal-test-statistics" class="level3" data-number="4.8.3">
+<h3 data-number="4.8.3" class="anchored" data-anchor-id="power-example-consistency-for-asymptotically-normal-test-statistics"><span class="header-section-number">4.8.3</span> Power example: Consistency for asymptotically normal test statistics</h3>
+<p>Say we have rejection region</p>
+<p><span class="math display">\[
+\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} &gt; z_{\alpha}
+\]</span></p>
+<p>and we know</p>
+<p><span class="math display">\[
+\sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta)\Big) \text{ for all } \theta
+\]</span></p>
+<p>Then, for some alternative <span class="math inline">\(\theta_1\)</span>, we have the power function</p>
+<p><span class="math display">\[
+\begin{split}
+\beta_n(\theta_1) &amp;= P_\theta \Bigg(\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} &gt; z_{\alpha} \Bigg)\\
+&amp;= P_\theta\Big({\sqrt n(T_n - \theta_1 + \theta_1- \theta_0)} &gt; z_{\alpha}{\sigma(\theta_0)} \Big)\\
+&amp;= P_\theta\Big({\sqrt n(T_n - \theta_1)} &gt; z_{\alpha}{\sigma(\theta_0) - \sqrt n( \theta_1- \theta_0)} \Big)\\
+\text{If } \theta_1 &amp;&gt; \theta_0, \text{ then} \\
+&amp;\lim_{n \rightarrow \infty} z_{\alpha}{\sigma(\theta_0) - \sqrt n( \theta_1- \theta_0)} = -\infty \\
+&amp;\text{Because }\sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta)\Big) \text{ for all } \theta, \\
+&amp;\lim_{n \rightarrow \infty} P_\theta\Big({\sqrt n(T_n - \theta_1)} &gt; z_{\alpha}{\sigma(\theta_0) - \sqrt n( \theta_1- \theta_0)} \Big) = 1. \text{ Hence, } \\
+\beta_n(\theta_1) &amp;\xrightarrow{n \rightarrow \infty} 1 \text{ for all } \theta_1 &gt; \theta_0.
+\end{split}
+\]</span></p>
+</section>
+<section id="power-example-consistency-for-asymptotically-normal-test-statistics-with-nuisance-parameters" class="level3" data-number="4.8.4">
+<h3 data-number="4.8.4" class="anchored" data-anchor-id="power-example-consistency-for-asymptotically-normal-test-statistics-with-nuisance-parameters"><span class="header-section-number">4.8.4</span> Power example: Consistency for asymptotically normal test statistics with nuisance parameters</h3>
+<p>Say we have rejection region</p>
+<p><span class="math display">\[
+\frac{\sqrt n (T_n - \theta_0)}{S_n} &gt; z_{\alpha}
+\]</span></p>
+<p>We know</p>
+<p><span class="math display">\[
+\begin{split}
+\sqrt n(T_n - \theta) &amp;\xrightarrow D N\Big(0, \sigma^2(\theta,\eta) \Big) \text{ for all } \theta \text{ and } \eta\\
+S^2_n &amp;\text{ is a consistent estimator of } \sigma^2(\theta,\eta)
+\end{split}
+\]</span></p>
+<p>Then, for some alternative <span class="math inline">\(\theta_1\)</span>, we have the power function</p>
+<p><span class="math display">\[
+\begin{split}
+\beta_n(\theta_1) &amp;= P\Bigg(\frac{\sqrt n (T_n - \theta_0)}{S_n} &gt; z_{\alpha} \Bigg) \\
+&amp;= P\Big({\sqrt n (T_n -\theta_1 + \theta_1 - \theta_0)} &gt; z_{\alpha}{S_n} \Big) \\
+&amp;= P\Big({\sqrt n (T_n -\theta_1)} &gt; z_{\alpha}{S_n} -\sqrt n(\theta_1 - \theta_0) \Big) \\
+\text{If } \theta_1 &amp;&gt; \theta_0, \text{ then} \\
+&amp;\lim_{n \rightarrow \infty} z_{\alpha}{S_n} -\sqrt n(\theta_1 - \theta_0) = -\infty \\
+&amp;\text{Because } \sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta,\eta) \Big) \text{ for all } \theta \text{ and } \eta, \\
+&amp;\lim_{n \rightarrow \infty} P\Big({\sqrt n (T_n -\theta_1)} &gt; z_{\alpha}{S_n} -\sqrt n(\theta_1 - \theta_0) \Big) = 1.  \text{ Hence, } \\
+\beta_n(\theta_1) &amp;\xrightarrow{n \rightarrow \infty} 1 \text{ for all } \theta_1 &gt; \theta_0.
+\end{split}
+\]</span></p>
+</section>
+</section>
+<section id="asymptotic-power-approximation-and-sample-size" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="asymptotic-power-approximation-and-sample-size"><span class="header-section-number">4.9</span> Asymptotic power approximation and sample size</h2>
+<p>For a given alternative <span class="math inline">\(\theta_1\)</span> and sample size <span class="math inline">\(n\)</span>, we can write</p>
+<p><span class="math display">\[
+\begin{split}
+\theta_1 &amp;= \theta_0 + \frac{\Delta}{\sqrt n} \\
+\Delta &amp;= \sqrt n(\theta_1 - \theta_0)
+\end{split}
+\]</span></p>
+<p>An approximation of the power for the alternative <span class="math inline">\(\theta_1\)</span> is then given by</p>
+<p><span class="math display">\[
+\begin{split}
+\beta_n(\theta_1) &amp;\approx \Phi \Bigg(\frac{\sqrt n(\theta_1 - \theta_1)}{\sigma(\theta_0)} - z_{\alpha} \Bigg) \\
+&amp;= \Phi \Bigg(\frac{\Delta}{\sigma(\theta_0)} - z_{\alpha} \Bigg) \\
+\end{split}
+\]</span></p>
+<p>And the minimum required sample size is given by</p>
+<p><span class="math display">\[
+n \ge \frac{(z_{\alpha} + z_{1 -\beta})^2}{(\theta_1 - \theta_0)^2}\sigma^2(\theta_0)
+\]</span></p>
+<section id="asymptotic-power-approximation-derivation-and-example" class="level3" data-number="4.9.1">
+<h3 data-number="4.9.1" class="anchored" data-anchor-id="asymptotic-power-approximation-derivation-and-example"><span class="header-section-number">4.9.1</span> Asymptotic power approximation: Derivation and example</h3>
+<p>Say we have rejection region</p>
+<p><span class="math display">\[
+\begin{split}
+&amp;\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0)} &gt; z_{\alpha} \\
+\beta_n(\theta) &amp;= P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_0)}{\sigma(\theta_0) } &gt; z_{\alpha}  \Bigg) \\
+&amp;\text{Define a local alternative } \theta_1 \\
+\theta_1 &amp;= \theta_0 + \frac{\Delta}{\sqrt n} \Leftrightarrow \Delta =\sqrt{n}(\theta_1 - \theta_0) \\
+\beta_n(\theta) &amp;= P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_1 + \theta_1 - \theta_0)}{\sigma(\theta_0) } &gt; z_{\alpha}  \Bigg) \\
+&amp;= P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_1)}{\sigma(\theta_0) } &gt; z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}  \Bigg) \\
+&amp;\text{We know}\\
+&amp;\sqrt n(T_n - \theta) \xrightarrow D N\Big(0, \sigma^2(\theta) \Big) \text{ for all } \theta \text{ and } \\
+&amp;\frac{\sqrt n(T_n - \theta)}{\sigma(\theta)} \xrightarrow D N\Big(0, 1 \Big) \text{ for all } \theta \\
+&amp;\text{We can also see that that} \\
+\lim_{n \rightarrow \infty } \theta_1 &amp;= \lim_{n \rightarrow \infty }\theta_0 + \frac{\Delta}{\sqrt n} \\
+&amp;= \theta_0 \\
+&amp;\text{If } \sigma^2(\theta) \text{ is continous, then} \\
+&amp;\sigma^2(\theta_1) \rightarrow \sigma^2(\theta_0) \text{ when } \theta_1 \rightarrow \theta_0\\
+&amp;\text{Thus, when } \theta_1 \xrightarrow{n \rightarrow \infty} \theta_0, \\
+&amp;\frac{\sqrt n(T_n - \theta_1)}{\sigma(\theta_0) } \xrightarrow D N(0,1) \\
+\end{split}
+\]</span></p>
+<p>We have obtained the asymptotic power of the test,</p>
+<p><span class="math display">\[
+\begin{split}
+\beta_n(\theta_1) &amp;\xrightarrow{n \rightarrow \infty} P_\theta\Bigg(\frac{\sqrt n(T_n - \theta_1)}{\sigma(\theta_0) } &gt; z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}  \Bigg) \\
+&amp;= P_\theta\Bigg(Z &gt; z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}  \Bigg) \\
+&amp;= 1 - P_\theta\Bigg(Z \le z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}   \Bigg) \\
+&amp;= 1 - \Phi\Bigg(z_{\alpha} - \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)}   \Bigg) \\
+&amp;= \Phi\Bigg( \frac{\sqrt n(\theta_1 - \theta_0)}{\sigma(\theta_0)} - z_{\alpha}   \Bigg) \\
+&amp;= \Phi\Bigg( \frac{\Delta}{\sigma(\theta_0)} - z_{\alpha}   \Bigg)
+\end{split}
+\]</span></p>
+</section>
+<section id="asymptotic-power-approximation-bernoulli-example" class="level3" data-number="4.9.2">
+<h3 data-number="4.9.2" class="anchored" data-anchor-id="asymptotic-power-approximation-bernoulli-example"><span class="header-section-number">4.9.2</span> Asymptotic power approximation: Bernoulli example</h3>
+<p>Suppose iid <span class="math inline">\(Y_i \sim\)</span> Bernoulli(<span class="math inline">\(p\)</span>). For <span class="math inline">\(T_n = \bar Y\)</span>, we have, by the CLT,</p>
+<p><span class="math display">\[
+\begin{split}
+\frac{\sqrt n(T_n - p)}{\sqrt{p(1 - p)}} &amp;\xrightarrow D N(0,1)\\
+\sigma^2(p) = p(1 - p) &amp;\text{ is continuous}
+\end{split}
+\]</span></p>
+<p>Then, the approximate power for the test <span class="math inline">\(H_0: p \le p_0\)</span> versus <span class="math inline">\(H_a: p &gt; p_0\)</span> against a fixed alternative <span class="math inline">\(p_1\)</span> equals</p>
+<p><span class="math display">\[
+\begin{split}
+\beta_n(p_1) &amp;\approx \Phi\Bigg( \frac{\sqrt n(p_1 - p_0)}{\sigma(p_0)} - z_{\alpha}   \Bigg) \\
+&amp;=\Phi\Bigg( \frac{\sqrt n(p_1 - p_0)}{\sqrt{p_0(1 - p_0)}} - z_{\alpha}   \Bigg) \\
+\end{split}
+\]</span></p>
+</section>
+</section>
+<section id="asymptotic-equivalence" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="asymptotic-equivalence"><span class="header-section-number">4.10</span> Asymptotic equivalence</h2>
+<p>If the rejection regions of two tests correspond to <span class="math inline">\(V_n &gt; u_{\alpha}\)</span> and <span class="math inline">\(V'_n &gt; u_{\alpha}\)</span>, then the tests will be asymptotically equivalent if</p>
+<p><span class="math display">\[
+P(V_n &gt; u_{\alpha}, V'n \le u_{\alpha}) +P(V_n \le u_{\alpha}, V'n &gt; u_{\alpha}) \rightarrow 0 \text{ when } n \rightarrow \infty
+\]</span></p>
+<p>That is, as <span class="math inline">\(n \rightarrow \infty\)</span>, the probability of the two tests giving discordant results goes to zero.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./week3.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./week5.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

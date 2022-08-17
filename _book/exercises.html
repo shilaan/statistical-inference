@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistical Inference - 6&nbsp; Exercises</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./week5.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Inference</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#likelihood-based-tests-and-confidence-regions" id="toc-likelihood-based-tests-and-confidence-regions" class="nav-link active" data-scroll-target="#likelihood-based-tests-and-confidence-regions"> <span class="header-section-number">6.1</span> Likelihood-based tests and confidence regions</a></li>
+  <li><a href="#m-estimators" id="toc-m-estimators" class="nav-link" data-scroll-target="#m-estimators"> <span class="header-section-number">6.2</span> M-estimators</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="likelihood-based-tests-and-confidence-regions" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="likelihood-based-tests-and-confidence-regions"><span class="header-section-number">6.1</span> Likelihood-based tests and confidence regions</h2>
+<p>Consider a sample <span class="math inline">\(X_1, ..., X_n\)</span> from the Pareto family with unknown parameter <span class="math inline">\(a &gt; 2\)</span> and known <span class="math inline">\(b &gt; 0\)</span>. The density function is given by</p>
+<p><span class="math display">\[
+\begin{split}
+f(x;a) &amp;= \frac{ab^a}{x^{a + 1}}, ~x &gt; b \\
+E[X] &amp;= \frac{ab}{a - 1} \\
+\text{Var}[X] &amp;= \frac{b^2a}{(a-1)^2(a-2)}
+\end{split}
+\]</span></p>
+<p>Find the likelihood function, the log likelihood function, the Score function of <span class="math inline">\(a\)</span>, and <span class="math inline">\(\hat a\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+L(a) &amp;= \prod_{i = 1}^n \frac{ab^a}{X_i^{a + 1}} \\
+\ell(a) &amp;= \sum_{i = 1}^n \ln a + a\ln b - (a + 1)\ln X_i \\
+&amp;= n\ln a + na\ln b   - (a + 1)\sum_{i = 1}^n\ln X_i \\
+S_n(a) = \frac{\partial}{\partial a} \ell(a) &amp;=  \frac{n}{a} + n\ln b -\sum_{i = 1}^n\ln X_i = 0 \\
+&amp;\Rightarrow \frac{n}{a} = \sum_{i = 1}^n\ln X_i -n\ln b \\
+\hat a &amp;=\frac{n}{\sum_{i = 1}^n\ln X_i -n\ln b} \\
+&amp;= \frac{n}{\sum_{i = 1}^n \ln(X_i/b)}
+\end{split}
+\]</span></p>
+<p>Calculate the total Fisher information matrix of <span class="math inline">\(a\)</span>, compute the asymptotic variance of <span class="math inline">\(\hat a\)</span>, and find the asymptotic distribution of <span class="math inline">\(\hat a\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+S_i(a) &amp;=   \frac{\partial}{\partial a} \ln a + a\ln b - (a + 1)\ln X_i\\
+&amp;= \frac{1}{a} + \ln b -\ln X_i \\
+I_1(a) &amp;= -E\Bigg[\frac{\partial}{\partial a} S_i(a)\Bigg] \\
+&amp;= -E\Bigg[\frac{\partial}{\partial a} \frac{1}{a} + \ln b -\ln X_i\Bigg] \\
+&amp;= -E\Big[-a^{-2}  \Big] \\
+&amp;=E\Big[\frac{1}{a^2} \Big] \\
+&amp;=\frac{1}{a^2} \\
+I_T(a) = nI_1(a) &amp;= \frac{n}{a^2} \\
+\text{Var}(\hat a) = [I_T(a)]^{-1} &amp;=\frac{a^2}{n}, \text{ the large-sample variance} \\
+\text{For large n, }\hat a_n &amp;\sim N(a, \frac{a^2}{n})\\
+V(a) = [I_1(a)]^{-1} &amp;={a^2}, \text{ the asymptotic variance} \\
+\text{By the asymptotic} &amp;\text{ normality of the MLE, } \\
+\sqrt n(\hat a - a) &amp;\xrightarrow D  N(0, [I_1(a)]^{-1}) \text{ as } n \rightarrow \infty \\
+\sqrt n(\hat a - a) &amp;\xrightarrow D  N(0, a^2) \text{ as } n \rightarrow \infty \\
+\end{split}
+\]</span></p>
+<p>Find the MLE of the expected value <span class="math inline">\(\displaystyle \frac{ab}{a - 1}\)</span> and its asymptotic variance.</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Let } g(a) &amp;=  \frac{ab}{a - 1}\\
+&amp;\text{By invariance of the MLE, } \\
+\widehat{g(a)} &amp;= g(\hat a) \\
+\widehat{E[X]}_{\text{MLE}} &amp;= g(\hat a) \\
+&amp;= \frac{\hat ab}{\hat a - 1} \\
+&amp;\text{By the asymptotic normality of the MLE, } \\
+\sqrt{n}(\hat a - a) &amp;\xrightarrow{D} N(0, a^2) \\
+&amp;\text{By the Delta method, } \\
+\sqrt{n}\Big(g(\hat a) - g(a)\Big) &amp;\xrightarrow{D} N\Bigg(0, a^2\Big[g'(a) \Big]^2 \Bigg) \\
+g(a) &amp;=  \frac{ab}{a - 1}\\
+g'(a) &amp;=  \frac{b(a-1) - ab}{(a - 1)^2}\\
+&amp;= \frac{-b}{(a - 1)^2} \\
+\Big[g'(a) \Big]^2 &amp;= \frac{b^2}{(a - 1)^4} \\
+\sqrt{n}\Big(g(\hat a) - g(a)\Big) &amp;\xrightarrow{D} N\Bigg(0, \frac{(ab)^2}{(a - 1)^4} \Bigg) \\
+V(\widehat{E[X]}_{\text{MLE}}) &amp;=\frac{(ab)^2}{(a - 1)^4}, \text{ the asymptotic variance} \\
+\text{Var}(\widehat{E[X]}_{\text{MLE}}) &amp;=\frac{(ab)^2}{n(a - 1)^4}, \text{ the large-sample variance} \\
+\end{split}
+\]</span></p>
+<p>Find the asymptotic variance of the sample mean as an estimator of the expected value and compute the Asymptotic Relative Efficiency (ARE) of the two estimators. By the CLT,</p>
+<p><span class="math display">\[
+\begin{split}
+\sqrt{n}\Big(\bar X_n - E[X]\Big) &amp;\xrightarrow{D} N\Bigg(0,  \frac{b^2a}{(a-1)^2(a-2)}\Bigg) \\
+V(\widehat{E[X]}_{\text{MLE}}) &amp;=\frac{(ab)^2}{(a - 1)^4} \\
+V(\bar X_n) &amp;=\frac{b^2a}{(a-1)^2(a-2)}\\
+ARE\Big(V(\widehat{E[X]}_{\text{MLE}}), V(\bar X_n)\Big) &amp;= \frac{V(\bar X_n)}{V(\widehat{E[X]}} \\
+\text{If } ARE &gt; 1, \text{ then }&amp;\widehat{E[X]}_{\text{MLE}} \text{ is more efficient} \\
+\text{If } ARE &lt; 1, \text{ then }&amp;\bar X_n \text{ is more efficient}.\\
+ARE\Big(V(\widehat{E[X]}_{\text{MLE}}), V(\bar X_n)\Big) &amp;=  \frac{b^2a}{(a-1)^2(a-2)} \cdot \frac{(a-1)^4}{a^2b^2} \\
+&amp;= \frac{(a-1)^2}{a(a-2)} \\
+&amp;= \frac{a^2 -2a + 1}{a^2 - 2a} \\
+&amp;= 1 + \frac{1}{a(a-2)}
+\end{split}
+\]</span></p>
+<p>We know that <span class="math inline">\(a &gt; 2\)</span>. We can see that for the lowest values of <span class="math inline">\(a\)</span>, the <span class="math inline">\(ARE\)</span> is greater than 1 and thus <span class="math inline">\(\widehat{E[X]}_{\text{MLE}}\)</span> is more efficient than <span class="math inline">\(\bar X_n\)</span>. <span class="math inline">\(\bar X_n\)</span> will be a relatively inefficient estimator for low values of <span class="math inline">\(a\)</span>, e.g.&nbsp;<span class="math inline">\(2 &lt; a \le 4\)</span>. However, for larger values of <span class="math inline">\(a\)</span>, the <span class="math inline">\(ARE\)</span> converges to 1, and the two estimators will be equally efficient.</p>
+<p>Consider testing <span class="math inline">\(H_0: a = a_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: a \ne a_0\)</span>. Derive two different versions of the Wald test and their rejection region.</p>
+<p><strong>Approach 1: Using <span class="math inline">\(\hat a\)</span> as a plug-estimator for <span class="math inline">\(I_T(a)\)</span></strong></p>
+<p><span class="math display">\[
+\begin{split}
+I_T(a) &amp;= \frac{n}{a^2} \\
+Z_W &amp;= \sqrt{I_T(\hat a)}(\hat a - a_0) \xrightarrow D N(0,1)  \\
+&amp;= \sqrt{\frac{n}{\hat a^2}}(\hat a - a_0) \\
+&amp;= \frac{\sqrt n}{\hat a}(\hat a - a_0) \\
+&amp;\text{We have obtained the following equivalent rejection regions:} \\
+&amp;\text{Reject } H_0 \text{ if } \\
+|Z_W| &amp;&gt; \Phi^{-1}(1 -\alpha/2) \\
+|Z_W| &amp;&gt; z_{\alpha/2} \\
+Z_W &amp;&gt; z_{\alpha/2} \text{ or } Z_W &lt; -z_{\alpha/2} \\
+R(a_0) &amp;= \Bigg[\pmb x: \Bigg|\frac{\sqrt n}{\hat a}(\hat a - a_0)\Bigg| &gt; z_{\alpha/2} \Bigg]
+\end{split}
+\]</span></p>
+<p><strong>Approach 2: Evaluating <span class="math inline">\(I_T(a)\)</span> at <span class="math inline">\(a_0\)</span></strong></p>
+<p><span class="math display">\[
+\begin{split}
+I_T(a) &amp;= \frac{n}{a^2} \\
+Z'_W &amp;= \sqrt{I_T(a_0)}(\hat a - a_0) \xrightarrow D N(0,1)  \\
+&amp;= \sqrt{\frac{n}{a_0^2}}(\hat a - a_0) \\
+&amp;= \frac{\sqrt n}{a_0}(\hat a - a_0) \\
+&amp;\text{We have obtained the following equivalent rejection regions:} \\
+&amp;\text{Reject } H_0 \text{ if } \\
+|Z'_W| &amp;&gt; \Phi^{-1}(1 -\alpha/2) \\
+|Z'_W| &amp;&gt; z_{\alpha/2} \\
+Z'_W &amp;&gt; z_{\alpha/2} \text{ or } Z'_W &lt; -z_{\alpha/2} \\
+R(a_0) &amp;= \Bigg[\pmb x: \Bigg|\frac{\sqrt n}{a_0}(\hat a - a_0)\Bigg| &gt; z_{\alpha/2} \Bigg]
+\end{split}
+\]</span></p>
+<p>Construct a <span class="math inline">\((1-\alpha)100\)</span>% confidence interval for both estimators. Compute the confidence intervals for <span class="math inline">\(a\)</span> using <span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(n = 100\)</span>, and <span class="math inline">\(\hat a = 3.5\)</span>.</p>
+<p><strong>Approach 1: Using <span class="math inline">\(\hat a\)</span> as a plug-estimator for <span class="math inline">\(I_T(a)\)</span></strong></p>
+<p><span class="math display">\[
+\begin{split}
+R(a_0) &amp;= \Bigg[\pmb x: \Bigg|\frac{\sqrt n}{\hat a}(\hat a - a_0)\Bigg| &gt; z_{\alpha/2} \Bigg] \\
+C(\pmb x) &amp;= \Big[a_0:\pmb x \notin R(a_0) \Big] \\
+&amp;= \Big[a_0: -z_{\alpha/2}\le Z_W \le z_{\alpha/2} \Big] \\
+&amp;= \Big[a_0: -z_{\alpha/2}\le \frac{\sqrt n}{\hat a}(\hat a - a_0) \le z_{\alpha/2} \Big] \\
+&amp;=  \Big[a_0: -\frac{\hat a}{\sqrt n}z_{\alpha/2}\le \hat a - a_0 \le \frac{\hat a}{\sqrt n}z_{\alpha/2} \Big] \\
+&amp;=  \Big[a_0:  -\hat a -\frac{\hat a}{\sqrt n}z_{\alpha/2}\le - a_0 \le  -\hat a +\frac{\hat a}{\sqrt n}z_{\alpha/2} \Big] \\
+&amp;=  \Big[a_0:  \hat a +\frac{\hat a}{\sqrt n}z_{\alpha/2}\ge a_0 \ge  \hat a -\frac{\hat a}{\sqrt n}z_{\alpha/2} \Big] \\
+&amp;=  \Big[a_0:  \hat a -\frac{\hat a}{\sqrt n}z_{\alpha/2}\le a_0 \le  \hat a +\frac{\hat a}{\sqrt n}z_{\alpha/2} \Big] \\
+C(\pmb X) &amp;=  \Big[\hat a -\frac{\hat a}{\sqrt n}z_{\alpha/2},~  \hat a +\frac{\hat a}{\sqrt n}z_{\alpha/2} \Big] \\
+&amp;= \Big[3.5 -\frac{3.5}{10}z_{\alpha/2},~ 3.5 +\frac{3.5}{10}z_{\alpha/2} \Big] \\
+&amp;= \Big[2.81,~4.19 \Big]
+\end{split}
+\]</span></p>
+<p><strong>Approach 2: Evaluating <span class="math inline">\(I_T(a)\)</span> at <span class="math inline">\(a_0\)</span></strong></p>
+<p><span class="math display">\[
+\begin{split}
+R(a_0) &amp;= \Bigg[\pmb x: \Bigg|\frac{\sqrt n}{a_0}(\hat a - a_0)\Bigg| &gt; z_{\alpha/2} \Bigg] \\
+C(\pmb x) &amp;= \Big[a_0:\pmb x \notin R(a_0) \Big] \\
+&amp;= \Big[a_0: -z_{\alpha/2}\le Z'_W \le z_{\alpha/2} \Big] \\
+&amp;= \Big[a_0: -z_{\alpha/2}\le \frac{\sqrt n}{a_0}(\hat a - a_0) \le z_{\alpha/2} \Big] \\
+&amp;= \Big[a_0: -\frac{1}{\sqrt n}z_{\alpha/2}\le \frac{\hat a - a_0}{a_0} \le \frac{1}{\sqrt n}z_{\alpha/2} \Big] \\
+&amp;= \Big[a_0: -\frac{1}{\sqrt n}z_{\alpha/2}\le \frac{\hat a}{a_0} -1 \le \frac{1}{\sqrt n}z_{\alpha/2} \Big] \\
+&amp;= \Big[a_0: 1 -\frac{1}{\sqrt n}z_{\alpha/2}\le \frac{\hat a}{a_0} \le 1 + \frac{1}{\sqrt n}z_{\alpha/2} \Big] \\
+&amp;= \Big[a_0: \frac{1 -\frac{1}{\sqrt n}z_{\alpha/2}}{\hat a}\le \frac{1}{a_0} \le \frac{1 + \frac{1}{\sqrt n}z_{\alpha/2}}{\hat a} \Big] \\
+&amp;= \Big[a_0: \frac{\hat a}{1 -\frac{1}{\sqrt n}z_{\alpha/2}}\ge {a_0} \ge \frac{\hat a}{1 + \frac{1}{\sqrt n}z_{\alpha/2}} \Big] \\
+&amp;= \Big[a_0: \frac{\hat a}{1 +\frac{1}{\sqrt n}z_{\alpha/2}}\le {a_0} \le \frac{\hat a}{1 - \frac{1}{\sqrt n}z_{\alpha/2}} \Big] \\
+C(\pmb X) &amp;=\Big[\frac{\hat a}{1 +\frac{1}{\sqrt n}z_{\alpha/2}}, ~\frac{\hat a}{1 - \frac{1}{\sqrt n}z_{\alpha/2}} \Big] \\
+&amp;= \Big[\frac{3.5}{1 +\frac{1}{10}z_{\alpha/2}}, ~\frac{3.5}{1 - \frac{1}{10}z_{\alpha/2}} \Big] \\
+&amp;= \Big[2.93, ~4.35 \Big] \\
+\end{split}
+\]</span></p>
+</section>
+<section id="m-estimators" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="m-estimators"><span class="header-section-number">6.2</span> M-estimators</h2>
+<p>Suppose that for each of <span class="math inline">\(n\)</span> independent subjects, the weekly number of alcoholic beverages <span class="math inline">\(X\)</span> is measured, along with two repeated blood pressure measurements <span class="math inline">\(Y_1\)</span> and <span class="math inline">\(Y_2\)</span>. Interest lies in a regression analysis of blood pressure <span class="math inline">\(Y\)</span> on weekly number of alcoholic beverages <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[
+E(Y|X) = \theta_1 + \theta_2X
+\]</span></p>
+<p>Suppose that the data analyst ignores that the data from the same subject are dependent. The investigator thus solves the following estimation equations:</p>
+<p><span class="math display">\[
+0 = \sum_{i = 1}^n \sum_{j = 1}^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i)
+\]</span></p>
+<p>Show that the obtained estimator is consistent, despite ignoring the dependence in the data.</p>
+<p>We have</p>
+<p><span class="math display">\[
+\begin{split}
+0 &amp;= \sum_{i = 1}^n U_i (\hat \theta) \\
+\text{Let }  U_i(\theta) &amp;= \sum_{j = 1}^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i) \\
+\text{To show } &amp;\text{consistency, we need to show} \\
+E\Big[U_i(\theta) \Big] &amp;= 0 \\
+E\Big[U_i(\theta) \Big] &amp;= E\Bigg[ \sum_{j = 1}^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i)\Bigg] \\&amp;= \sum_{j = 1}^2E\Bigg[  \begin{pmatrix} 1 \\ X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i)\Bigg] \\
+\text{Recall that } E\Big[Y_{ij} \Big] &amp;= E\Big[E\Big(Y_{ij} | X_i \Big) \Big]. \text{ Thus, } \\
+E\Big[U_i(\theta) \Big] &amp;=\sum_{j = 1}^2E\Bigg[  E\Bigg(\begin{pmatrix} 1 \\ X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i) \Bigg| X_i \Bigg)\Bigg] \\
+&amp;= \sum_{j = 1}^2E\Bigg[  \begin{pmatrix} 1 \\ X_i \end{pmatrix} \Big(E\Big[Y_{ij} \Big| X_i \Big] - \theta_1 - \theta_2X_i\Big) \Bigg] \\
+&amp;= \sum_{j = 1}^2E\Bigg[  \begin{pmatrix} 1 \\ X_i \end{pmatrix} \Big(\theta_1 + \theta_2X_i - \theta_1 - \theta_2X_i\Big) \Bigg] \\
+&amp;= \sum_{j = 1}^2E\Bigg[  \begin{pmatrix} 1 \\ X_i \end{pmatrix} \Big(0\Big) \Bigg] \\
+&amp;= 0
+\end{split}
+\]</span></p>
+<p>What is the asymptotic variance of this estimator? When the data are iid, then the solution <span class="math inline">\(\hat \theta\)</span> to an unbiased estimating equation</p>
+<p><span class="math display">\[
+0 = \sum_{i = 1}^n U_i (\hat \theta)
+\]</span></p>
+<p>is asymptotically normal with</p>
+<p><span class="math display">\[
+\begin{split}
+\sqrt n (\hat \theta - \theta) &amp;\xrightarrow D N(0, \Sigma), \text{where} \\
+\Sigma &amp;= E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1} \text{Var}\Big[ U_i(\theta)  \Big] E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1,T} \\
+U_i(\theta) &amp;= \sum_{j = 1}^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i) \\
+U_i(\theta_1) &amp;= \sum_{j = 1}^2 Y_{ij} - \theta_1 - \theta_2X_i \\
+\frac{\partial}{\partial \theta_1} U_i(\theta_1) &amp;=\sum_{j = 1}^2-1 \\
+&amp;= -2 \\
+\frac{\partial}{\partial \theta_2} U_i(\theta_1) = \frac{\partial}{\partial \theta_1} U_i(\theta_2) &amp;= \sum_{j = 1}^2 -X_i \\
+&amp;=-2X_i \\
+U_i(\theta_2) &amp;= \sum_{j = 1}^2 Y_{ij}X_i - \theta_1X_i - \theta_2X_i^2 \\
+\frac{\partial}{\partial \theta_2} U_i(\theta_2) &amp;=  \sum_{j = 1}^2 -X_i^2 \\
+&amp;= -2X_i^2 \\
+\frac{\partial}{\partial\theta} U_i(\theta) &amp;= \begin{bmatrix} -2 &amp; -2X_i \\ -2X_i &amp; - 2X_i^2 \end{bmatrix} \\
+&amp;= -2 \begin{bmatrix} 1 &amp; X_i \\ X_i &amp; X_i^2 \end{bmatrix} \\
+\Bigg(\frac{\partial}{\partial\theta} U_i(\theta)\Bigg)^{-1} &amp;= -\frac{1}{2}\begin{bmatrix} 1 &amp; X_i \\ X_i &amp; X_i^2 \end{bmatrix}^{-1} \\
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\text{Var}\Big[U_i(\theta) \Big] &amp;= E\Big [U_i(\theta)^2 \Big] - E\Big[U_i(\theta) \Big]^2 \\
+&amp;= E\Big [U_i(\theta)^2 \Big] \\
+&amp;= E\Big [U_i(\theta)U_i(\theta)^T \Big] \\
+&amp;= E\Bigg[\sum_{j = 1}^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i) \sum_{j = 1}^2 \begin{pmatrix} 1 &amp; X_i \end{pmatrix} (Y_{ij} - \theta_1 - \theta_2X_i)  \Bigg] \\
+&amp;= E\Bigg[\Bigg(\sum_{j = 1}^2 (Y_{ij} - \theta_1 - \theta_2X_i) \Bigg)^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} \begin{pmatrix} 1 &amp; X_i \end{pmatrix} \Bigg] \\
+&amp;\text{Recall that } \begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix} \begin{pmatrix} b_{11} &amp; b_{12} \end{pmatrix} =  \begin{pmatrix} a_{11}b_{11} &amp; a_{11}b_{12} \\ a_{21}b_{11} &amp; a_{21}b_{12}  \end{pmatrix}. \text{ Thus, } \\
+\text{Var}\Big[U_i(\theta) \Big] &amp;=E\Bigg[\Bigg(\sum_{j = 1}^2 (Y_{ij} - \theta_1 - \theta_2X_i) \Bigg)^2 \begin{pmatrix} a_{11}b_{11} &amp; a_{11}b_{12} \\ a_{21}b_{11} &amp; a_{21}b_{12}  \end{pmatrix} \Bigg] \\
+&amp;=E\Bigg[\Bigg(\sum_{j = 1}^2 (Y_{ij} - \theta_1 - \theta_2X_i) \Bigg)^2 \begin{pmatrix} 1 &amp; X_i \\ X_i &amp; X_i^2 \end{pmatrix} \Bigg] \\
+\Sigma &amp;= E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1} \text{Var}\Big[ U_i(\theta)  \Big] E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1,T} \\
+&amp;= -\frac{1}{2}E\begin{bmatrix} 1 &amp; X_i \\ X_i &amp; X_i^2 \end{bmatrix} ^{-1}E\Bigg[\Bigg(\sum_{j = 1}^2 (Y_{ij} - \theta_1 - \theta_2X_i) \Bigg)^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} \begin{pmatrix} 1 &amp; X_i \end{pmatrix} \Bigg] \Bigg( -\frac{1}{2}E\begin{bmatrix} 1 &amp; X_i \\ X_i &amp; X_i^2 \end{bmatrix} ^{-1} \Bigg) \\
+&amp;= \frac{1}{4}E\begin{bmatrix} 1 &amp; X_i \\ X_i &amp; X_i^2 \end{bmatrix} ^{-1}E\Bigg[\Bigg(\sum_{j = 1}^2 (Y_{ij} - \theta_1 - \theta_2X_i) \Bigg)^2 \begin{pmatrix} 1 \\ X_i \end{pmatrix} \begin{pmatrix} 1 &amp; X_i \end{pmatrix} \Bigg]  E\begin{bmatrix} 1 &amp; X_i \\ X_i &amp; X_i^2 \end{bmatrix} ^{-1} \\
+\end{split}
+\]</span></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./week5.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

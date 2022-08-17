@@ -1,0 +1,115 @@
+# Confidence intervals
+
+An interval estimate of a parameter $\theta$ is any pair of functions $L(\pmb x)$ and $U(\pmb x)$ of a sample $\pmb x$ that satisfy $L(\pmb x) \le U(\pmb x)$ for all $\pmb x \in \chi$. $[L(\pmb X), U(\pmb X)]$ is called a random interval, confidence interval, or confidence set. 
+
+The coverage probability of an interval estimator $[L(\pmb X), U(\pmb X)]$ of a parameter $\theta$ is the probability $P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)$. The confidence coefficient/level of an interval estimator $[L(\pmb X), U(\pmb X)]$ of a parameter $\theta$ is the infimum of the coverage probabilities $\inf_\theta P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)$. 
+
+Note: in the probability statement $P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)$, $\theta$ is fixed and $\pmb X$ is random: the probability statement refers to $\pmb X$, not $\theta$. 
+
+## Duality between test statistics and confidence sets
+
+For a level $\alpha$ test with rejection region $R(\theta_0)$, $C(\pmb X) = \Big[\theta_0: \pmb X \notin R(\theta_0) \Big]$ is a $1 - \alpha$ confidence set. Thus, we can always obtain the confidence set $C(\pmb X)$ by inverting a test.    
+
+For a $1 - \alpha$ confidence set $C(\pmb X)$, $R(\theta_0) = \Big[\pmb X : \theta_0 \notin C(\pmb X) \Big]$ is the rejection region of a level $\alpha$ test. 
+
+## Example: Obtaining a confidence interval by inverting the t-test
+
+The *t*-test for $H_0: \mu = \mu_0$ vs. $H_a: \mu \ne \mu_0$ rejects $H_0$ if 
+$$
+\Bigg| \frac{\bar X - \mu_0}{S/\sqrt n} \Bigg| > t_{n-1, \frac{\alpha}{2}}
+$$
+
+This is an $\alpha$ level test. Derive the appropriate confidence $1 - \alpha$ interval. We have
+$$
+\begin{split}
+R(\mu_0) &= \Bigg[\pmb x:  \Bigg| \frac{\bar x - \mu_0}{s/\sqrt n} \Bigg| > t_{n-1, \frac{\alpha}{2}}\Bigg] \\
+&=\Bigg[\pmb x:   \frac{\bar x - \mu_0}{s/\sqrt n} > t_{n-1, \frac{\alpha}{2}} ~\text{ or }~ -\Bigg(\frac{\bar x - \mu_0}{s/\sqrt n} \Bigg) > t_{n-1, \frac{\alpha}{2}}  \Bigg] \\
+&=\Bigg[\pmb x:   {\bar x - \mu_0} > t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} ~\text{ or }~ \frac{\bar x - \mu_0}{s/\sqrt n}  < -t_{n-1, \frac{\alpha}{2}}  \Bigg] \\
+&=\Bigg[\pmb x:   {\bar x} > \mu_0 + t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} ~\text{ or }~ {\bar x}  < \mu_0 -t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}  \Bigg] \\
+C(\pmb x) &= \Big[\mu_0: \pmb x \notin R(\mu_0) \Big] \\
+&= \Bigg[\mu_0:   {\bar x} \le \mu_0 + t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} ~\text{ and }~ {\bar x}  \ge \mu_0 -t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}  \Bigg] \\ 
+&= \Bigg[\mu_0:   {\bar x} - t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} \le \mu_0  ~\text{ and }~ {\bar x} +t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}  \ge \mu_0   \Bigg] \\ 
+&= \Bigg[\mu_0:   {\bar x} - t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} \le \mu_0  ~\text{ and }~ \mu_0  \le{\bar x} +t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}    \Bigg] \\ 
+&= \Bigg[\mu_0:   {\bar x} - t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n} \le \mu_0  \le{\bar x} +t_{n-1, \frac{\alpha}{2}}\frac{s}{\sqrt n}    \Bigg] \\ 
+&\text{We have obtained the } 1- \alpha \text{ confidence interval}\\
+C(\pmb X) &= \Bigg[{\bar X} - t_{n-1, \frac{\alpha}{2}}\frac{S}{\sqrt n}, {\bar X} +t_{n-1, \frac{\alpha}{2}}\frac{S}{\sqrt n} \Bigg]
+\end{split}
+$$
+
+## Interval estimators based on pivots 
+
+A random variable $Q(\pmb X,\theta)$ is a pivotal quantity (or pivot) if the distribution of $Q(\pmb X, \theta)$ is independent of all parameters. If $\pmb X \sim F(\pmb x | \theta)$ then $Q(\pmb X, \theta)$ given $\theta$ has the same distribution for all values of $\theta$. A pivot that is also a statistic (a function of the observed data $\pmb X$) is called an ancillary statistic.  
+
+For example, the distribution of the $T$ statistic $Q(\pmb X, \mu, \sigma^2) =\displaystyle T = \frac{\bar X - \mu}{S/\sqrt n} \sim t_{n-1}$ does not depend on the parameters $\mu$ and $\sigma^2$. Thus, $T$ is a pivotal quantity, and using the pivot $T \sim t_{n-1}$ , we have 
+$$P\Big(-t_{n-1,\frac{\alpha}{2}}  \le T \le t_{n-1,\frac{\alpha}{2}} \Big) = 1-\alpha$$
+
+If $Q(\pmb X, \theta)$ is a pivot, we can find numbers $a$ and $b$ such that 
+$$P_\theta\Big(a \le Q(\pmb X,\theta) \le b \Big) \ge 1 - \alpha$$
+Then, $$C(\pmb x) = \Big[\theta: a \le Q(\pmb x, \theta) \le b \Big]$$ and $C(\pmb X)$ is a $1 - \alpha$ confidence set for $\theta$. 
+
+If $Q(\pmb x, \theta)$ is an increasing function of $\theta$, then $C(\pmb x)$ has the form $$Q^{-1}(\pmb x, a) \le \theta \le Q^{-1}(\pmb x, b)$$
+
+If $Q(\pmb x, \theta)$ is a decreasing function of $\theta$, then $C(\pmb x)$ has the form $$Q^{-1}(\pmb x, b) \le \theta \le Q^{-1}(\pmb x, a)$$
+  
+  
+## Example: Confidence interval based on the T pivot
+
+Using the pivot $$T = \frac{\bar X - \mu}{S/\sqrt n} \sim t_{n-1},$$
+
+we have that 
+
+$$
+P\Big(-t_{n-1,\frac{\alpha}{2}} \le T \le t_{n-1,\frac{\alpha}{2}} \Big) = 1 - \alpha 
+$$
+
+Thus, 
+$$
+\begin{split}
+P\Big(-t_{n-1,\frac{\alpha}{2}} \le T \le t_{n-1,\frac{\alpha}{2}} \Big) 
+&= P\Big(-t_{n-1,\frac{\alpha}{2}} \le \frac{\bar X - \mu}{S/\sqrt n}\le t_{n-1,\frac{\alpha}{2}} \Big) \\
+&=P\Big(-t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \le {\bar X - \mu}\le t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \Big) \\
+&=P\Big(-\bar X -t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \le { - \mu}\le -\bar X + t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \Big) \\ 
+&=P\Big(\bar X +t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \ge { \mu}\ge \bar X - t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \Big) \\ 
+&=P\Big(\bar X - t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n} \le { \mu}\le  \bar X +t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n}  \Big) \\ 
+&= 1 - \alpha
+\end{split}
+$$
+
+We have obtained a $1 - \alpha$ confidence interval
+$$
+\Big[\bar X - t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n},~ \bar X +t_{n-1,\frac{\alpha}{2}}\frac{S}{\sqrt n}  \Big]
+$$
+
+## Example: Confidence interval for $\sigma^2$ based on a pivot 
+
+We have iid $X_i \sim N(\mu,\sigma^2)$. Since $(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$, we can find a $1-\alpha$ confidence interval for $\sigma^2$ by choosing $a$ and $b$ such that 
+
+$$
+P\Bigg(a \le \frac{(n-1)S^2}{\sigma^2} \le b \Bigg) = P(a \le \chi^2_{n-1} \le b) = 1 - \alpha
+$$
+
+This leads to a $1 - \alpha$ confidence interval for $\sigma^2$:
+
+$$
+\Bigg[\frac{(n-1)S^2}{b}, \frac{(n-1)S^2}{a}   \Bigg]
+$$
+
+Typically, we spread the probability equally over the two endpoints: 
+
+$$
+P(a \le \chi^2_{n-1} \le b) = P(-\chi^2_{n-1,\alpha/2} \le \chi^2_{n-1} \le \chi^2_{n-1,\alpha/2})
+$$
+
+## Example: Asymptotic confidence coefficient
+
+We have iid $X_i \sim N(\mu, \sigma^2)$ and rejection region
+$$
+\Bigg| \frac{\sqrt n (\bar X - \mu_0)}{S}  \Bigg| > z_{\alpha/2}
+$$
+This test has asymptotic level $\alpha$. An **asymptotic** $1 - \alpha$ confidence interval is given by 
+
+$$
+\Big[\bar X - z_{\alpha/2}\frac{S}{\sqrt n},~  \bar X + z_{\alpha/2}\frac{S}{\sqrt n}\Big]
+$$
+
+

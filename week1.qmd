@@ -1,0 +1,1018 @@
+\newcommand{\indep}{\perp \!\!\! \perp}
+\def\R{\mathbb{R}}
+
+# Point estimation
+
+## Maximum likelihood estimation
+
+The likelihood function corresponds to the density of all observed data as a function of $\theta$, evaluated at the effective observations $x_1, ..., x_n$. 
+$$
+\begin{split}
+L(\theta|x_1, ..., x_n) &= f_{X_1, X_2, ..., X_n}(x_1, x_2, ..., x_n | \theta) \\
+\text{Assuming that the data are} &\text{ independent and have the same distribition function (iid),} \\
+f_{X_1, X_2, ..., X_n}(x_1, x_2, ..., x_n | \theta) &= \prod_{i = 1}^n f_{X_i}(x_i;\theta)
+\end{split}
+$$
+A sensible choice for $\theta$ is the one for which the observed data are most likely,
+$$
+\hat \theta = \text{argmax}_\theta L(\theta|x_1, ..., x_n)
+$$
+Because maximizing $L(\theta)$ is not obvious, we often instead maximize the loglikelihood, which (assuming iid) simplifies to
+$$
+\begin{split}
+\ell(\theta | x_1 , ..., x_n) &= \ln L(\theta | x_1 , ..., x_n) \\
+&= \ln \prod_{i = 1}^n f_{X_i}(x_i;\theta) \\
+&= \sum_{i = 1}^n \ln f_{X_i}(x_i;\theta) \\
+\hat \theta &= \text{argmax}_\theta \sum_{i = 1}^n \ln f_{X_i}(x_i;\theta)
+\end{split}
+$$
+
+
+\newpage 
+
+### Example: Exponential distribution
+
+How likely is it to survive 120 days or more? We have 
+
+$$
+\begin{split}
+X &\sim \text{Exp}(\theta) \\
+f_X(x) &= \theta\exp(-\theta x) \\
+F_X(x) &= 1 - \exp(-\theta x) \\
+P(X \ge 120) &= 1 - P(X \le 120) \\
+&= 1 - F_X(120)\\
+&=1- 1 + \exp(-120\theta) \\
+&= \exp(-120\theta) \\
+F_X(x) &= 1 - \exp(-\theta x) \\
+f_X(x) &= \frac{d}{dx} F_X(x) \\
+&= -\exp(-\theta x)\cdot-\theta \\
+&= \theta\exp(-\theta x) \\
+L(\theta) &= \prod_{i = 1}^n \theta\exp(-\theta x_i) \\
+&= \theta^n \prod_{i = 1}^n \exp(-\theta x_i) \\
+&= \theta^n \exp\Big(\sum_{i = 1}^n -\theta x_i\Big) \\
+\ell(\theta) &= n\ln\theta + \sum_{i = 1}^n -\theta x_i \\
+&= n\ln\theta -\theta\sum_{i = 1}^n x_i \\
+\frac{d}{d\theta}\ell(\theta) &= \frac{n}{\theta} -\sum_{i = 1}^n x_i =0 \\
+\frac{n}{\hat\theta} &= \sum_{i = 1}^n x_i \\
+\hat \theta &= \frac{n}{\displaystyle \sum_{i = 1}^n x_i} = \frac{1}{\bar X_n}
+\end{split}
+$$
+
+\newpage
+
+Now, due to the invariance property of the MLE, we can estimate the probability to survive 120 days as $\displaystyle P(Y \ge 120) = \exp(-120\hat \theta)$.
+
+$$
+\begin{split}
+\hat \theta &= \frac{1}{\bar X_n} \\
+g(\theta) &= \exp(-\theta y) \\
+g(\theta)_\text{MLE} &= g(\hat \theta) \\
+&= \exp(-\hat \theta y)
+\end{split}
+$$
+
+
+
+### Example: Poisson distribution
+
+|No. of movements|0  |1  |2  |3  |4  |5  |6  |7  |
+|----------------|---|---|---|---|---|---|---|---|
+|Counts          |182|41 |12 |2  |2  |0  |0  |1  |
+
+Assuming a Poisson distribution, show that the MLE equals 0.358. 
+
+**Plan of action**
+
+1. Determine the Distribution function $$f_{X_i}(x_i;\theta)$$
+2. Construct the Likelihood function $$L(\theta|x_1, ..., x_n) =  \prod_{i = 1}^n f_{X_i}(x_i;\theta)$$
+3. Construct the Loglikelihood function $$LL(\theta|x_1, ..., x_n) = \ln \prod_{i = 1}^n f_{X_i}(x_i;\theta) =   \sum_{i = 1}^n \ln f_{X_i}(x_i;\theta)$$
+4. Take the derivative of the Loglikelihood function, and set to zero, to maximize it
+
+We have
+$$
+\begin{split}
+f_{X_i}(x_i;\lambda) &= e^{-\lambda}\frac{\lambda^{x_i}}{x_i!}  \\
+L(\lambda|x_1, ..., x_n) &=  \prod_{i = 1}^n f_{X_i}(x_i;\lambda) \\
+&=  \prod_{i = 1}^n e^{-\lambda}\frac{\lambda^{x_i}}{x_i!} \\
+\ell(\lambda) &= \sum_{i = 1}^n -\lambda + x_i\ln\lambda -\ln(x_i!)\\
+\frac{d}{d\lambda} \ell(\lambda) &= \sum_{i = 1}^n -1 + \frac{x_i}{\lambda} \\
+&= -n + \frac{1}{\lambda}\sum_{i = 1}^n x_i =0 \\
+&\Rightarrow  \frac{1}{\hat \lambda}\sum_{i = 1}^n x_i = n \\
+\hat \lambda &= \frac{\sum_{i = 1}^n x_i}{n} = \bar X_n \\
+&= \frac{41 + 24 + 6 + 8 + 7}{240} \\
+&= \frac{86}{240} \approx .358
+\end{split} 
+$$
+
+### Example: Zero-inflated Poisson model
+
+$$
+\begin{split}
+f_X(x) &= pI(x = 0) + (1 - p)e^{-\lambda} \frac{\lambda^x}{x!} \\
+&=\begin{cases}
+p + (1-p)e^{-\lambda} & \text{ for } x = 0 \\
+(1-p)e^{-\lambda}\frac{\lambda^x}{x!} & \text{ for } x > 0
+\end{cases} \\
+&\text{Combining this expression, we get} \\
+f_X(x) &= \Big(p + (1-p)e^{-\lambda}\Big)^{I(x = 0)} \Big((1-p)e^{-\lambda}\frac{\lambda^x}{x!}\Big)^{I(x > 0)} \\
+L(p, \lambda) &= \prod_{i = 1}^n f_{X_i}(x_i) \\
+&= \prod_{i = 1}^n \Big(p + (1-p)e^{-\lambda}\Big)^{I(x_i = 0)} \Big((1-p)e^{-\lambda}\frac{\lambda^{x_i}}{x_i!}\Big)^{I(x_i > 0)} \\
+\ell(p, \lambda) &= \sum_{i = 1}^n I(x_i=0)\ln\Big(p + (1-p)e^{-\lambda}\Big) \\ &~+ I(x_i > 0)\Big[\ln(1 - p) -\lambda +x_i\ln\lambda -\ln(x_i!) \Big] \\
+\frac{d}{dp} \ell(p,\lambda) &=\sum_{i = 1}^n \frac{I(x_i=0)(1 -e^{-\lambda})}{\Big(p + (1-p)e^{-\lambda}\Big)} 
+- \frac{I(x_i >0)}{(1 - p)} \\
+&= \sum_{i: x_i = 0} \frac{1 -e^{-\lambda}}{p + (1-p)e^{-\lambda}} + \sum_{i: x_i > 0} \frac{-1}{(1-p)} \\
+\frac{d}{d\lambda} \ell(p,\lambda) &=\sum_{i = 1}^n \frac{I(x_i =0)(1 - p)(-e^{-\lambda})}{\Big(p + (1-p)e^{-\lambda}\Big)} 
++ I(x_i > 0)\Big[-1 + \frac{x_i}{\lambda}\Big] \\
+&= \sum_{i: x_i = 0}\frac{(1 - p)(-e^{-\lambda})}{p + (1-p)e^{-\lambda}} + \sum_{i: x_i > 0} -1 + \frac{x_i}{\lambda}
+\end{split}
+$$
+
+### Example: Normal distribution
+
+$$
+\begin{split}
+f_{X_i}(x_i; \mu,\sigma^2) &= \frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(x_i - \mu)^ 2}{2\sigma^ 2}\Big] \\
+L(\mu, \sigma^2 | x_1, ..., x_n) &= \prod_{i = 1}^n f_{X_i}(x_i; \mu,\sigma^2) \\
+&= \prod_{i = 1}^n \frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(x_i - \mu)^ 2}{2\sigma^ 2}\Big] \\
+&= \frac{1}{(2\pi\sigma^2)^{n/2}} \exp\Big[\sum_{i = 1}^n-\frac{(x_i - \mu)^2}{2\sigma^2}\Big] \\
+\ell(\mu, \sigma^2 | x_1, ..., x_n) &= \ln \Big( (2\pi\sigma^2)^{-n/2}  \exp\Big[\sum_{i = 1}^n-\frac{(x_i - \mu)^ 2}{2\sigma^ 2}\Big] \Big) \\
+&= \ln\Big( (2\pi\sigma^2)^{-n/2} \Big) + \sum_{i = 1}^n-\frac{(x_i - \mu)^ 2}{2\sigma^2} \\
+&= -n/2\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+\frac{dl}{d\mu} &= - \frac{1}{2\sigma^2} \cdot 2 \cdot -1 \sum_{i = 1}^n (x_i - \mu) \\
+&= \frac{1}{\sigma^2} \sum_{i = 1}^n (x_i - \mu) \\
+&=  \frac{1}{\sigma^2} \Big[(\sum_{i = 1}^n x_i) -n\mu  \Big] = 0 \\
+&\Rightarrow \Big(\sum_{i = 1}^n x_i\Big) -n\hat\mu = 0 \\
+&\Rightarrow n\hat\mu = \sum_{i = 1}^n x_i \\
+\hat \mu &= \frac{1}{n} \sum_{i = 1}^n x_i \\
+\end{split}
+$$
+$$
+\begin{split}
+\frac{dl}{d\sigma^2} &= -n/2\frac{2\pi}{2\pi\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+&= \frac{-n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i = 1}^n{(x_i - \mu)^ 2} = 0 \\
+&\Rightarrow \frac{n}{2\sigma^2} = \frac{1}{2\sigma^4} \sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+&\Rightarrow \frac{n}{2} = \frac{1}{2\sigma^2}  \sum_{i = 1}^n{(x_i - \mu)^ 2} \\
+\hat\sigma^2 &= \frac{1}{n}  \sum_{i = 1}^n{(x_i - \hat \mu)^ 2}
+\end{split}
+$$
+
+
+### Example: Censored exponential distribution
+
+Suppose we have the following days to failure:
+$$Y = [2, > 72, 51, >60, 33, 27, 14, 24, 4, >21]$$
+Suppose also that the data follow an exponential distribution with parameter $\lambda$. We have two groups: uncensored observations ($\delta_i = 1$) and censored observations ($\delta_i = 0$). For the first group (uncensored), we have $Y_i \sim \text{Exponential}(\lambda)$. For the second group (censored), we have $1 - F_{R_i}(R_i) = 1 - (1 - \exp(-\lambda R_i))$. Thus, Y is a random variable with distribution function
+
+$$
+\begin{split}
+f_{Y_i}(y_i; \lambda)
+&= \begin{cases}
+\lambda e^{-\lambda y_i} & ~~~~~~~~~~~~\text{ for } \delta_i = 1 \\
+e^{-\lambda R_i} &  ~~~~~~~~~~~~\text{ for } \delta_i = 0 \text{ and censoring time } R_i
+\end{cases}
+\end{split}
+$$
+
+Combining this expression, we get
+$$
+\begin{split}
+f_{Y_i }(y_i ; \lambda)&= \Big(\lambda e^{-\lambda y_i} \Big)^{\delta_i}\Big(1 - (1 - e^{-\lambda R_i})  \Big)^{1 -\delta_i} \\
+&= \Big(\lambda e^{-\lambda y_i} \Big)^{\delta_i}\Big(e^{-\lambda R_i}  \Big)^{1 -\delta_i} \\
+L(\lambda|y_i,..., y_n) &= \prod_{i = 1}^n f_{Y_i}(y_i ; \lambda) \\
+&= \prod_{i = 1}^n \Big(\lambda e^{-\lambda y_i} \Big)^{\delta_i}\Big(e^{-\lambda R_i}  \Big)^{1 -\delta_i} \\
+&= \prod_{i = 1}^n \lambda^{\delta_i} \exp\Big({-\lambda y_i\delta_i}\Big)\exp\Big({-\lambda R_i(1-\delta_i)}\Big) \\
+&= \prod_{i = 1}^n \lambda^{\delta_i}\exp\Big({-\lambda(y_i\delta_i + R_i(1 - \delta_i)}\Big) \\
+\ell(\lambda) &= \sum_{i = 1}^n \delta_i\ln\lambda -\lambda\Big(y_i\delta_i + R_i(1 - \delta_i)\Big) \\
+\frac{d}{d\lambda}\ell(\lambda) &= \sum_{i = 1}^n \frac{\delta_i}{\lambda} -\Big(y_i\delta_i + R_i(1 - \delta_i)\Big) \\
+&= \sum_{i = 1}^n \frac{\delta_i}{\lambda} -y_i\delta_i - R_i(1 - \delta_i) = 0 \\
+\sum_{i = 1}^n \frac{\delta_i}{\lambda} &= \sum_{i = 1}^n y_i\delta_i + R_i(1 - \delta_i) \\
+\frac{1}{\lambda} \sum_{i = 1}^n \delta_i &= \sum_{i = 1}^n y_i\delta_i + R_i(1 - \delta_i) \\
+\hat \lambda &= \frac{\sum_{i = 1}^n\delta_i}{\sum_{i = 1}^ny_i\delta_i + R_i(1 - \delta_i)} \\
+&= \frac{7}{308} \approx 0.0227
+\end{split}
+$$
+
+Thus, the maximum likelihood estimate for the censored data equals the number of uncensored observations divided by the sum of all $Y_i$ (for $\delta_i = 1$) and all censoring times $R_i$ (for $\delta_i = 0$). 
+
+\newpage
+
+```{r poisson-mle, warning=FALSE}
+yi <- c(2, 51, 33, 27, 14, 24, 4)
+ri <- c(72, 60, 21)
+
+#analytical solution
+lambda_hat <- length(yi)/sum(c(yi,ri))
+lambda_hat
+
+#numerical solution
+negloglik <- function(lambda){
+  -(sum(log(lambda) - lambda*yi) + sum(-lambda*ri))
+}
+
+nlm(negloglik, p = .03)$estimate
+```
+
+```{r, include=FALSE}
+di <- c(1, 0, 1, 0, 1, 1, 1, 1, 1, 0)
+yi <-  c(2, 72, 51, 60, 33, 27, 14, 24, 4, 21)
+#analytical solution
+lambda_hat <- sum(di)/(sum(di*yi + (1-di)*yi))
+lambda_hat
+
+#numerical solution
+negloglik <- function(lambda){
+  -sum(di*(log(lambda) - lambda*yi) + (1-di)*(-lambda*yi))
+}
+nlm(negloglik, p = .03)$estimate
+```
+
+
+\newpage
+
+### Example: Right-censored distribution
+
+Let $X$ be a continuous random variable with distribution function $F_X(x)$ and density function $f_X(x)$. Consider the following random variable $Y$, and obtain its CDF and PDF 
+
+$$
+\begin{split}
+Y &= \begin{cases}
+X & \text{if } X < a \\
+a & \text{if } X \ge a
+\end{cases} \\
+\end{split}
+$$
+
+This is a right-censored version of $X$ at $x = a$. We have
+$$
+\begin{split}
+\text{For } X &< a, \text{ or, equivalently, } Y < a, \\
+F_Y(y) &= P(Y \le y) \\&= P(X \le y) \\&= F_X(y) \\
+f_Y(y) &= f_X(x) \\&= f_X(y) \\
+\text{For } X &\ge a , \text{ or, equivalently, } Y = a, \\
+F_Y(y) &= F_Y(a) \\ &= P(Y \le a) \\&= 1 \\
+f_Y(y) &= P(Y = a) \\
+&= 1 - P(Y < a) \\
+&= 1 - P(X < a ) \\
+&= 1 - P(X \le a ) \\
+&= 1 - F_X(a). \text{ Thus, } \\
+f_Y(y) &= \begin{cases}
+f_X(y) & \text{if } y < a \\
+1 - F_X(a) & \text{if } y = a
+\end{cases} \\
+&= f_X(y)^{I(y < a)}\Big[1 - F_X(a)\Big]^{I(y = a)}
+\\
+F_Y(y)&= \begin{cases}
+F_X(y) & ~~~~~~~\text{if } y < a \\
+1 & ~~~~~~~\text{if } y = a \\
+\end{cases} \\
+&= F_X(y)^{I(y < a)} 1^{I(y = a)}
+\end{split}
+$$
+
+\newpage
+
+Suppose we have iid data $X_1, ..., X_n$, with $X_i \sim N(\mu, 1)$. Derive equations for the MLE $\hat\mu$ of $\mu$ based on the censored data $Y_1, ..., Y_n$. We have
+
+$$
+\begin{split}
+f_{Y_i}(y_i) &= f_{X_i}(y_i)^{I(y_i < a)}\Big[1 - F_{X_i}(a)\Big]^{I(y_i = a)} \\
+f_{X_i}(x_i) &=\frac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(x_i - \mu)^2}{2\sigma^2}\Bigg) \\
+&= \frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(x - \mu)^2\Big] \\
+F_{X_i}(x_i) &=\Phi\Big(\frac{x_i - \mu}{\sigma}\Big)\\
+&= \Phi(x_i - \mu) \\
+L(\mu) &= \prod_{i = 1}^n f_{X_i}(y_i)^{I(y_i < a)}\Big[1 - F_{X_i}(a)\Big]^{I(y_i = a)} \\
+&=\prod_{i = 1}^n \Bigg(\frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(y_i - \mu)^2\Big]\Bigg)^{I(y_i < a)}\Big[1 - \Phi(a - \mu)\Big]^{I(y_i = a)} \\
+&\text{Because } 1 - \Phi(x) \equiv \Phi(-x), \\
+&=\prod_{i = 1}^n \Bigg(\frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(y_i - \mu)^2\Big]\Bigg)^{I(y_i < a)}\Big[\Phi(\mu - a)\Big]^{I(y_i = a)} \\
+\ell(\mu) &= \sum_{i = 1}^n I(y_i < a) \ln \Bigg(\frac{1}{\sqrt{2\pi}}\exp\Big[-\frac{1}{2}(y_i - \mu)^2\Big] \Bigg) + I(y_i = a)\ln\Big[\Phi(\mu - a)\Big] \\
+&=\sum_{i = 1}^n I(y_i < a)\Bigg(\ln\Big[ \frac{1}{\sqrt{2\pi}} \Big] - \frac{1}{2}(y_i - \mu)^2 \Bigg)+ I(y_i = a)\ln\Big[\Phi(\mu - a)\Big] \\
+\frac{d}{d\mu} \ell(\mu) &=\sum_{i = 1}^n I(y_i < a) (y_i - \mu) + I(y_i = a) \frac{f_X(\mu - a)}{\Phi(\mu - a)} 
+\end{split}
+$$
+
+Numerically calculate the MLe for a sample of size $n = 100$ with $\mu = 0$ and $a = 1$. 
+
+```{r mle-rightcensored}
+xi <- rnorm(100)
+mean(xi) #the MLE based on the full data
+a <- 1
+yi <- ifelse(xi < a, xi, a)
+
+#numerical solution
+negloglik <- function(mu){
+  #Negative log likelihood expression
+  -sum(I(yi < a)*(-0.5*(yi - mu)^2) + I(xi >= a)*log(pnorm(mu - a)))
+}
+
+nlm(negloglik, p = -.03)$estimate
+```
+
+
+\newpage
+
+### Neyman Scott Problem
+
+Suppose we collect 2 measurements $Y_{i1}$ and $Y_{i2}$ for each of $n$ subjects, with iid $Y_{ij}, i = 1, ..., n, j = 1,2, Y_{ij} \sim N(\mu_i, \sigma^2)$ (i.e., same variance $\sigma^2$ but individual-specific means $\mu_i$). We are interested in estimating $\sigma^2$.
+$$
+\begin{split}
+f_{Y_{ij}}(y_{ij}) &=\begin{cases}
+N(\mu_i, \sigma^2) & \text{ for } j = 1 \\
+N(\mu_i, \sigma^2) & \text{ for } j = 2 
+\end{cases} \\
+&= \Big(\frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big]\Big)^{I(j = 1)} \\
+&~~~~~\Big(\frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big]\Big)^{I(j = 2)} \\
+& = \prod_{j = 1}^2 \frac{1}{(2\pi\sigma^2)^{1/2}} \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big] \\
+&= \frac{1}{2\pi\sigma^2} \prod_{j = 1}^2 \exp\Big[-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big] \\
+&= \frac{1}{2\pi\sigma^2}\exp\Big[ \sum_{j = 1}^2-\frac{(y_{ij} - \mu_i)^ 2}{2\sigma^ 2}\Big] \\
+&= \frac{1}{2\pi\sigma^2}\exp\Big[- \frac{1}{2\sigma^ 2} \sum_{j = 1}^2  {(y_{ij} - \mu_i)^ 2}\Big] \\
+&= \frac{1}{2\pi\sigma^2}\exp\Big[- \frac{1}{2\sigma^ 2} \Big({(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2}\Big)  \Big] \\
+L(\mu_i, \sigma^2) &= \prod_{i = 1}^n \frac{1}{2\pi\sigma^2} \exp\Big[- \frac{1}{2\sigma^ 2} \Big({(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2}\Big) \Big] \\
+&= \frac{1}{(2\pi\sigma^2)^n} \exp\Big[\sum_{i = 1}^n- \frac{1}{2\sigma^ 2} \Big({(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2}\Big)  \Big] \\
+&= \frac{1}{(2\pi\sigma^2)^n} \exp\Big[- \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \Big] \\
+l (\mu_i, \sigma^2)&= \ln\Big((2\pi\sigma^2)^{-n}\Big) - \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+&= -n\ln(2\pi\sigma^2) - \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+\end{split}
+$$
+
+$$
+\begin{split}
+&\text{For a single individual, we have} \\
+l (\mu_i, \sigma^2)&= -n\ln(2\pi\sigma^2) - \frac{1}{2\sigma^ 2} \Big( {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \Big) \\
+\frac{d}{d\mu_i} l (\mu_i, \sigma)&= - \frac{1}{2\sigma^ 2}\Big( -2{(y_{i1} - \mu_i)}  - {2(y_{i2} - \mu_i)} \Big) \\
+&= \frac{-\Big( -2{(y_{i1} - \mu_i)}  - {2(y_{i2} - \mu_i)} \Big)}{2\sigma^ 2} \\
+&= \frac{2(y_{i1} - \mu_i) + 2(y_{i2} - \mu_i)}{2\sigma^ 2} \\
+&= \frac{(y_{i1} - \mu_i) + (y_{i2} - \mu_i)}{\sigma^ 2} \\
+&= \frac{y_{i1} + y_{i2} - 2\mu_i}{\sigma^2} = 0 \\
+&\Rightarrow 2\mu_i = y_{i1} + y_{i2} \\
+\hat{\mu_i} &= \frac{y_{i1} + y_{i2}}{2}
+\end{split}
+$$
+
+To estimate $\sigma^2$, we plug in $\hat \mu_i$:
+$$
+\begin{split}
+\ell(\mu_i, \sigma^2)&= -n\ln(2\pi\sigma^2) - \frac{1}{2\sigma^ 2}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+\frac{d}{d\sigma^2} \ell(\mu_i, \sigma^2)&= \frac{-n2\pi}{2\pi\sigma^2} + \frac{1}{2\sigma^4}\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+&\Rightarrow \frac{1}{2\sigma^4} \sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} =\frac{n}{\sigma^2} \\
+&\Rightarrow\sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} =\frac{2n\sigma^4}{\sigma^2} \\
+\hat \sigma^2 &= \frac{1}{2n} \sum_{i = 1}^n {(y_{i1} - \mu_i)^ 2}  + {(y_{i2} - \mu_i)^ 2} \\
+&=  \frac{1}{2n} \sum_{i = 1}^n {\Big(\frac{y_{i1} - y_{i2}}{2}\Big)^ 2} + {\Big(\frac{y_{i1} - y_{i2}}{2}\Big)^ 2} \\
+&= \frac{1}{2n}\sum_{i = 1}^n 2{\Big(\frac{y_{i1} - y_{i2}}{2}\Big)^ 2} \\
+&= \frac{1}{n}\sum_{i = 1}^n{\Big(\frac{1}{2}({y_{i1} - y_{i2}})\Big)^ 2} \\
+&= \frac{1}{n}\sum_{i = 1}^n\frac{1}{4} \Big({y_{i1} - y_{i2}}\Big)^ 2 \\
+&= \frac{1}{4n}\sum_{i = 1}^n{\Big({y_{i1} - y_{i2}}\Big)^ 2}
+\end{split}
+$$
+
+\newpage
+
+$\hat \sigma^2$ is a biased estimator for $\sigma^2$. We have
+
+$$
+\begin{split}
+E\Big[\hat \sigma^2\Big] &=E \Bigg[\frac{1}{4n}\sum_{i = 1}^n\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+&= \frac{1}{4n} E \Bigg[\sum_{i = 1}^n\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+&=\frac{1}{4n} \sum_{i = 1}^nE \Bigg[\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+\text{Let } Z &= Y_{i1} - Y_{12}. \text{ Then, }\\
+E[Z] &= E\Big[Y_{i1} - Y_{12}\Big] \\
+&= E[Y_{i1}] - E[Y_{i2}] \\
+&= \mu_i - \mu_i = 0. \\
+\text{Var}[Z] &=  E[Z^2] - \Big(E[Z]\Big)^2 \\
+&= E[Z^2] \\
+&= E\Big[(Y_{i1} - Y_{i2})^2\Big] \\
+&= \text{Var}\Big[Y_{i1} - Y_{i2}\Big] \\
+\text{Because } Y_{i1} &\indep Y_{i2}, \\
+\text{Var}\Big[Y_{i1} - Y_{i2}\Big] &= \text{Var}[Y_{i1}] +  \text{Var}[- Y_{i2}] \\
+&= \text{Var}[Y_{i1}] +  \text{Var}[Y_{i2}] \\
+&= 2\sigma^2. \text{ Thus, } \\
+E\Big[\hat \sigma^2\Big] &= \frac{1}{4n} \sum_{i = 1}^nE \Bigg[\Big({Y_{i1} - Y_{i2}}\Big)^ 2 \Bigg] \\
+&= \frac{1}{4n} \sum_{i = 1}^n 2\sigma^2 \\
+&= \frac{2n\sigma^2}{4n} \\
+&= \frac{\sigma^2}{2}
+\end{split}
+$$
+The bias remains even if $n$ tends to infinity: the MLE of $\sigma^2$ is inconsistent. Solution: transform the data, such that their distribution is independent of the nuisance parameters. The likelihood of these transformed data is called a **marginal likelihood**, because it averages away some of the information in the data. It results in a **marginal** or **restricted MLE**. 
+
+$$
+\begin{split}
+\text{Let } V_i &= \frac{Y_{i1}  - Y_{i2}}{\sqrt 2}. \text{ Then, } \\
+E[V_i] &= E\Bigg[\frac{Y_{i1}  - Y_{i2}}{\sqrt 2}\Bigg] \\
+&= \frac{1}{\sqrt 2} E\Big[Y_{i1}  - Y_{i2}\Big] = 0. \\
+\text{Var}[V_i] &= E[V_i^2] - \Big(E[V_i]\Big)^2 \\
+&=E[V_i^2] \\
+&= E\Bigg[\Bigg(\frac{Y_{i1}  - Y_{i2}}{\sqrt 2}\Bigg)^2\Bigg] \\
+&= E\Bigg[\frac{(Y_{i1}  - Y_{i2})^2}{2}\Bigg] \\
+&= \frac{1}{2} E \Big[({Y_{i1} - Y_{i2}})^ 2 \Big] \\
+&= \frac{2\sigma^2}{2} \\
+&= \sigma^2. \\
+\text{Thus, } V_i &\sim N(0, \sigma^2) \\
+\hat \sigma^2 &= \frac{1}{n} \sum_{i = 1}^n \Big(V_i - E[V_i]\Big)^2 \\
+&= \frac{1}{n} \sum_{i = 1}^n V_i^2 \\
+&= \frac{1}{n} \sum_{i = 1}^n \frac{(Y_{i1} - Y_{i2})^2}{2} \\
+&= \frac{1}{2n} \sum_{i = 1}^n (Y_{i1} - Y_{i2})^2 \\
+E[\hat \sigma^2] &= E\Bigg[\frac{1}{n} \sum_{i = 1}^n V_i^2\Bigg] \\
+&=  \frac{1}{n} \sum_{i = 1}^n E\Big[V_i^2\Big] \\
+&=  \frac{1}{n} \sum_{i = 1}^n \sigma^2 \\
+&= \sigma^2.
+\end{split}
+$$
+
+```{r neyman-scott}
+n <- 200; mu <- rnorm(n, mean = 0, sd = 1)
+y1 <- rnorm(n, mean = mu, sd = 1); y2 <- rnorm(n, mean = mu, sd = 1)
+sum((y1 - y2)^2)/(4*n) #biased mle of sigma^2
+sum((y1 - y2)^2)/(2*n)  #restricted/marginal mle of sigma^2
+```
+
+## Distributions of transformed data
+
+Let X be a random variable with a known distribution and Y a function of X. Then, $Y = h(X)$, $X = h^{-1}(Y)$, and we can use the chain rule to obtain the PDF of $Y$. 
+
+For $h(X)$ **strictly increasing**, we have
+$$\displaystyle f_Y(y) = f_X\Big(h^{-1}(y)\Big) \frac{d}{dy} \Big[h^{-1}(y)\Big]$$
+
+**Derivation**
+$$
+\begin{split}
+F_Y(y) &= P\Big(h(X) \le y\Big) \\ 
+&= P\Big(X \le h^{-1}(y)\Big) \\
+&= F_X\Big(h^{-1}(y) \Big) \\
+f_Y(y) &= \frac{d}{dy} F_X\Big(h^{-1}(y) \Big) \\
+&= f_X\Big(h^{-1}(y) \Big) \frac{d}{dy} \Big[h^{-1}(y)  \Big] \\
+\end{split}
+$$
+
+For example, let $X \sim N(\mu, \sigma^2)$ and $Y = e^X$. Then,
+$$
+\begin{split} 
+f_X(x) &= \dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(x - \mu)^2}{2\sigma^2}\Bigg)\\
+Y &= h(X) = e^X \\
+X &= h^{-1}(Y) = \ln Y \\
+f_Y(y) &= f_X\Big(h^{-1}(y)\Big)  \frac{d}{dy} \Big[ h^{-1}(y) \Big] \\
+&= f_X(\ln y)  \frac{d}{dy} \Big[ \ln y \Big]\\
+&= f_X(\ln y) \cdot \frac{1}{y} \\
+&= \dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(\ln y - \mu)^2}{2\sigma^2}\Bigg) \cdot \frac{1}{y} \\
+&= \dfrac{1}{y\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(\ln y  - \mu)^2}{2\sigma^2}\Bigg) \\
+&\text{This is } \text{the lognormal distribution:} \\
+&Y \sim \text{LN}(\mu, \sigma^2)
+\end{split}
+$$
+To obtain $h^{-1}(y)$:
+$$
+\begin{split}
+F_Y(y) &= P(Y \le y) \\
+&= P(e^X \le y) \\
+&= P(X \le \ln y) \\
+&= F_X(\ln y) \\
+h^{-1}(y) &= \ln y
+\end{split}
+$$
+
+\newpage
+
+For $h(X)$ **strictly decreasing**, we note that if a continuous function is increasing on its interval, then its inverse is also increasing and continuous. Similarly, if a continuous function $h(X)$ is decreasing on its interval, then its inverse $h^{-1}(Y)$ is also decreasing and continuous (and, consequently, the derivative of both $h(X)$ and $h^{-1}(Y)$ will be negative). We have:
+$$
+\begin{split}
+f_Y(y) &= -f_X\Big(h^{-1}(y)\Big) \frac{d}{dy} \Big[ h^{-1}(y) \Big] \\
+&= f_X\Big(h^{-1}(y) \Big)   \Bigg| \frac{d}{dy} \Big[h^{-1}(y)  \Big]\Bigg|
+\end{split}
+$$
+
+**Derivation**
+$$
+\begin{split}
+F_Y(y) &= P(Y \le y) \\
+&=P\Big(h(X) \le y\Big) \\ 
+&= P\Big(X \ge h^{-1}(y)\Big) \\
+&= 1 - P\Big(X \le h^{-1}(y)\Big) \\
+&= 1 - F_X\Big(h^{-1}(y) \Big) \\
+f_Y(y) &= \frac{d}{dy} \Bigg[1 - F_X\Big(h^{-1}(y) \Big) \Bigg] \\
+&= -\frac{d}{dy} F_X\Big(h^{-1}(y) \Big) \\
+&= -f_X\Big(h^{-1}(y) \Big) \cdot \frac{d}{dy} \Big[h^{-1}(y)  \Big] \\
+\text{Because } h(X) &\text{ is strictly decreasing, } h^{-1}(y) \text{ is also decreasing and thus } \frac{d}{dy} \Big[h^{-1}(y) \Big]  < 0. \\
+\Rightarrow f_Y(y) &=  f_X\Big(h^{-1}(y) \Big) \cdot -\frac{d}{dy} \Big[h^{-1}(y)  \Big] \\
+&= f_X\Big(h^{-1}(y) \Big) \Bigg| \frac{d}{dy} \Big[h^{-1}(y)  \Big] \Bigg| \\
+\end{split}
+$$
+
+For example, let $Y = h(X) = -e^X$. Then, 
+$$
+\begin{split}
+Y &= -e^X = h(X) \\
+-Y &=e^X \\
+X &= \ln(-Y) = h^{-1}(Y) \\
+f_Y(y) &= f_X\Big(h^{-1}(y) \Big)   \Bigg| \frac{d}{dy} \Big[h^{-1}(y)  \Big]\Bigg| \\
+&= f_X\Big(\ln(-y) \Big)   \Bigg| \frac{d}{dy} \Big[\ln(-y)  \Big]\Bigg| \\
+&= f_X\Big(\ln(-y) \Big) \Bigg| \frac{-1}{-y} \Bigg| \\
+&= \Bigg|\frac{1}{y} \Bigg|f_X\Big(\ln(-y)\Big) \\
+\end{split}
+$$
+
+
+
+
+\newpage
+
+## Score vector
+
+We have the loglikelihood based on data **for a single subject** $X_i$:
+$$\ell_i(\theta) = \ln f_X(X_i;\theta) = \ln L_i(\theta)$$
+The score vector is the derivative of the loglikelihood based on data for a single subject $X_i$:
+$$S_i(\theta) \equiv \frac{\partial \ell_i(\theta)}{\partial \theta} = \frac{\partial \ln L_i(\theta)}{\partial \theta}$$
+The MLE is obtained by solving $\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0$.
+
+To obtain the MLE from the score vector, follow these steps:
+$$
+\begin{split}
+\text{ For a } &\text{single subject } X_i, \\
+L_i(\theta | X_i) &= f_X(X_i; \theta) \\
+\ell_i(\theta) &= \ln f_X(X_i; \theta) \\
+S_i(\theta) &= \frac{\partial \ell_i(\theta)}{\partial \theta} \\
+\text{To obtain} &\text{ the MLE,  solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\theta) &= 0 \\
+\end{split}
+$$
+A key property of the score statistic is, for any $\theta$, and assuming regularity conditions that allow interchanging the derivative and integral:
+$$
+E_\theta \Big[S_i(\theta)\Big] = 0
+$$
+
+Thus, the solution $\hat \theta$ to $\displaystyle\frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0$ will be close to the population value, which solves $\displaystyle E_\theta \Big[S_i(\theta)\Big] = 0$. We use this fact later to show that:
+
+- MLEs are unbiased in large samples
+- MLEs converge to the truth as more data are collected
+
+
+### Example: Score vector for Exponential distribution
+
+$$
+\begin{split}
+X &\sim \text{Exp}(\theta) \\
+f_X(x) &= \theta\exp(-\theta x) \\
+&\text{ For a single subject } X_i, \\
+L_i(\theta | X_i) &= f_X(X_i; \theta) \\
+&= \theta \exp (-\theta X_i) \\
+\ell_i(\theta) &= \ln f_X(X_i; \theta) \\
+&=\ln \theta -\theta X_i \\
+S_i(\theta) &= \frac{\partial \ell_i(\theta)}{\partial \theta} \\
+&= \frac{1}{\theta} - X_i \\
+\text{To obtain the } &\text{MLE, we solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\theta) &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{1}{\theta} - X_i &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{1}{\theta} &= \frac{1}{n} \sum_{i = 1}^n X_i \\
+\frac{1}{n} \cdot \frac{n}{\theta}  &=\frac{1}{n} \sum_{i = 1}^n X_i \\
+\frac{1}{\theta}&=\frac{1}{n} \sum_{i = 1}^n X_i \\ 
+\hat \theta &= \frac{1}{\bar X_n}
+\end{split}
+$$
+
+### Example: Score vector for Poisson distribution
+
+$$
+\begin{split}
+X &\sim \text{Po}(\theta)\\
+f_X(x) &= \frac{\theta^x}{x!} e^{-\theta}\\
+\text{ For a } &\text{single subject } X_i, \\
+L_i(\theta | X_i) &= f_X(X_i; \theta) \\
+&= \frac{\theta^{X_i}}{X_i!} e^{-\theta} \\
+\ell_i(\theta) &= \ln f_X(X_i; \theta) \\
+&= X_i\ln\theta  -\theta - \ln X_i!  \\
+S_i(\theta) &= \frac{\partial \ell_i(\theta)}{\partial \theta} \\
+&= \frac{X_i}{\theta} -1\\
+\text{To obtain} &\text{ the MLE,  solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\theta) &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n  \frac{X_i}{\theta} -1 &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n  \frac{X_i}{\theta} - \frac{1}{n} \sum_{i = 1}^n 1 &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n  \frac{X_i}{\theta} &= \frac{1}{n} \sum_{i = 1}^n 1 \\
+\frac{1}{\theta} \frac{1}{n} \sum_{i = 1}^n X_i &= \frac{n}{n} \\
+\frac{1}{\theta} \frac{1}{n} \sum_{i = 1}^n X_i &= 1 \\
+\hat \theta &=  \frac{1}{n} \sum_{i = 1}^n X_i \\
+&= \bar X_n
+\end{split}
+$$
+
+### Example: Score vector for Normal distribution
+
+$$
+\begin{split}
+X &\sim N(\mu, \sigma^2)\\
+\text{ For a } &\text{single subject } X_i, \\
+L_i(\theta | X_i) &= f_X(X_i; \theta) \\
+&= \dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(X_i - \mu)^2}{2\sigma^2}\Bigg) \\
+\ell_i(\theta) &= \ln f_X(X_i; \theta) \\
+&= -\ln\sigma-\ln\sqrt{2\pi} - \frac{(X_i - \mu)^2}{2\sigma^2}\\
+S_i(\mu) &= \frac{\partial \ell_i(\theta)}{\partial \mu} \\
+&= -\frac{1}{2\sigma^2} \cdot 2(X_i-\mu) \cdot -1 \\
+&= \frac{2(X_i - \mu)}{2\sigma^2}\\
+&= \frac{X_i - \mu}{\sigma^2}\\
+\text{To obtain} &\text{ the MLE for } \mu, \text{ solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\mu) &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{X_i - \mu}{\sigma^2} &= 0   \\
+\frac{1}{\sigma^2} \frac{1}{n} \sum_{i = 1}^n X_i - \mu &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n X_i - \mu &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n X_i &= \frac{1}{n} \sum_{i = 1}^n \mu \\
+\frac{1}{n} \sum_{i = 1}^n X_i &= \frac{n\mu}{\mu} = \mu \\
+\Rightarrow \hat \mu &= \bar X_n \\
+\end{split}
+$$
+$$
+\begin{split}
+\text{Rewrite } \ell_i(\theta) &= -\ln\sigma-\ln\sqrt{2\pi} - \frac{(X_i - \mu)^2}{2} \cdot \frac{1}{\sigma^2} \\
+&=  -\ln\sigma-\ln\sqrt{2\pi} - \frac{(X_i - \mu)^2}{2} \cdot \sigma^{-2} \\
+S_i(\sigma) &= \frac{\partial \ell_i(\theta)}{\partial \sigma} \\
+&= -\frac{1}{\sigma} - \frac{(X_i - \mu)^2}{2} \cdot -2\sigma^{-3} \\
+&= -\frac{1}{\sigma} + \frac{(X_i - \mu)^2}{\sigma^3} \\
+&= \frac{1}{\sigma} \Bigg(-1 +  \frac{(X_i - \mu)^2}{\sigma^2} \Bigg) \\
+\text{Equivalently, } S_i(\sigma^2) &= -\frac{1}{2\sigma^2} + \frac{(X_i - \mu)^2}{2\sigma^4}  \\
+\text{To obtain} &\text{ the MLE for } \sigma \text{ and } \sigma^2, \text{ solve} \\
+\frac{1}{n} \sum_{i = 1}^n S_i(\sigma) &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{1}{\sigma} \Bigg(-1 +  \frac{(X_i - \mu)^2}{\sigma^2} \Bigg) &= 0 \\
+\frac{1}{\sigma}  \frac{1}{n} \sum_{i = 1}^n -1 +  \frac{(X_i - \mu)^2}{\sigma^2} &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n -1 +  \frac{(X_i - \mu)^2}{\sigma^2} &= 0 \\
+\frac{1}{n} \sum_{i = 1}^n \frac{(X_i - \mu)^2}{\sigma^2} &=  \frac{1}{n} \sum_{i = 1}^n 1 \\
+&= \frac{n}{n} = 1\\
+\frac{1}{\sigma^2} \frac{1}{n} \sum_{i = 1}^n  (X_i - \mu)^2 &= 1 \\
+\hat{\sigma^2} &=\frac{1}{n} \sum_{i = 1}^n  (X_i - \mu)^2
+\end{split}
+$$
+Thus, we have obtained the score vector for a single individual and the (total) score:
+$$
+\begin{split}
+S_i(\mu,\sigma) &= 
+\begin{Bmatrix}
+\dfrac{X_i - \mu}{\sigma^2}  \\
+ -\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \\
+\end{Bmatrix} \\
+S(\mu,\sigma) &= 
+\begin{Bmatrix}
+\displaystyle \sum_{i = 1}^n \dfrac{X_i - \mu}{\sigma^2}  \\
+\displaystyle \sum_{i = 1}^n  -\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \\
+\end{Bmatrix} \\
+\end{split}
+$$
+
+
+
+## Fisher information matrix and large-sample variance
+
+There are two equivalent definitions/ways of obtaining the Fisher information matrix
+
+$$
+\begin{split}
+I_1(\theta) &= - E\Bigg[\frac{\partial}{\partial \theta} S_i(\theta) \Bigg] \\
+&= - E\Bigg[\frac{\partial^2}{\partial \theta^2}  \ln f_X(X_i;\theta) \Bigg] \\
+I_1(\theta) &= E\Bigg[ \Big\{S_i(\theta)\Big\}^2 \Bigg] \\
+&=E\Bigg[ \Big\{  \frac{\partial}{\partial \theta} \ln f_X(X_i;\theta)\Big\}^2 \Bigg]
+\end{split}
+$$
+
+When the model is correct, assuming regularity conditions that allow interchanging the derivatives and integral, then
+$$
+\text{Var}_\theta \Big[ S_i(\theta) \Big] = - E_\theta\Bigg[\frac{\partial}{\partial \theta} S_i (\theta) \Bigg] \equiv I(\theta)
+$$
+
+
+**Distribution of the MLE in large samples**
+
+In large samples, the MLE is normal with large-sample variance (in the univariate case) or large-sample covariance matrix (in the multivariate case)
+$$
+\text{Var}(\hat \theta) = \frac{1}{nI(\theta)}
+$$
+The **total Fisher information** equals $\displaystyle nI(\theta)$.
+
+### Multivariate Fisher information
+
+In the multivariate parameter case, the Fisher information matrix $I(\theta)$ is the matrix of second derivatives of the log likelihood for a single individual, with elements
+
+$$
+I_{jk}(\theta) = - E_\theta \Bigg[\frac{\partial^2}{\partial\theta_j\partial\theta_k} \ell_i(\theta) \Bigg]
+$$
+
+The large sample variance of the MLE for a parameter $\theta$ when the other parameter $\eta$ is known equals $\displaystyle \Big(n I_{\theta\theta}\Big)^{-1}$.
+
+When the other parameter $\eta$ is unknown, we have the Fisher information
+$$\displaystyle I^*_{\theta\theta} = I_{\theta\theta} - \Big[ I_{\theta\eta} \cdot I^{-1}_{\eta\eta} \cdot I_{\eta\theta} \Big] = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}}$$
+
+Then, we have the large sample variance of the MLE for $\theta$ with the other parameter unknown: $\displaystyle \Big(n I^*_{\theta\theta}\Big)^{-1}$. And we have the total information $nI^*_{\theta\theta}$.
+
+Note that, when the off-diagonal elements ($I_{\theta\eta}$ and $I_{\eta\theta}$) equal zero, then the large sample variance of the MLe for $\theta$ and $\eta$ with the other parameter unknown will necessarily equal the large sample variance of the MLE for $\theta$ and $\eta$ with the other parameter known. That is: 
+
+$$\displaystyle I^*_{\theta\theta} = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}} = I_{\theta\theta} - \dfrac{0}{I_{\eta\eta}} = I_{\theta\theta} $$
+
+
+### Example: Fisher information matrix for Exponential distribution
+
+#### Approach 1 
+
+$$
+\begin{split}
+X &\sim \text{Exp}(\theta) \\
+S_i(\theta) &= \frac{1}{\theta} - X_i \\
+&= \theta^{-1} - X_i \\
+I_\theta &= - E_\theta\Bigg[\frac{\partial}{\partial \theta} S_i (\theta) \Bigg] \\
+&= - E_\theta \Big[-\theta^{-2} \Big]\\
+&= -E_\theta \Big[-\frac{1}{\theta^2}\Big] \\
+&= E_\theta \Big[\frac{1}{\theta^2}\Big] \\
+&= \frac{1}{\theta^2} \\
+nI_\theta &= \frac{n}{\theta^2}, \text{the total Fisher information }\\ 
+\text{We have the MLE } \hat \theta &= \frac{1}{\bar X_n} \text{ and } \\
+\text{Var}(\hat \theta) &= \frac{1}{nI(\theta)}, \text{the large-sample variance} \\
+&= \frac{1}{n} \cdot \theta^2 \\
+&= \frac{\theta^2}{n}
+\end{split}
+$$
+
+#### Approach 2
+
+We have
+$$
+\begin{split}
+E[X] &= \frac{1}{\theta} \\
+\text{Var}[X] &= \frac{1}{\theta^2} \\
+I_1(\theta) &= E\Big[ \{S_i(\theta)\}^2 \Big] \\
+&= E\Big[\Big(\frac{1}{\theta} - X \Big)^2 \Big] \\
+&= E\Big[\frac{1}{\theta^2} - 2\frac{X}{\theta} + X^2 \Big] \\
+&= \frac{1}{\theta^2} - \frac{2}{\theta}E[X] + E[X^2] \\
+&= \frac{1}{\theta^2} - \frac{2}{\theta^2} + \text{Var}[X] + (E[X])^2\\
+&= \frac{1}{\theta^2} - \frac{2}{\theta^2} + \frac{1}{\theta^2} + \frac{1}{\theta^2} \\
+&= \frac{1}{\theta^2}\\
+\end{split}
+$$
+
+
+\newpage
+
+### Example: Fisher information matrix for Poisson distribution
+
+#### Approach 1 
+
+$$
+\begin{split}
+X &\sim \text{Poisson}(\theta) \\
+S_i(\theta) &=  \frac{X_i}{\theta} -1\\
+I_\theta &= - E_\theta\Bigg[\frac{\partial}{\partial \theta} S_i (\theta) \Bigg] \\
+&= - E_\theta\Bigg[\frac{\partial}{\partial \theta} \frac{X_i}{\theta} -1\Bigg] \\
+&= - E_\theta\Bigg[\frac{\partial}{\partial \theta} X_i \cdot \theta^{-1} -1\Bigg] \\
+&= - E_\theta \Big[X_i \cdot -\theta^{-2} \Big]\\
+&= -E_\theta \Big[-\frac{X_i}{\theta^2}\Big] \\
+&= E_\theta \Big[\frac{X_i}{\theta^2}\Big] \\
+&= \frac{E_\theta[X_i]}{\theta^2} \\
+&= \frac{\theta}{\theta^2}\\
+&= \frac{1}{\theta} \\
+nI(\theta) &= \frac{n}{\theta}, \text{ the total Fisher information}\\
+\text{We have the MLE } \hat \theta &= \bar X_n \text{ and } \\
+\text{Var}(\hat \theta) &= \frac{1}{nI(\theta)}, \text{ the large-sample variance} \\
+&= \frac{\theta}{n}
+\end{split}
+$$
+
+
+#### Approach 2
+
+$$
+\begin{split}
+E[X] &= \text{Var}[X] = \theta \\
+I_1(\theta) &= E\Big[ \{S_i(\theta)\}^2 \Big] \\ 
+&= E\Big[ \Big(\frac{X}{\theta} - 1 \Big)^2 \Big] \\
+&= E\Big[\frac{X^2}{\theta^2} - 2\frac{X}{\theta} + 1 \Big] \\
+&= \frac{1}{\theta^2}E[X^2] -\frac{2}{\theta}E[X] + 1\\
+&= \frac{1}{\theta^2} \Big(\text{Var}[X] + \{E[X]\}^2 \Big) -\frac{2\theta}{\theta} + 1 \\
+&= \frac{1}{\theta^2} \Big(\theta + \theta^2 \Big) -2+1 \\
+&=\frac{1}{\theta} + 1- 1 \\
+&= \frac{1}{\theta}
+\end{split}
+$$
+
+### Example: Fisher information for Normal Distribution
+
+$$
+\begin{split}
+S_i(\mu,\sigma) &= 
+\begin{Bmatrix}
+\displaystyle\frac{\partial}{\partial \mu} \ell_i(\mu, \sigma)  \\
+\displaystyle\frac{\partial}{\partial \sigma} \ell_i(\mu, \sigma) \\
+\end{Bmatrix} \\
+&= 
+\begin{Bmatrix}
+\dfrac{X_i - \mu}{\sigma^2}  \\
+ -\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \\
+\end{Bmatrix} \\
+I_{jk}(\theta) &= - E_\theta \Bigg[\frac{\partial^2}{\partial\theta_j\partial\theta_k} \ell_i(\theta) \Bigg] \\
+I_{11}(\theta) &= - E_\theta \Bigg[\frac{\partial}{\partial\mu}\frac{\partial}{\partial\mu} \ell_i(\theta) \Bigg]\\
+&=- E_\theta \Bigg[\frac{\partial}{\partial\mu} \dfrac{X_i - \mu}{\sigma^2} \Bigg]\\
+&=- E_\theta \Bigg[\frac{\partial}{\partial\mu} \dfrac{X_i}{\sigma^2} - \dfrac{\mu}{\sigma^2}  \Bigg]\\
+&=- E_\theta \Bigg[-\frac{1}{\sigma^2}  \Bigg]  \\
+&= E_\theta \Bigg[\frac{1}{\sigma^2}  \Bigg]  \\
+&= \frac{1}{\sigma^2} \\
+I_{21}(\theta) = I_{12}(\theta) &= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}\frac{\partial}{\partial\mu} \ell_i(\theta) \Bigg]\\
+&= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}\dfrac{X_i - \mu}{\sigma^2} \Bigg] \\
+&= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}(X_i - \mu) \cdot \sigma^{-2} \Bigg] \\
+&= - E_\theta \Bigg[(X_i - \mu) \cdot -2\sigma^{-3} \Bigg] \\
+&= - E_\theta \Bigg[-\frac{2(X_i - \mu)}{\sigma^3}  \Bigg] \\
+&=  E_\theta \Bigg[\frac{2(X_i - \mu)}{\sigma^3}  \Bigg] \\
+&=  \frac{2}{\sigma^3}E_\theta \Big[X_i - \mu \Big] \\
+&= \frac{2}{\sigma^3} \Big[E_\theta[X_i] - \mu \Big] \\
+&= \frac{2}{\sigma^3} \Big[\mu - \mu \Big] = 0 \\
+I_{22}(\theta) &= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}\frac{\partial}{\partial\sigma} \ell_i(\theta) \Bigg]\\
+&= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}-\dfrac{1}{\sigma} + \dfrac{(X_i - \mu)^2}{\sigma^3} \Bigg]\\
+&= - E_\theta \Bigg[\frac{\partial}{\partial\sigma}-\sigma^{-1} + (X_i - \mu)^2 \cdot \sigma^{-3} \Bigg]\\
+&= - E_\theta \Bigg[\frac{1}{\sigma^2} + (X_i - \mu)^2 \cdot -3\sigma^{-4} \Bigg]\\
+&= - E_\theta \Bigg[\frac{1}{\sigma^2} + (X_i - \mu)^2 \cdot \frac{-3}{\sigma^4}  \Bigg]\\
+&= -\frac{1}{\sigma^2} - E_\theta \Bigg[ (X_i - \mu)^2 \cdot \frac{-3}{\sigma^4}  \Bigg]\\
+&= -\frac{1}{\sigma^2} + \frac{3}{\sigma^4}E_\theta \Big[ (X_i - \mu)^2   \Big]\\
+&= -\frac{1}{\sigma^2} + \frac{3}{\sigma^4}E_\theta \Bigg[ \Big(X_i - E[X_i]\Big)^2   \Bigg]\\
+&= -\frac{1}{\sigma^2} + \frac{3}{\sigma^4}\text{Var}[X]\\
+&= -\frac{1}{\sigma^2} + \frac{3\sigma^2}{\sigma^4}\\
+&= \frac{3}{\sigma^2} - \frac{1}{\sigma^2} \\
+&= \frac{2}{\sigma^2} \\
+\end{split}
+$$
+Thus, we have obtained  
+$$
+\begin{split}
+\text{The Fisher information matrix } I(\theta) &=
+\begin{bmatrix}
+\displaystyle \frac{1}{\sigma^2} & 0 \\
+ 0 & \displaystyle \frac{2}{\sigma^2}\\
+\end{bmatrix} \\
+\text{The total Fisher information matrix } nI(\theta) &=
+\begin{bmatrix}
+\displaystyle \frac{n}{\sigma^2} & 0 \\
+ 0 & \displaystyle \frac{2n}{\sigma^2}\\
+\end{bmatrix} \\
+\text{The large-sample covariance matrix } \frac{1}{nI(\theta)} &=
+\begin{bmatrix}
+\displaystyle \frac{\sigma^2}{n} & 0 \\
+ 0 & \displaystyle \frac{\sigma^2}{2n}\\
+\end{bmatrix} \\
+\end{split}
+$$
+
+Because the off-diagonal elements of the Fisher information matrix equal $0$, we can immediately infer that the large sample variance of $\hat \mu$ equals $\dfrac{\sigma^2}{n}$ regardless of whether $\sigma$ is known; the large sample variance of $\hat \sigma^2$ equals $\dfrac{\sigma^2}{2n}$ regardless of whether $\sigma$ is known. 
+
+### Example: Fisher information for Poisson regression
+
+$$
+\begin{split}
+S_i(\beta_0,\beta_1) &= 
+\begin{Bmatrix}
+\displaystyle\frac{\partial}{\partial \beta_0} \ell_i(\mu, \sigma)  \\
+\displaystyle\frac{\partial}{\partial \beta_1} \ell_i(\mu, \sigma) \\
+\end{Bmatrix} \\
+&= 
+\begin{Bmatrix}
+Y - \exp(\beta_0 + \beta_1X)  \\
+XY - X\exp(\beta_0 + \beta_1X) \\
+\end{Bmatrix} \\
+I_{11}(\theta)&= -E\Bigg[ \frac{\partial}{\partial \beta_0} Y - \exp(\beta_0 + \beta_1X) \Bigg] \\
+&= - E\Big[-\exp(\beta_0 + \beta_1X) \Big] \\
+&= E\Big[\exp(\beta_0 + \beta_1X) \Big] \\
+I_{22}(\theta)&= -E\Bigg[ \frac{\partial}{\partial \beta_1} XY - X\exp(\beta_0 + \beta_1X) \Bigg] \\
+&= - E\Big[-X^2\exp(\beta_0 + \beta_1X) \Big] \\
+&= E\Big[X^2\exp(\beta_0 + \beta_1X) \Big] \\
+I_{12}(\theta) = I_{21}(\theta)&= -E\Bigg[ \frac{\partial}{\partial \beta_1} Y - \exp(\beta_0 + \beta_1X) \Bigg] \\
+&= -E\Big[-X\exp(\beta_0 + \beta_1X) \Big] \\
+&= E\Big[X\exp(\beta_0 + \beta_1X) \Big] \\
+\end{split}
+$$
+
+We have obtained the Fisher information matrix,
+
+$$
+\begin{split}
+I(\theta) &=
+\begin{bmatrix}
+E\Big[\exp(\beta_0 + \beta_1X) \Big] & E\Big[X\exp(\beta_0 + \beta_1X) \Big] \\
+E\Big[X\exp(\beta_0 + \beta_1X) \Big] & E\Big[X^2\exp(\beta_0 + \beta_1X) \Big]\\
+\end{bmatrix} \\
+\text{if } \beta_0 \text{ is known, } I_{\beta_1\beta_1} &=E\Big[X^2\exp(\beta_0 + \beta_1X) \Big]\\
+\text{Var}(\hat \beta_1) &= \frac{1}{nE\Big[X^2\exp(\beta_0 + \beta_1X) \Big]} \\
+\text{if } \beta_0 \text{ is unknown, } I^*_{\beta_1\beta_1} &= I_{\beta_1\beta_1} - \frac{(I_{\beta_0\beta_1})^2}{I_{\beta_0\beta_0}}\\
+&= E\Big[X^2\exp(\beta_0 + \beta_1X) \Big] - \frac{E[X\exp(\beta_0 + \beta_1X)]^2}{E[\exp(\beta_0 + \beta_1X)]}
+\\
+\text{Var}(\hat \beta_1) &= \frac{1}{n} \Bigg(E\Big[X^2\exp(\beta_0 + \beta_1X) \Big] - \frac{E[X\exp(\beta_0 + \beta_1X)]^2}{E[\exp(\beta_0 + \beta_1X)]}\Bigg)^{-1}
+\end{split}
+$$
+
+
+
+\newpage
+
+### Example: Fisher information for Gamma distribution
+
+If both the shape $\alpha$ and rate $\lambda$ are unknown for iid gamma variates $X_i \sim$ Ga($\alpha, \lambda$), the Fisher information for $\theta = (\alpha, \lambda)$ is
+
+$$
+\begin{split}
+I(\theta) &= \begin{bmatrix}
+\psi'(\alpha) & -\lambda^{-1} \\
+-\lambda^{-1} & \alpha\lambda^{-2}
+\end{bmatrix} \text{ where }\\ 
+\ell_i(\theta) &= \alpha \ln(\lambda) + (\alpha - 1)\ln X-\lambda X -\ln \Gamma(\alpha)
+\end{split}
+$$
+
+NB: $\psi'(\alpha)$ is the trigamma function (the second derivative of the log of $\Gamma(\alpha)$). 
+
+Above, we used the shape-rate form of the Gamma distribution. If, instead, we use the shape-scale form($\alpha, \beta$) with $\alpha$ known, we have
+
+$$
+\begin{split}
+\ell(\beta) &= -n\ln\Gamma(\alpha) -n\alpha\ln\beta + (a - 1)\sum_{i = 1}^n \ln x_i - \frac{\sum_{i = 1}^n x_i}{\beta} \\
+S(\beta) &= \frac{n\alpha}{\beta^2}\Bigg(\frac{\sum_{i = 1}^n x_i}{n\alpha} -\beta \Bigg)
+\end{split}
+$$
+
+
+\newpage
+
+## Cramer-Rao inequality
+
+**Minimum Variance Unbiased Estimators (MVUE) for** $\theta$: An unbiased estimator (for every $\theta$) whose variance is no larger than that of any other unbiased estimator. 
+
+**Cramer-Rao information inequality for univariate parameters**
+
+Let $W(\pmb X)$ be an unbiased estimator of a scalar parameter $\tau(\theta)$. Then
+$$
+\begin{split}
+\text{Var}\{W(\pmb X)\} &\ge \frac{\{\frac{\partial}{\partial\theta} \tau(\theta)\}^2}{nI(\theta)} \\
+\text{Var}\{W(\pmb X)\} &\ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)}
+\end{split}
+$$
+
+**Cramer-Rao information inequality for multivariate parameters**
+
+Let $W(\pmb X)$ be an unbiased estimator of a multivariate parameter $\tau(\theta)$.
+
+$$
+\text{Var}\{W(\pmb X)\} \ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^t} {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}}  \frac{1}{nI(\theta)}
+$$
+
+For unbiased estimators of $\tau(\theta)$, the Cramer-Rao inequality provides **a lower bound for the variance**.
+
+For unbiased estimators $W(\pmb X)$ of $\tau(\theta)$ (i.e., a **function of** $\theta$), we have
+
+$$
+\text{Var}\{W(\pmb X)\} \ge \underbrace{{\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)}}_{\text{Cramer-Rao Lower Bound}}
+$$
+
+For unbiased estimators $W(\pmb X)$ of $\theta$, we have 
+
+$$\text{Var}\{W(\pmb X)\} \ge \underbrace{\frac{1}{nI(\theta)}}_{\text{CRLB}}$$
+MLEs are Best Asymptotically Normal (i.e., asymptotically efficient): The MLE has a limiting normal distribution with the Cramer-Rao lower bound as variance. That is, 
+$$\text{Var}(\hat \theta)= \frac{1}{nI(\theta)}$$ 
+
+### Example: Cramer-Rao Lower bound for Poisson Distribution
+
+Given a sample $X_1, ..., X_n$ from the Poisson distribution with density 
+$$
+f(x; \theta) = e^{-\theta} \frac{\theta^x}{x!}
+$$
+with $\theta$ unknown and $x \in \R$. We know that $E[X] = \text{Var}[X] = \theta$. Find the MLE of $\theta$, the Fisher information and the corresponding large-sample variance of the MLE, and the Cramer-Rao lower bound for any unbiased estimator of $e^{-\theta}$. 
+
+$$
+\begin{split}
+\hat \theta &= \bar X_n \\
+I(\theta) &= \frac{1}{\theta}  \\
+nI(\theta) &= \frac{n}{\theta}  \\
+\frac{1}{nI(\theta)} &= \frac{\theta}{n} = \text{Var}(\hat \theta) \\
+\text{Var}\{W(\pmb X)\} &\ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)} \\
+\text{Var}\{W(\pmb X)\} &\ge {\Big\{\frac{\partial}{\partial\theta} e^{-\theta}\Big\}^2} \frac{\theta}{n} \\
+\text{Var}\{W(\pmb X)\} &\ge {\Big\{-e^{-\theta}\Big\}^2} \frac{\theta}{n} \\
+\text{Var}\{W(\pmb X)\} &\ge e^{-2\theta} \frac{\theta}{n} \\
+\text{Var}\{W(\pmb X)\} &\ge \frac{\theta e^{-2\theta}}{n} \\
+\end{split}
+$$
+
+
+\newpage
+
+## Newton-Raphson method 
+
+The NR method is an iterative application of
+$$x_{n + 1} = x_n - f(x_n)/f'(x_n)$$
+
+For example, let $f(x) = x^2$. Our goal is to solve $f(x) = 0$. Then,
+$$
+\begin{split}
+f(x) &= x^2 \\
+f'x &= 2x\\
+x_{n + 1} &= x_n - f(x_n)/f'(x_n) \\
+&= x_n - \frac{x_n^2}{2x_n} \\
+&= x_n - \frac{1}{2}x_n \\
+&= \frac{x_n}{2}
+\end{split}
+$$
+Thus, we see that the iteration converges towards 0, the solution to $f(x) = x^2 = 0$. 
+
+Our goal is to find the solution to $\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0$. We have
+$$
+\begin{split}
+f(\theta) &= \frac{1}{n} \sum_{i = 1}^n S_i(\theta) \\
+f'(\theta) &= \frac{1}{n} \sum_{i = 1}^n \frac{\partial}{\partial \theta} S_i(\theta)\\
+\theta_{n + 1} &= \theta_n - f(\theta_n)/f'(\theta_n) \\
+&= \theta_n - \dfrac{\frac{1}{n} \sum_{i = 1}^n S_i(\theta_n)}{\frac{1}{n} \sum_{i = 1}^n \frac{\partial}{\partial \theta} S_i(\theta_n)}
+\end{split}
+$$
+
+

@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shilaan Alzahawi">
+
+<title>Statistical Inference</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./week1.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Statistical Inference</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Inference</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Large sample theory</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics of maximum likelihood estimators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exercises</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#common-discrete-distributions" id="toc-common-discrete-distributions" class="nav-link" data-scroll-target="#common-discrete-distributions">Common discrete distributions</a></li>
+  <li><a href="#common-continuous-distributions" id="toc-common-continuous-distributions" class="nav-link" data-scroll-target="#common-continuous-distributions">Common continuous distributions</a></li>
+  <li><a href="#week-1-point-estimation" id="toc-week-1-point-estimation" class="nav-link" data-scroll-target="#week-1-point-estimation">Week 1: Point estimation</a></li>
+  <li><a href="#week-2-large-sample-theory" id="toc-week-2-large-sample-theory" class="nav-link" data-scroll-target="#week-2-large-sample-theory">Week 2: Large sample theory</a></li>
+  <li><a href="#week-3-asymptotics-of-maximum-likelihood-estimators" id="toc-week-3-asymptotics-of-maximum-likelihood-estimators" class="nav-link" data-scroll-target="#week-3-asymptotics-of-maximum-likelihood-estimators">Week 3: Asymptotics of maximum likelihood estimators</a></li>
+  <li><a href="#week-4-hypothesis-testing" id="toc-week-4-hypothesis-testing" class="nav-link" data-scroll-target="#week-4-hypothesis-testing">Week 4: Hypothesis testing</a></li>
+  <li><a href="#week-5-confidence-intervals" id="toc-week-5-confidence-intervals" class="nav-link" data-scroll-target="#week-5-confidence-intervals">Week 5: Confidence intervals</a></li>
+  <li><a href="#week-6-inference-under-the-bootstrap" id="toc-week-6-inference-under-the-bootstrap" class="nav-link" data-scroll-target="#week-6-inference-under-the-bootstrap">Week 6: Inference under the bootstrap</a></li>
+  <li><a href="#week-7-bayesian-statistics" id="toc-week-7-bayesian-statistics" class="nav-link" data-scroll-target="#week-7-bayesian-statistics">Week 7: Bayesian statistics</a></li>
+  <li><a href="#week-8-m-estimators" id="toc-week-8-m-estimators" class="nav-link" data-scroll-target="#week-8-m-estimators">Week 8: M-estimators</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Statistical Inference</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shilaan Alzahawi </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level1 unnumbered">
+<h1 class="unnumbered">Overview</h1>
+<section id="common-discrete-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="common-discrete-distributions">Common discrete distributions</h2>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(f(x)\)</span></th>
+<th><span class="math inline">\(F(x)\)</span></th>
+<th><span class="math inline">\(E[X]\)</span></th>
+<th><span class="math inline">\(\text{Var}[X]\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bernoulli</td>
+<td><span class="math inline">\(\displaystyle p^x(1-p)^{1-x}\)</span></td>
+<td><span class="math inline">\(\displaystyle 1 - p\)</span></td>
+<td><span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(p(1-p)\)</span></td>
+</tr>
+<tr class="even">
+<td>Binomial</td>
+<td><span class="math inline">\(\displaystyle {n \choose x} p^x(1-p)^{n-x}\)</span></td>
+<td><span class="math inline">\(\displaystyle \sum_{i = 0}^x {n \choose i} p^i(1-p)^{n-i}\)</span></td>
+<td><span class="math inline">\(np\)</span></td>
+<td><span class="math inline">\(np(1-p)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Poisson</td>
+<td><span class="math inline">\(\displaystyle \dfrac{e^{-\lambda} \lambda^x}{x!}\)</span></td>
+<td><span class="math inline">\(\displaystyle \sum_{k = 0}^x \dfrac{e^{-\lambda} \lambda^k}{k!}\)</span></td>
+<td><span class="math inline">\(\lambda\)</span></td>
+<td><span class="math inline">\(\lambda\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="common-continuous-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="common-continuous-distributions">Common continuous distributions</h2>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 36%">
+<col style="width: 27%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(f(x)\)</span></th>
+<th><span class="math inline">\(F(x)\)</span></th>
+<th><span class="math inline">\(E[X]\)</span></th>
+<th><span class="math inline">\(\text{Var}[X]\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normal</td>
+<td><span class="math inline">\(\dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(x - \mu)^2}{2\sigma^2}\Bigg)\)</span></td>
+<td><span class="math inline">\(\Phi\Bigg(\dfrac{x - \mu}{\sigma}\Bigg)\)</span></td>
+<td><span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(\sigma^2\)</span></td>
+</tr>
+<tr class="even">
+<td>Exponential</td>
+<td><span class="math inline">\(\lambda\exp(-\lambda x)\)</span></td>
+<td><span class="math inline">\(1 - \exp(-\lambda x)\)</span></td>
+<td><span class="math inline">\(\dfrac{1}{\lambda}\)</span></td>
+<td><span class="math inline">\(\dfrac{1}{\lambda^2}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Exp <span class="math inline">\(\beta=\frac{1}{\lambda}\)</span></td>
+<td><span class="math inline">\(\frac{1}\beta\exp(-{x}/\beta)\)</span></td>
+<td><span class="math inline">\(1 - \exp(- x/\beta)\)</span></td>
+<td><span class="math inline">\(\beta\)</span></td>
+<td><span class="math inline">\(\beta^2\)</span></td>
+</tr>
+<tr class="even">
+<td>Uniform</td>
+<td><span class="math inline">\(\dfrac{1}{b-a}\)</span></td>
+<td><span class="math inline">\(\dfrac{x-a}{b-a}\)</span></td>
+<td><span class="math inline">\(\dfrac{a + b}{2}\)</span></td>
+<td><span class="math inline">\(\dfrac{(b -a)^2}{12}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Gamma<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></td>
+<td><span class="math inline">\(\dfrac{\beta^a x^{a-1}e^{-\beta x}}{\Gamma(\alpha)}\)</span></td>
+<td><span class="math inline">\(\dfrac{\gamma(a,\beta x)}{\Gamma(\alpha)}\)</span></td>
+<td><span class="math inline">\(\dfrac{\alpha}{\beta}\)</span></td>
+<td><span class="math inline">\(\dfrac{\alpha}{\beta^2}\)</span></td>
+</tr>
+<tr class="even">
+<td>Gamma<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></td>
+<td><span class="math inline">\(\dfrac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k}\)</span></td>
+<td><span class="math inline">\(\dfrac{\gamma\Big(k,\frac{x}{\theta}\Big)}{\Gamma(k)}\)</span></td>
+<td><span class="math inline">\(k\theta\)</span></td>
+<td><span class="math inline">\(k\theta^2\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\chi^2_k\)</span></td>
+<td><span class="math inline">\(\dfrac{x^{\frac{k}{2}-1}e^{-x/2}}{2^{k/2}\Gamma(\frac{k}{2})}\)</span></td>
+<td><span class="math inline">\(\dfrac{\gamma\Big(\frac{k}{2},\frac{x}{2} \Big)}{\Gamma(k/2)}\)</span></td>
+<td><span class="math inline">\(k\)</span></td>
+<td><span class="math inline">\(2k\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="week-1-point-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="week-1-point-estimation">Week 1: Point estimation</h2>
+<ul>
+<li>Distribution function definition
+<ul>
+<li><span class="math inline">\(F_X(x) = P(X \le x)\)</span></li>
+<li><span class="math inline">\(\displaystyle \lim_{x \rightarrow -\infty} F_X(x) = 0\)</span></li>
+<li><span class="math inline">\(\displaystyle \lim_{x \rightarrow +\infty} F_X(x) = 1\)</span></li>
+<li><span class="math inline">\(F_X(x)\)</span> is a non-decreasing function of <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(F_X(x)\)</span> is right-continuous</li>
+<li>Its derivative <span class="math inline">\(f_X(x)\)</span> is the probability density function</li>
+</ul></li>
+<li>Parametric model definition
+<ul>
+<li>Set of (conditional) distribution functions indexed by an unknown finite-dimensional parameter</li>
+<li>E.g., linear regression model is a parametric model for <span class="math inline">\(F_{Y|X}\)</span>
+<ul>
+<li><span class="math inline">\(F_{Y|X}(y | x; \theta) = N(\alpha + \beta x, \nu^2); \theta \equiv (\alpha, \beta, \nu^2) \in \mathbb{R}^2 \times \mathbb{R}^+\)</span></li>
+</ul></li>
+</ul></li>
+<li>Semi-parametric model definition
+<ul>
+<li>Set of (conditional) distribution functions indexed by an unknown finite-dimensional parameter and some infinite-dimensional parameter (e.g.&nbsp;unknown function)</li>
+<li>E.g., conditional mean model
+<ul>
+<li><span class="math inline">\(F_{Y|X}(y | x; \theta) : E(Y | X = x) = \alpha + \beta x;~ \theta \equiv (\alpha, \beta) \in \mathbb{R}^2\)</span></li>
+</ul></li>
+</ul></li>
+<li>Likelihood function definition
+<ul>
+<li>The density of all observed data, viewed as a function of <span class="math inline">\(\theta\)</span>, evaluated at the effective observations <span class="math inline">\(x_1, ..., x_n\)</span></li>
+<li><span class="math inline">\(\displaystyle L(\theta | x_1,..., x_n)=f_{X_1, ..., X_n}(x_1,...,x_n|\theta)\)</span></li>
+</ul></li>
+<li>i.i.d sampling</li>
+<li>Maximum likelihood estimate
+<ul>
+<li>The value of <span class="math inline">\(\theta\)</span> which maximizes the likelihood <span class="math inline">\(L(\theta | x_1,...,x_n)\)</span></li>
+<li><span class="math inline">\(\displaystyle \hat \theta = \text{argmax}_\theta L(\theta | x_1,...,x_n)\)</span></li>
+</ul></li>
+<li>Invariance of the MLE
+<ul>
+<li>If <span class="math inline">\(\hat \theta\)</span> is the MLE of <span class="math inline">\(\theta\)</span>, then for any function <span class="math inline">\(g(\theta)\)</span>, the MLE of <span class="math inline">\(g(\theta)\)</span> is <span class="math inline">\(g(\hat \theta)\)</span></li>
+</ul></li>
+<li>Calculate expected counts using the MLE, <span class="math inline">\(\chi^2\)</span> test to contrast observed and expected counts</li>
+<li>Likelihood function for the zero-inflated Poisson model</li>
+<li>MLE of the normal distribution</li>
+<li>Censoring problem (equipment failure times): Censored exponential distribution</li>
+<li>The Neyman-Scott problem</li>
+<li>Marginal likelihood, marginal/restricted MLE
+<ul>
+<li>Transforming the data, such that their distribution is independent of nuisance parameters</li>
+</ul></li>
+<li>Two approaches to tackle the nuisance parameter problem
+<ul>
+<li>Marginal likelihood</li>
+<li>Conditional likelihood</li>
+</ul></li>
+<li>Distribution of transformed data / a function of a random variable
+<ul>
+<li>For <span class="math inline">\(Y = h(X)\)</span>, use the chain rule to obtain the pdf of <span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(h(X)\)</span> <strong>strictly increasing</strong></li>
+<li><span class="math inline">\(\displaystyle f_Y(y) = f_X\Big(h^{-1}(y)\Big) \frac{d}{dy} \Big[h^{-1}(y)\Big]\)</span></li>
+<li><span class="math inline">\(h(X)\)</span> <strong>strictly decreasing</strong></li>
+<li><span class="math inline">\(\displaystyle f_Y(y) = f_X\Big(h^{-1}(y) \Big) \Bigg| \frac{d}{dy} \Big[h^{-1}(y) \Big]\Bigg|\)</span></li>
+</ul></li>
+<li>Bijective (i.e., one-to-one) multivariate transformations
+<ul>
+<li>A bijection, also known as a bijective function, one-to-one correspondence, or invertible function, is a function between the elements of two sets, where each element of one set is paired with exactly one element of the other set, and each element of the other set is paired with exactly one element of the first set. There are no unpaired elements.</li>
+</ul></li>
+<li>Score vector
+<ul>
+<li>The derivative of the loglikelihood based on data for a single subject <span class="math inline">\(X_i\)</span></li>
+<li><span class="math inline">\(\displaystyle l_i(\theta) = \ln f_X(X_i;\theta) = \ln L_i(\theta)\)</span></li>
+<li><span class="math inline">\(\displaystyle S_i(\theta) \equiv \frac{\partial l_i(\theta)}{\partial \theta} = \frac{\partial \ln L_i(\theta)}{\partial \theta}\)</span></li>
+<li>Total score: <span class="math inline">\(\displaystyle S_n(\theta) = \sum_{i = 1}^n S_i(\theta)\)</span></li>
+<li>Under regularity conditions, <span class="math inline">\(\displaystyle S_n(\hat \theta_{MLE}) = \sum_{i = 1}^n S_i(\hat \theta_{MLE}) = 0\)</span></li>
+<li>The MLE is obtained by solving <span class="math inline">\(\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0\)</span></li>
+</ul></li>
+<li>Mean of the score statistic</li>
+<li>Fisher information matrix <span class="math inline">\(I(\theta)\)</span> and large-sample variance / covariance matrix
+<ul>
+<li>There are two equivalent definitions/ways of obtaining the Fisher information matrix</li>
+<li><span class="math inline">\(\displaystyle I_1(\theta) = - E\Bigg[\frac{\partial}{\partial \theta} S_i(\theta) \Bigg] = - E\Bigg[\frac{\partial^2}{\partial \theta^2} \ln f_X(X_i;\theta) \Bigg]\)</span></li>
+<li><span class="math inline">\(\displaystyle I_1(\theta) = E\Bigg[ \Big\{S_i(\theta)\Big\}^2 \Bigg] = E\Bigg[ \Big\{ \frac{\partial}{\partial \theta} \ln f_X(X_i;\theta)\Big\}^2 \Bigg]\)</span></li>
+<li><span class="math inline">\(\displaystyle I_{jk}(\theta) = - E_\theta \Bigg[\frac{\partial^2}{\partial\theta_j\partial\theta_k} l_i(\theta) \Bigg]\)</span></li>
+<li><span class="math inline">\(\displaystyle \text{Var}(\hat \theta) = \frac{1}{nI(\theta)}\)</span></li>
+<li>Total Fisher information: in the iid case, <span class="math inline">\(I_T = nI_1(\theta)\)</span></li>
+</ul></li>
+<li>The inverse of a <span class="math inline">\(2 \times 2\)</span> matrix</li>
+<li>Example multivariate Fisher information</li>
+<li>Variance cost of adding complexity</li>
+<li>The large sample variance of the MLE for a parameter <span class="math inline">\(\theta\)</span> when the other parameter <span class="math inline">\(\eta\)</span> is known
+<ul>
+<li><span class="math inline">\(\displaystyle \Big(n I_{\theta\theta}\Big)^{-1}\)</span></li>
+</ul></li>
+<li>Large-sample variance versus asymptotic variance
+<ul>
+<li>Var<span class="math inline">\((\hat \theta) = \displaystyle \Big(n I_{\theta\theta}\Big)^{-1}\)</span> is the large sample variance</li>
+<li><span class="math inline">\(V(\theta) = \displaystyle \Big(I_{\theta\theta}\Big)^{-1}\)</span> is the asymptotic variance</li>
+<li>Var<span class="math inline">\((\hat \theta) \approx V(\theta)/n\)</span> for <span class="math inline">\(n\)</span> large</li>
+</ul></li>
+<li>When the other parameter <span class="math inline">\(\eta\)</span> is unknown, we have the Fisher information
+<ul>
+<li><span class="math inline">\(\displaystyle I^*_{\theta\theta} = I_{\theta\theta} - \Big[ I_{\theta\eta} \cdot I^{-1}_{\eta\eta} \cdot I_{\eta\theta} \Big] = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}}\)</span></li>
+<li>Then, we have the large sample variance of the MLE for <span class="math inline">\(\theta\)</span> with the other parameter unknown:</li>
+<li><span class="math inline">\(\displaystyle \Big(n I^*_{\theta\theta}\Big)^{-1}\)</span></li>
+<li>And we have the total information <span class="math inline">\(nI^*_{\theta\theta}\)</span></li>
+</ul></li>
+<li>Inference under singular Fisher information matrix: when the variance increases to an enormous extent</li>
+<li>Cramer-Rao inequality, Minimum Variance Unbiased Estimators (MVUE)</li>
+<li>The Cramer-Rao inequality provides a lower bound for the variance of unbiased estimators <span class="math inline">\(W(\pmb X)\)</span> of <span class="math inline">\(\tau(\theta)\)</span> (i.e., functions of <span class="math inline">\(\theta\)</span>)
+<ul>
+<li><span class="math inline">\(\displaystyle \text{Var}\{W(\pmb X)\} \ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)}\)</span></li>
+</ul></li>
+<li>For unbiased estimators <span class="math inline">\(W(\pmb X)\)</span> of <span class="math inline">\(\theta\)</span>,
+<ul>
+<li><span class="math inline">\(\displaystyle \text{Var}\{W(\pmb X)\} \ge \frac{1}{nI(\theta)}\)</span></li>
+</ul></li>
+<li>If there exists a Minimum Variance Unbiased Estimator <span class="math inline">\(W\)</span> of <span class="math inline">\(\tau(\theta)\)</span>, then <span class="math inline">\(W\)</span> is unique</li>
+<li>Uniformly Minimum Variance Unbiased Estimators (UMVUE)</li>
+<li>MLEs are BAN: Best Asymptotically Normal (i.e., asymptotically efficient). The MLE has a limiting normal distribution with the Cramer-Rao lower bound as variance:
+<ul>
+<li><span class="math inline">\(\displaystyle \text{Var}(\hat \theta)= \frac{1}{nI(\theta)}\)</span></li>
+</ul></li>
+<li>Optimization
+<ul>
+<li>First order Taylor approximation</li>
+</ul></li>
+<li>Newton-Raphson method
+<ul>
+<li><span class="math inline">\(\displaystyle x_{n + 1} = x_n - f(x_n)/f'(x_n)\)</span></li>
+<li>Goal is to find the solution to <span class="math inline">\(\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0\)</span></li>
+</ul></li>
+<li>Mixture density
+<ul>
+<li>Full data <span class="math inline">\(Y_{\text{full}} = (Y_1, Z_1, ..., Y_n, Z_n)\)</span></li>
+<li>Observed data <span class="math inline">\(Y_{\text{obs}} = (Y_1, ..., Y_n)\)</span></li>
+<li>Unobserved, missing data <span class="math inline">\(\pmb Z = (Z_1, ..., Z_n)\)</span></li>
+<li>Because <span class="math inline">\(\pmb Z\)</span> is unobserved, the joint likelihood of the full data <span class="math inline">\(L_F(\theta | Y_{\text{full}}) = L_F(\theta | Y_{\text{obs}}, \pmb Z)\)</span> cannot be computed</li>
+</ul></li>
+<li>EM algorithm
+<ul>
+<li>Properties</li>
+<li>In the E (Expectation) step, we formally estimate the missing information</li>
+<li>In the M (Maximization) step, we estimate the parameters</li>
+</ul></li>
+<li>Estimation methods
+<ul>
+<li>Maximum likelihood</li>
+<li>EM algorithm</li>
+<li>Method of moments</li>
+<li>Quantile-matching</li>
+<li>Least squares</li>
+<li>M-estimation</li>
+<li>Bayesian Estimation</li>
+</ul></li>
+</ul>
+</section>
+<section id="week-2-large-sample-theory" class="level2">
+<h2 class="anchored" data-anchor-id="week-2-large-sample-theory">Week 2: Large sample theory</h2>
+<ul>
+<li>Desirable properties of a statistic</li>
+<li>Convergence of non-random sequences</li>
+<li>Convergence in probability
+<ul>
+<li>A sequence of random variables <span class="math inline">\(Y_1, Y_2, ...\)</span> converges in probability to a random variable <span class="math inline">\(Y\)</span> if, for every <span class="math inline">\(\epsilon &gt; 0\)</span>:</li>
+<li><span class="math inline">\(\displaystyle \lim_{n \rightarrow \infty} P\Big(|Y_n - Y| \ge \epsilon \Big) = 0\)</span>, or, equivalently,</li>
+<li><span class="math inline">\(\displaystyle \lim_{n \rightarrow \infty} P\Big(|Y_n - Y| &lt; \epsilon \Big) = 1\)</span></li>
+<li>Notation: <span class="math inline">\(Y_n \xrightarrow{P} Y\)</span></li>
+</ul></li>
+<li>Weak consistency
+<ul>
+<li>Let <span class="math inline">\(\pmb W_n = \pmb W_n(\pmb X_1, ..., \pmb X_n)\)</span> be an estimator of a function <span class="math inline">\(\tau(\pmb t)\)</span> of parameter(s) <span class="math inline">\(\pmb t\)</span> based on based on <em>n</em> random variables <span class="math inline">\(\pmb X_1, ..., \pmb X_n\)</span>. The sequence of estimators <span class="math inline">\(\pmb W_n\)</span> of <span class="math inline">\(\tau(\pmb t)\)</span> is consistent if <span class="math inline">\(\displaystyle \pmb W_n \xrightarrow{P} \tau(\pmb t)\)</span> for ever <span class="math inline">\(\pmb \theta \in \pmb \Theta\)</span>.</li>
+</ul></li>
+<li>Weak law of large numbers (convergence in probability)
+<ul>
+<li>Let <span class="math inline">\(\pmb X_1, ..., \pmb X_n\)</span> be iid with finite expectation <span class="math inline">\(E[\pmb X_i] = \mu\)</span> and let <span class="math inline">\(\displaystyle \bar{\pmb X}_n = \frac{1}{n} \sum_{i = 1}^n \pmb X_i\)</span>. Then, <span class="math inline">\(\pmb{\bar X}_n\)</span> is a consistent estimator of the population mean <span class="math inline">\(\mu\)</span>:</li>
+<li><span class="math inline">\(\displaystyle \bar{\pmb X}_n \xrightarrow{P} \mu\)</span> or, equivalently,</li>
+<li><span class="math inline">\(\displaystyle \lim_{n \rightarrow \infty} P\Big(|\pmb{\bar X}_n - \mu| \ge \epsilon \Big) = 0\)</span></li>
+</ul></li>
+<li>Chebychev’s inequality
+<ul>
+<li>For any <span class="math inline">\(\epsilon &gt; 0\)</span> and a random <span class="math inline">\(Z\)</span>,</li>
+<li><span class="math inline">\(\displaystyle P\Bigg(\Big|Z - E[Z]\Big| \ge \epsilon \Bigg) \le \frac{\text{Var}[Z]}{\epsilon^2}\)</span></li>
+</ul></li>
+<li>Strong law of large numbers: almost sure convergence
+<ul>
+<li>Let <span class="math inline">\(\pmb X_1, ..., \pmb X_n\)</span> be iid with finite expectation <span class="math inline">\(E[\pmb X_i] = \mu\)</span> and let <span class="math inline">\(\displaystyle \bar{\pmb X}_n = \frac{1}{n} \sum_{i = 1}^n \pmb X_i\)</span>.<br>
+Then, for any <span class="math inline">\(\epsilon &gt;0\)</span>,</li>
+<li><span class="math inline">\(\displaystyle P\Big( \lim_{n \rightarrow \infty}|\pmb{\bar X}_n - \mu| &lt; \epsilon \Big) = 1\)</span> or, equivalently,</li>
+<li><span class="math inline">\(\displaystyle P\Big( \lim_{n \rightarrow \infty}|\pmb{\bar X}_n - \mu| \ge \epsilon \Big) = 0\)</span></li>
+<li>Notation: <span class="math inline">\(\pmb{\bar X_n} \xrightarrow{a.s.} \mu\)</span></li>
+<li>That is, <span class="math inline">\(\pmb{\bar X}_n\)</span> converges almost surely to <span class="math inline">\(\mu\)</span> (or, equivalently, converges with probability one to <span class="math inline">\(\mu\)</span>)</li>
+<li>Note: if <span class="math inline">\(X_n \xrightarrow{a.s.} X\)</span>, then <span class="math inline">\(X_n \xrightarrow{P} X\)</span>: almost sure converge is stronger than, and is a superset of, convergence in probability</li>
+<li>Stronger than convergence in probability (which implies weak consistency)</li>
+</ul></li>
+<li>Consistency of a function of <span class="math inline">\(\pmb X_n\)</span> (<strong>continuous mapping</strong>)
+<ul>
+<li>If <span class="math inline">\(\pmb X_n \xrightarrow{P} \pmb X\)</span> and <span class="math inline">\(\pmb h\)</span> is a continuous function, then</li>
+<li><span class="math inline">\(\pmb h(\pmb X_n) \xrightarrow{P} \pmb h (\pmb X)\)</span></li>
+<li>For example, since <span class="math inline">\(S^2_n\)</span> is a consistent estimator of <span class="math inline">\(\sigma^2\)</span>, then <span class="math inline">\(\sqrt{S^2_n} = S_n\)</span> is a consistent estimator of <span class="math inline">\(\sqrt{\sigma^2} = \sigma\)</span></li>
+</ul></li>
+<li>Convergence in distribution
+<ul>
+<li>A sequence of random variables <span class="math inline">\(X_1, X_2, ...\)</span> converges in distribution or in law to a random variable <span class="math inline">\(X\)</span> if</li>
+<li><span class="math inline">\(\displaystyle \lim_{n \rightarrow \infty} F_{X_n}(x) = F_X(x)\)</span> at all points at which <span class="math inline">\(F_X(x)\)</span> is continuous</li>
+<li>Notation: <span class="math inline">\(X_n \xrightarrow{D} X\)</span> or <span class="math inline">\(X_n \xrightarrow{D} F\)</span></li>
+<li>Convergence in distribution does <strong>not</strong> guarantee that <span class="math inline">\(X_n\)</span> is likely to be close to <span class="math inline">\(X\)</span> or imply convergence in probability in general: it is about convergence of cdf, not of random variables.</li>
+<li>For example, if <span class="math inline">\(X_n\)</span> converges in distribution to a standard normal variable <span class="math inline">\(Z\)</span> (<span class="math inline">\(X_n \xrightarrow{D} Z\)</span>), then it also converges in distribution to <span class="math inline">\(-Z\)</span> (<span class="math inline">\(X_n \xrightarrow{D} -Z\)</span>).</li>
+<li>Note: convergence in distribution is weaker than almost sure convergence and convergence in probability. If a sequence of random variables converges almost surely or in probability (NB: the first implies the second, but the second does not imply the first), it also converges in distribution.</li>
+</ul></li>
+<li>From weakest to strongest:
+<ul>
+<li><span class="math inline">\(X_n \xrightarrow{D} X\)</span>, which implies <span class="math inline">\(h(X_n) \xrightarrow{D} h(X)\)</span></li>
+<li><span class="math inline">\(X_n \xrightarrow{P} X\)</span>, which implies <span class="math inline">\(h(X_n) \xrightarrow{P} h(X)\)</span> and <span class="math inline">\(X_n \xrightarrow{D} X\)</span></li>
+<li><span class="math inline">\(X_n \xrightarrow{a.s.} X\)</span>, which implies <span class="math inline">\(h(X_n) \xrightarrow{a.s.} h(X)\)</span>, <span class="math inline">\(X_n \xrightarrow{P} X\)</span>, and <span class="math inline">\(X_n \xrightarrow{D} X\)</span></li>
+</ul></li>
+<li>Convergence in distribution for vectors
+<ul>
+<li><span class="math inline">\(\pmb X_n \xrightarrow{D} \pmb X\)</span> implies <span class="math inline">\(X_n^{(k)} \xrightarrow{D} X^{(k)} ~~~\forall k\)</span></li>
+<li><strong>However,</strong> <span class="math inline">\(X_n^{(k)} \xrightarrow{D} X^{(k)} ~~~\forall k\)</span> does <strong>not</strong> imply <span class="math inline">\(\pmb X_n \xrightarrow{D} \pmb X\)</span>, <strong>unless</strong> the <span class="math inline">\(X_n^{(1)},..., X_n^{(K)}\)</span> <strong>and</strong> the <span class="math inline">\(X^{(1)},..., X^{(K)}\)</span> are independent</li>
+</ul></li>
+<li>Slutsky’s lemma
+<ul>
+<li>Consider two sequences of random variables <span class="math inline">\(X_n\)</span> and <span class="math inline">\(Y_n\)</span>, with <span class="math inline">\(X_n \xrightarrow{D} X\)</span> and <span class="math inline">\(Y_n \xrightarrow{P} c\)</span>. Then,</li>
+<li><span class="math inline">\(X_n + Y_n \xrightarrow{D} X + c\)</span></li>
+<li><span class="math inline">\(Y_nX_n \xrightarrow{D} cX\)</span></li>
+<li><span class="math inline">\(\displaystyle \frac{X_n}{Y_n} \xrightarrow{D} \frac{X}{c}\)</span> if <span class="math inline">\(c \ne 0\)</span></li>
+</ul></li>
+<li>The asymptotic distribution of sums</li>
+<li>Central Limit Theorem (CLT): univariate verson
+<ul>
+<li>Let <span class="math inline">\(X_1, X_2,...\)</span> be a sequence of iid random variables with <span class="math inline">\(E[X_i] = \mu\)</span> and <span class="math inline">\(\text{Var}[X_i] = \sigma^2\)</span>. Then,</li>
+<li><span class="math inline">\(\displaystyle \frac{\sqrt n(\bar X_n - \mu)}{\sigma} \xrightarrow{D} N(0,1)\)</span></li>
+<li>Notation: <span class="math inline">\(\displaystyle \frac{\sqrt n(\bar X_n - \mu)}{\sigma} \approx N(0,1)\)</span></li>
+<li><span class="math inline">\(\sqrt n( {\bar X_n} - \mu) \xrightarrow{D} N( 0, \sigma^2)\)</span></li>
+</ul></li>
+<li>Multivariate CLT
+<ul>
+<li>Let <span class="math inline">\(\pmb X_n\)</span> be a sequence of iid random vectors with mean <span class="math inline">\(E[\pmb X_n] = \pmb \mu\)</span> and covariance matrix <span class="math inline">\(\text{Var}[\pmb X] = \pmb\Sigma\)</span>. Then,</li>
+<li><span class="math inline">\(\sqrt n(\pmb {\bar X} - \pmb \mu) \xrightarrow{D} N(\pmb 0, \pmb \Sigma)\)</span></li>
+</ul></li>
+<li>The Delta Method: Variance of transformations
+<ul>
+<li>Let <span class="math inline">\(X_n\)</span> be a sequence of random variables such that <span class="math inline">\(\sqrt n(X_n - \theta) \xrightarrow{D} N(0, \sigma^2)\)</span>. Consider a function <span class="math inline">\(g\)</span> and a value <span class="math inline">\(\theta\)</span> for which <span class="math inline">\(g'(\theta) \ne 0\)</span> exists. Then:</li>
+<li><span class="math inline">\(\sqrt n\Big(g(X_n) - g(\theta)\Big) \xrightarrow{D} N\Big(0, \sigma^2\Big[g'(\theta)\Big]^2\Big)\)</span></li>
+</ul></li>
+<li>Asymptotically pivotal quantities (APQs)
+<ul>
+<li>We want to avoid asymptotic distributions that depend on unknown parameters. To do so, we can use
+<ul>
+<li>The plug-in method</li>
+<li>Variance-stabilizing transformations</li>
+<li>We wish to find a function <span class="math inline">\(g(\theta)\)</span> such that <span class="math inline">\(\sigma^2\Big[g'(\theta)\Big]^2 = c^2\)</span> or, equivalently, <span class="math inline">\(\sigma g'(\theta) = c\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="week-3-asymptotics-of-maximum-likelihood-estimators" class="level2">
+<h2 class="anchored" data-anchor-id="week-3-asymptotics-of-maximum-likelihood-estimators">Week 3: Asymptotics of maximum likelihood estimators</h2>
+<ul>
+<li>MLE (multivariate) definition</li>
+<li>Desirable properties for the MLE
+<ul>
+<li>Consistency: <span class="math inline">\(\pmb{\hat \theta} \xrightarrow{P} \pmb{\theta}_0\)</span></li>
+<li>Asymptotic normality</li>
+</ul></li>
+<li>Support of a distribution
+<ul>
+<li>The support of f is the smallest closed set containing all the values of <span class="math inline">\(\pmb y\)</span> for which <span class="math inline">\(f(\pmb y) &gt; 0\)</span></li>
+</ul></li>
+<li>Consistency assumptions (regularity conditions)
+<ul>
+<li>Identifiability</li>
+</ul></li>
+<li>Consistency theorem
+<ul>
+<li>If the regularity conditions hold, there exists a consistent solution of the score equations</li>
+<li>NB: this does not yet imply that the MLE is consistent! (Only when there is only one solution to the score equations)</li>
+<li>For the exponential family of distributions, the score equations have a unique solution; the MLE is consistent</li>
+</ul></li>
+<li>Further assumptuins/regularity conditions for asymptotic normality</li>
+<li>Asymptotic normality of the MLE
+<ul>
+<li><span class="math inline">\(\displaystyle \sqrt{n}(\hat \theta - \theta_0) \xrightarrow{D} N\Big(0, I_1(\theta_0)^{-1}\Big)\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span></li>
+</ul></li>
+<li>Asymptotic normality presupposes consistency: if an estimator <span class="math inline">\(\hat \theta\)</span> is asymptotically normal, it is necessarily consistent</li>
+<li>Asymptotic variance</li>
+<li>Large-sample variance versus asymptotic variance
+<ul>
+<li>Var<span class="math inline">\((\hat \theta) = \displaystyle \Big(n I_{\theta\theta}\Big)^{-1}\)</span> is the large sample variance</li>
+<li><span class="math inline">\(V(\theta) = \displaystyle \Big(I_{\theta\theta}\Big)^{-1}\)</span> is the asymptotic variance</li>
+<li>Var<span class="math inline">\((\hat \theta) \approx V(\theta)/n\)</span> for <span class="math inline">\(n\)</span> large</li>
+</ul></li>
+<li>Asymptotic efficiency</li>
+</ul>
+</section>
+<section id="week-4-hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="week-4-hypothesis-testing">Week 4: Hypothesis testing</h2>
+<ul>
+<li>Rejection and non-rejection regions
+<ul>
+<li>Rejection region of H: The set <span class="math inline">\(R\)</span> of possible outcomes <span class="math inline">\(\pmb y\)</span> not consistent with H</li>
+<li>Non-rejection region of H: The set <span class="math inline">\(R^c\)</span> of possible outcomes <span class="math inline">\(\pmb y\)</span> consistent with H</li>
+<li>Reject H iff <span class="math inline">\(\pmb y \in R\)</span></li>
+</ul></li>
+<li>Test <span class="math inline">\(H_0: \pmb \theta \in \Theta_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \pmb \theta \notin \Theta_0\)</span>
+<ul>
+<li>Define some test statistic <span class="math inline">\(T(\pmb y)\)</span> to evaluate <span class="math inline">\(H_0\)</span></li>
+<li><span class="math inline">\(T\)</span> is a 1-dimensional summary of the <span class="math inline">\(n\)</span>-dimensional observed data <span class="math inline">\(\pmb y\)</span></li>
+<li><span class="math inline">\(R = \{\pmb y|T(\pmb y) \text{ rejects } H_0\}\)</span></li>
+</ul></li>
+<li>Type I and type II errors
+<ul>
+<li>Type I: <span class="math inline">\(\pmb \theta \in \Theta_0\)</span> and <span class="math inline">\(\pmb y \in R\)</span>. We reject <span class="math inline">\(H_0\)</span> when it is in fact true</li>
+<li>The probability of a Type I error: <span class="math inline">\(\alpha(R) = P_{\pmb\theta}(\pmb Y \in R)\)</span> for <span class="math inline">\(\pmb \theta \in \Theta_0\)</span></li>
+<li>Type II: <span class="math inline">\(\pmb \theta \notin \Theta_0\)</span> and <span class="math inline">\(\pmb y \notin R\)</span>. We fail to reject <span class="math inline">\(H_0\)</span> when it is in fact false</li>
+<li>The probability of a Type II error: <span class="math inline">\(\beta(R) = P_{\pmb \theta}(\pmb Y \notin R) = 1 - P_{\pmb \theta}(\pmb Y \in R)\)</span> for <span class="math inline">\(\pmb \theta \notin \Theta_0\)</span></li>
+</ul></li>
+<li>The Power function of a test with rejection region <span class="math inline">\(R\)</span> based on a sample of size <span class="math inline">\(n\)</span>
+<ul>
+<li><span class="math inline">\(\beta_n(\pmb \theta) = P_{\pmb \theta}(\pmb Y \in R)\)</span></li>
+<li>If <span class="math inline">\(\pmb \theta \notin \Theta_0\)</span>, <span class="math inline">\(\beta_n(\pmb \theta)\)</span> is the probability of detecting the alternative: <span class="math inline">\(\beta_n(\pmb \theta) =1 - \beta(R)\)</span></li>
+<li>If <span class="math inline">\(\pmb \theta \in \Theta_0\)</span>, <span class="math inline">\(\beta_n(\pmb \theta)\)</span> is the Type I error probability: <span class="math inline">\(\beta_n(\pmb \theta) = \alpha(R)\)</span></li>
+</ul></li>
+<li>Likelihood ratio
+<ul>
+<li><span class="math inline">\(\displaystyle T_{LR}(y) = \dfrac{\sup_{\Theta_0} L(\theta | y)}{\sup_{\Theta} L(\theta | y)}\)</span></li>
+<li><span class="math inline">\(\displaystyle R = \{y | T_{LR}(y) \le \xi \}\)</span>, where <span class="math inline">\(\xi\)</span> is the critical value</li>
+</ul></li>
+<li>Choose a critical value <span class="math inline">\(\xi\)</span> such that <span class="math inline">\(\displaystyle P\Big(T_{LR}(Y) \le \xi; H_0\Big) = \alpha\)</span>
+<ul>
+<li>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(T(y) \le \xi\)</span></li>
+</ul></li>
+<li>Exponential LRT of <span class="math inline">\(H_0: \theta \le \theta_0\)</span> vs <span class="math inline">\(H_a: \theta &gt; \theta_0\)</span></li>
+<li>Normal LRT with known variance of <span class="math inline">\(H_0: \mu \le \mu_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \mu &gt; \mu_0\)</span>
+<ul>
+<li><span class="math inline">\(T_W = T_S = T_{LR} = \displaystyle \frac{n(\bar Y - \mu_0)^2}{\sigma^2}\)</span></li>
+<li>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(T &gt; \chi^2_{1,\alpha}\)</span>, where <span class="math inline">\(\chi^2_{1,\alpha} = Q(1 - \alpha)\)</span> and <span class="math inline">\(Q\)</span> is the quantile function associated with the <span class="math inline">\(\chi^2\)</span> distribution. For example, when <span class="math inline">\(\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84\)</span>.</li>
+<li>This is equivalent to rejecting <span class="math inline">\(H_0\)</span> if <span class="math inline">\(Z = \displaystyle \frac{\bar Y - \mu_0}{\sigma/\sqrt n} &gt; z_{\alpha}\)</span>, where <span class="math inline">\(z_{\alpha} = Q(1 - \alpha) = \Phi^{-1}(1 - \alpha)\)</span> and <span class="math inline">\(Q\)</span> is the quantile function associated with the standard normal distribution distribution. In other words, <span class="math inline">\(z_\alpha\)</span> satisfies <span class="math inline">\(P(Z \ge z_\alpha) = \alpha\)</span>.</li>
+<li>A note on notation: <span class="math inline">\(z_{\alpha} = \Phi^{-1}(1-\alpha) = Q(1 - \alpha)\)</span>. For example, when <span class="math inline">\(\alpha = 0.05, z_{\alpha} \approx 1.64\)</span>. <span class="math inline">\(z_\alpha\)</span> satisfies <span class="math inline">\(P(Z \le z_\alpha) = 1- \alpha\)</span> and <span class="math inline">\(P(Z &gt; z_\alpha) = \alpha\)</span>.</li>
+<li>Corresponding power function</li>
+</ul></li>
+<li>Level of a test
+<ul>
+<li><strong>Size <span class="math inline">\(\alpha\)</span> test</strong><br>
+<span class="math inline">\(\displaystyle \sup_{\pmb \theta \in \Theta_0} P(\pmb Y \in R) =\sup_{\pmb \theta \in \Theta_0} \beta_n(\pmb \theta) = \alpha\)</span></li>
+<li><strong>Level <span class="math inline">\(\alpha\)</span> test</strong><br>
+<span class="math inline">\(\displaystyle \sup_{\pmb \theta \in \Theta_0} P(\pmb Y \in R) =\sup_{\pmb \theta \in \Theta_0} \beta_n(\pmb \theta) \le \alpha\)</span></li>
+<li><strong>Asymptotic level <span class="math inline">\(\alpha\)</span> test</strong><br>
+<span class="math inline">\(\displaystyle \sup_{\pmb \theta \in \Theta_0} P(\pmb Y \in R) =\sup_{\pmb \theta \in \Theta_0} \beta_n(\pmb \theta) \xrightarrow{n \rightarrow \infty} \alpha\)</span></li>
+</ul></li>
+<li>The Wald Statistic, Likelihood Ratio Statistic, and Score Statistic are asymptotically equivalent under appropriate regularity conditions
+<ul>
+<li>Wald is often the simplest to calculate (need to calculate the MLE) and can be the least conservative</li>
+<li>The LR statistic is often the most computationally demanding (requires likelihood evaluation under both hypotheses)</li>
+<li>The Score is often somewhere in between (doesn’t need the MLE)</li>
+</ul></li>
+<li><strong>Simple null hypothesis: all parameters known under <span class="math inline">\(H_0\)</span></strong></li>
+<li>Three test statistics
+<ul>
+<li>Wald:<br>
+<span class="math inline">\(T_W = \displaystyle \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\Big\{nI_1(\hat \theta_{\text MLE})\Big\}^{-1}} = \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\text{Var}(\hat \theta_{\text{MLE}})} = (\hat \theta_{\text{MLE}} -\theta_0)^2 \cdot nI_1(\hat \theta_{\text{MLE}})\)</span></li>
+<li>Likelihood ratio :<br>
+<span class="math inline">\(\displaystyle T_{LR} = -2\Big\{\ell(\theta_0) - \ell(\hat \theta_{\text{MLE}}) \Big\} = 2\Big\{\ell(\hat \theta_{\text{MLE}}) - \ell(\theta_0) \Big\}\)</span> or, equivalently,<br>
+<span class="math inline">\(\displaystyle T_{LR} = -2\ln\Bigg\{\frac{L(\theta_0)}{L(\hat \theta_{\text{MLE}})} \Bigg\} = 2\ln\Bigg\{\frac{ L(\hat \theta_{\text{MLE}})}{L(\theta_0)} \Bigg\}\)</span></li>
+<li>Score:<br>
+<span class="math inline">\(\displaystyle T_S = \frac{S_n(\theta_0)^2}{nI_1(\theta_0)}\)</span></li>
+</ul></li>
+<li>Asymptotic distribution of the Wald statistic
+<ul>
+<li><span class="math inline">\(\displaystyle T_W = nI_1(\theta)(\hat \theta_{\text{MLE}} -\theta)^2 \xrightarrow{D} \chi_1^2 \text{ under } H_0\)</span></li>
+<li><span class="math inline">\(\displaystyle \sqrt{n}(\hat \theta_{\text{MLE}} - \theta) \xrightarrow{D} N\Big(0, \frac{1}{I_1(\theta)}\Big)\)</span></li>
+<li><span class="math inline">\(\displaystyle Z_W = \sqrt{T_W} = \sqrt{nI_1(\theta)}(\hat \theta_{\text{MLE}} - \theta) \xrightarrow{D} N(0, 1)\)</span></li>
+<li>NB: the relationship between a standard normal variable and the <span class="math inline">\(\chi^2\)</span> distribution:<br>
+<span class="math inline">\(Z^2 \sim \chi_1^2\)</span></li>
+</ul></li>
+<li>General vector formulation of the Wald statistic
+<ul>
+<li><span class="math inline">\(\displaystyle T_W = (\hat{\pmb\theta}_{\text{MLE}} - \hat{\pmb\theta}_0)^T \{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}(\hat{\pmb\theta}_{\text{MLE}} - \hat{\pmb\theta}_0) \xrightarrow{D} \chi_b^2 \text{ under } H_0\)</span></li>
+<li><span class="math inline">\(\displaystyle \hat{\pmb\theta}_{\text{MLE}} \xrightarrow{D} N\Big({\pmb\theta}_0, \Big[\pmb I_T(\pmb \theta_0) \Big]^{-1}\Big)\)</span></li>
+<li><span class="math inline">\(\displaystyle \sqrt{\pmb I_T(\pmb \theta_0)} (\hat{\pmb\theta}_{\text{MLE}} - \pmb \theta_0) \xrightarrow{D} N\Big({\pmb\theta}_0, \mathbb{1}_b \Big)\)</span></li>
+</ul></li>
+<li>Score statistic (Lagrange Multiplier test)
+<ul>
+<li><span class="math inline">\(\displaystyle T_S = \frac{[S_n(\theta_0)]^2}{nI_1(\theta_0)} \xrightarrow{D} \chi^2_1\)</span></li>
+<li><span class="math inline">\(\displaystyle \text{Reject } H_0 \text{ if } T_S &gt; \chi^2_{1,\alpha}\)</span>, where <span class="math inline">\(\chi^2_{1,\alpha} = Q(1 - \alpha)\)</span> and <span class="math inline">\(Q\)</span> is the quantile function associated with the <span class="math inline">\(\chi^2\)</span> distribution. For example, when <span class="math inline">\(\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84\)</span>.</li>
+<li><span class="math inline">\(\displaystyle Z_S = \frac{S_n(\theta_0)}{\sqrt{nI_1(\theta_0)}} \xrightarrow{D} N(0,1)\)</span></li>
+<li><span class="math inline">\(\displaystyle \text{Reject } H_0 \text{ if } Z_S &gt; z_{\alpha}\)</span>, where <span class="math inline">\(z_{\alpha} = Q(1 - \alpha) = \Phi^{-1}(1 - \alpha)\)</span> and <span class="math inline">\(Q\)</span> is the quantile function associated with the standard normal distribution distribution.</li>
+</ul></li>
+<li>Multi-parameter formulation of the Score statistic
+<ul>
+<li><span class="math inline">\(\displaystyle T_S = \pmb S_n(\pmb \theta_0)^T [\pmb I_T(\pmb \theta_0)]^{-1} \pmb S_n(\pmb \theta_0) \xrightarrow {D} \chi^2_b\)</span> under <span class="math inline">\(H_0\)</span></li>
+<li><span class="math inline">\([\pmb I_T(\pmb \theta_0)]^{-1/2} \pmb S_n(\pmb \theta_0) \xrightarrow {D} N(\pmb 0, \mathbb{1}_b)\)</span></li>
+</ul></li>
+<li>Likelihood ratio statistic
+<ul>
+<li><span class="math inline">\(T_{LR} = 2\Big\{ \ell(\hat \theta_{MLE}) - \ell(\theta_0) \Big\} \xrightarrow{D} \chi^2_1 \text{ under } H_0, \text{ as } n \rightarrow \infty\)</span></li>
+<li><span class="math inline">\(\text{Reject } H_0 \text{ if } T_{LR} &gt; \chi^2_{1,\alpha}\)</span>, where <span class="math inline">\(\chi^2_{1,\alpha} = Q(1 - \alpha)\)</span> and <span class="math inline">\(Q\)</span> is the quantile function associated with the <span class="math inline">\(\chi^2\)</span> distribution. For example, when <span class="math inline">\(\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84\)</span>.</li>
+</ul></li>
+<li>Multi-parameter formulation of the Likelihood ratio statistic
+<ul>
+<li><span class="math inline">\(T_{LR} = 2\Big\{ \ell(\hat {\pmb \theta}_{MLE}) - \ell(\pmb\theta_0) \Big\} \xrightarrow{D} \chi^2_b \text{ under } H_0, \text{ as } n \rightarrow \infty\)</span></li>
+<li>The distribution of <span class="math inline">\(T_{LR}\)</span> converges to a <span class="math inline">\(\chi^2_r\)</span> distribution as <span class="math inline">\(n \rightarrow \infty\)</span>, where the degrees of freedom <span class="math inline">\(r\)</span>, are given by the difference between the number of free parameters specified by <span class="math inline">\(\pmb \theta \in \Theta_0\)</span> (the <span class="math inline">\(H_0\)</span>-restricted parameter space) and the number of free parameters specified by <span class="math inline">\(\pmb \theta \in \Theta\)</span> (the entire parameter space)</li>
+<li>We reject <span class="math inline">\(H_0\)</span> iff <span class="math inline">\(T_{LR} &gt; \chi^2_{r,\alpha}\)</span>, where <span class="math inline">\(\chi^2_{1,\alpha} = Q(1 - \alpha)\)</span> and <span class="math inline">\(Q\)</span> is the quantile function associated with the <span class="math inline">\(\chi^2\)</span> distribution. For example, when <span class="math inline">\(\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84\)</span>.</li>
+</ul></li>
+<li><strong>Composite null hypotheses (unknown parameters under <span class="math inline">\(H_0\)</span>)</strong></li>
+<li>Partitioning the information matrix
+<ul>
+<li>Let <span class="math inline">\(\hat{\pmb I} = \pmb I_T(\hat{\pmb \theta}_{\text{MLE}}) = n \pmb I_1(\hat{\pmb \theta}_{\text{MLE}})\)</span></li>
+</ul></li>
+<li>Wald test of <span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span> versus <span class="math inline">\(H_a: \pmb \theta_1 \ne \pmb \theta_{10}\)</span>
+<ul>
+<li><span class="math inline">\(T_W = (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \xrightarrow{D} \chi^2_r\)</span></li>
+</ul></li>
+<li>Score test of <span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span> versus <span class="math inline">\(H_a: \pmb \theta_1 \ne \pmb \theta_{10}\)</span>
+<ul>
+<li><span class="math inline">\(T_S =\pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10}) \xrightarrow {D} \chi^2_r\)</span></li>
+</ul></li>
+<li>Likelihood ratio test of <span class="math inline">\(H_0: \pmb \theta_1 = \pmb \theta_{10}\)</span> versus <span class="math inline">\(H_a: \pmb \theta_1 \ne \pmb \theta_{10}\)</span>
+<ul>
+<li><span class="math inline">\(\displaystyle T_{LR} = -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\} \xrightarrow{D} \chi^2_{r}\)</span></li>
+</ul></li>
+<li>Asymptotic equivalence of tests
+<ul>
+<li>Two sequences of tests <span class="math inline">\(V_n\)</span> and <span class="math inline">\(V'_n\)</span> with respective rejection regions <span class="math inline">\(R_n\)</span> and <span class="math inline">\(R'_n\)</span> are asymptotically equivalent if under the null hypothesis, the probability of obtaining the same conclusion from both tests converges to 1 as <span class="math inline">\(n \rightarrow \infty\)</span></li>
+<li>Under regularity conditions, the Wald, Score, and Likelihood Ratio tests are asymptotic level <span class="math inline">\(\alpha\)</span> tests</li>
+<li>Under suitable regularity conditions, <span class="math inline">\(T_W\)</span>, <span class="math inline">\(T_S\)</span>, and <span class="math inline">\(T_{LR}\)</span> are asymptotically equivalent tests</li>
+</ul></li>
+<li>Showing asymptotic equivalence</li>
+<li>Consistent tests (no upper limit to power)
+<ul>
+<li>A sequence of tests is called consistent against a specific alternative <span class="math inline">\(\pmb \theta_1\)</span> if <span class="math inline">\(\beta_n(\pmb \theta_1) \xrightarrow{n \rightarrow \infty} 1\)</span></li>
+</ul></li>
+<li>Showing consistency for asymptotically normal test statistics</li>
+<li>Showing consistency with nuisance parameters</li>
+<li>Power function normal</li>
+<li>Asymptotic power approximation
+<ul>
+<li><span class="math inline">\(\displaystyle \beta_n(\theta_1) \approx \Phi \Bigg(\frac{\sqrt n(\theta_1 - \theta_1)}{\sigma(\theta_0)} - z_{\alpha} \Bigg)\)</span>, where <span class="math inline">\(z_\alpha\)</span> satisfies <span class="math inline">\(P(Z \ge z_\alpha) = \alpha\)</span></li>
+<li><span class="math inline">\(\displaystyle n \ge \frac{(z_{\alpha} + z_{1 -\beta})^2}{(\theta_1 - \theta_0)^2}\sigma^2(\theta_0)\)</span></li>
+</ul></li>
+<li>Asymptotic power approximation with nuisance parameters
+<ul>
+<li><span class="math inline">\(\displaystyle \beta_n(\theta_n, \eta) \xrightarrow{ n \rightarrow \infty} \Phi\Bigg(\frac{\Delta}{\sigma(\theta_0, \eta)} - z_{\alpha}\Bigg)\)</span>, where <span class="math inline">\(z_\alpha\)</span> satisfies <span class="math inline">\(P(Z \ge z_\alpha) = \alpha\)</span></li>
+</ul></li>
+<li>Relative efficiency of tests <span class="math inline">\(e_{12} = N_2 / N_1\)</span></li>
+<li>Efficiency is impacted by
+<ul>
+<li>The null and the alternative of interest</li>
+<li>The significance level <span class="math inline">\(\alpha\)</span></li>
+<li>The power <span class="math inline">\(\beta\)</span> at which the test is to be conducted</li>
+</ul></li>
+<li>Three relative efficiency measures
+<ul>
+<li>Pitman efficiency <span class="math inline">\(\displaystyle \lim_{\theta \rightarrow \theta_0} e_{12}(\alpha, \beta, \theta)\)</span></li>
+<li>Bahadur efficiency <span class="math inline">\(\displaystyle \lim_{\alpha \rightarrow 0} e_{12}(\alpha, \beta, \theta)\)</span></li>
+<li>Hodges and Lehmann efficiency <span class="math inline">\(\displaystyle \lim_{\beta \rightarrow 1} e_{12}(\alpha, \beta, \theta)\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="week-5-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="week-5-confidence-intervals">Week 5: Confidence intervals</h2>
+<ul>
+<li>Interval estimate vs.&nbsp;interval estimator/random interval</li>
+<li>Coverage probability
+<ul>
+<li><span class="math inline">\(P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)\)</span></li>
+</ul></li>
+<li>Confidence coefficient / confidence level
+<ul>
+<li><span class="math inline">\(\inf_\theta P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)\)</span></li>
+</ul></li>
+<li>Duality between test statistics and confidence sets
+<ul>
+<li>For a level <span class="math inline">\(\alpha\)</span> test with rejection region <span class="math inline">\(R(\theta_0)\)</span>,</li>
+<li><span class="math inline">\(C(\pmb X) = \Big[\theta_0: \pmb X \notin R(\theta_0) \Big]\)</span> is a <span class="math inline">\(1 - \alpha\)</span> confidence set.</li>
+<li>For a <span class="math inline">\(1 - \alpha\)</span> confidence set <span class="math inline">\(C(\pmb X)\)</span></li>
+<li><span class="math inline">\(R(\theta_0) = \Big[\pmb X : \theta_0 \notin C(\pmb X) \Big]\)</span> is the rejection region of a level <span class="math inline">\(\alpha\)</span> test</li>
+</ul></li>
+<li>Pivotal quantities
+<ul>
+<li>A random variable <span class="math inline">\(Q(\pmb X,\theta)\)</span> is a pivotal quantity (or pivot) if the distribution of <span class="math inline">\(Q(\pmb X, \theta)\)</span> is independent of all parameters</li>
+<li>If <span class="math inline">\(\pmb X \sim F(\pmb x | \theta)\)</span> then <span class="math inline">\(Q(\pmb X, \theta)\)</span> given <span class="math inline">\(\theta\)</span> has the same distribution for all values of <span class="math inline">\(\theta\)</span></li>
+<li>A pivot that is also a statistic (a function of the observed data <span class="math inline">\(\pmb X\)</span>) is called an ancillary statistic</li>
+<li>For example, the distribution of the <span class="math inline">\(T\)</span> statistic <span class="math inline">\(Q(\pmb X, \mu, \sigma^2) =\displaystyle T = \frac{\bar X - \mu}{S/\sqrt n} \sim t_{n-1}\)</span> does not depend on the parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>. Thus, <span class="math inline">\(T\)</span> is a pivotal quantity, and using the pivot <span class="math inline">\(T \sim t_{n-1}\)</span> , we have</li>
+<li><span class="math inline">\(P\Big(-t_{n-1,\frac{\alpha}{2}} \le T \le t_{n-1,\frac{\alpha}{2}} \Big) = 1-\alpha\)</span>, where <span class="math inline">\(t_\alpha = Q^{-1}(1 - \alpha)\)</span> satisfies <span class="math inline">\(P(T \ge t_\alpha) = \alpha\)</span></li>
+</ul></li>
+<li>Interval estimators based on pivots
+<ul>
+<li>Find numbers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> such that <span class="math inline">\(\displaystyle P_\theta\Big(a \le Q(\pmb X,\theta) \le b \Big) \ge 1 - \alpha\)</span></li>
+<li>Then, <span class="math inline">\(C(\pmb x) = \Big[\theta: a \le Q(\pmb x, \theta) \le b \Big]\)</span> and <span class="math inline">\(C(\pmb X)\)</span> is a <span class="math inline">\(1 - \alpha\)</span> confidence set for <span class="math inline">\(\theta\)</span>.</li>
+</ul></li>
+<li>Decreasing versus increasing pivotal functions of <span class="math inline">\(\theta\)</span>
+<ul>
+<li>If <span class="math inline">\(Q(\pmb x, \theta)\)</span> is an increasing function of <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(C(\pmb x)\)</span> has the form<br>
+<span class="math inline">\(Q^{-1}(\pmb x, a) \le \theta \le Q^{-1}(\pmb x, b)\)</span></li>
+<li>If <span class="math inline">\(Q(\pmb x, \theta)\)</span> is a decreasing function of <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(C(\pmb x)\)</span> has the form<br>
+<span class="math inline">\(Q^{-1}(\pmb x, b) \le \theta \le Q^{-1}(\pmb x, a)\)</span></li>
+</ul></li>
+<li>Confidence interval for <span class="math inline">\(\sigma^2\)</span> based on a pivot
+<ul>
+<li><span class="math inline">\((n-1)S^2/\sigma^2 \sim\chi^2_{n-1}\)</span></li>
+</ul></li>
+<li>Confidence intervals based on a pivot of the CDF</li>
+<li>Suppose T is a statistic with continuous cdf <span class="math inline">\(F_T(t|\theta)\)</span> and <span class="math inline">\(F_T(T|\theta) \sim U(0,1)\)</span>
+<ul>
+<li>When <span class="math inline">\(F_T(t | \theta)\)</span> is a decreasing function of <span class="math inline">\(\theta\)</span>,
+<ul>
+<li><span class="math inline">\(F_T\Big(t | \theta_U(\theta)\Big) = \alpha/2\)</span></li>
+<li><span class="math inline">\(F_T\Big(t | \theta_L(\theta)\Big) = 1 - \alpha/2\)</span></li>
+</ul></li>
+<li>When <span class="math inline">\(F_T(t | \theta)\)</span> is an increasing function of <span class="math inline">\(\theta\)</span>,
+<ul>
+<li><span class="math inline">\(F_T\Big(t | \theta_U(\theta)\Big) = 1- \alpha/2\)</span></li>
+<li><span class="math inline">\(F_T\Big(t | \theta_L(\theta)\Big) = \alpha/2\)</span></li>
+</ul></li>
+<li>Then, the random interval <span class="math inline">\(\Big(\theta_L(T),\theta_U(T)\Big)\)</span> is a <span class="math inline">\(1-\alpha\)</span> confidence set for <span class="math inline">\(\theta\)</span></li>
+</ul></li>
+<li>Asymptotic confidence coefficient
+<ul>
+<li>A sequence of interval estimators <span class="math inline">\(\Big[L_n(\pmb X), U_n(\pmb X) \Big]\)</span> of a parameter <span class="math inline">\(\theta\)</span> has asymptotic confidence coefficient <span class="math inline">\(\gamma\)</span> if for every <span class="math inline">\(\theta\)</span></li>
+<li><span class="math inline">\(\displaystyle P_\theta \Bigg(\theta \in \Big[L_n(\pmb X), U_n(\pmb X) \Big] \Bigg) \xrightarrow{n \rightarrow \infty} \gamma\)</span></li>
+</ul></li>
+<li>Evaluating interval estimators
+<ul>
+<li>Size and coverage probability: for a specified coverage probability, find the interval with the shortest length</li>
+<li>Test-related optimality: probability of covering false values</li>
+<li>Loss function: reflection both length and coverage</li>
+</ul></li>
+</ul>
+</section>
+<section id="week-6-inference-under-the-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="week-6-inference-under-the-bootstrap">Week 6: Inference under the bootstrap</h2>
+<ul>
+<li>Bootstrap: re-sampling with replacement</li>
+<li>When <span class="math inline">\(n\)</span> is very small, assuming asymptotic normality is unreasonable</li>
+<li>Building confidence intervals
+<ul>
+<li>Straightforward when the exact distribution of a statistic is available</li>
+<li>Straightforward when we can use asymptotics (i.e., for any distribution and sample size <span class="math inline">\(n\)</span> where the CLT holds)</li>
+<li>When neither are possible (e.g., small <span class="math inline">\(n\)</span> or no exact distribution): bootstrap</li>
+</ul></li>
+<li>Two approaches
+<ul>
+<li>If you can sample from <span class="math inline">\(f_\theta\)</span>, use <span class="math inline">\(\hat \theta\)</span> and generate <span class="math inline">\(B\)</span> bootstrap samples from <span class="math inline">\(f_{\hat \theta}\)</span></li>
+<li>If not, draw with replacement from the available data to get <span class="math inline">\(B\)</span> bootstrap samples</li>
+</ul></li>
+<li>With the bootstrap, we can discover the sampling distribution of a statistic</li>
+<li>Bootstrap approach</li>
+<li>Strengths and weaknesses</li>
+</ul>
+</section>
+<section id="week-7-bayesian-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="week-7-bayesian-statistics">Week 7: Bayesian statistics</h2>
+<ul>
+<li>In the frequentist approach, the parameter <span class="math inline">\(\theta\)</span> is fixed and the data is random</li>
+<li>In the Bayesian approach, the parameter <span class="math inline">\(\theta\)</span> is a random variable and the data is fixed</li>
+<li>A prior distribution is a subjective distribution of the parameters based on the experimenter’s belief</li>
+<li>A posterior distribution is a distribution of the parameters updated by the information contain in the sample</li>
+<li>Bayesian approach notation
+<ul>
+<li><span class="math inline">\(\pmb x\)</span>: observed sample <span class="math inline">\(x_1, ..., x_n\)</span></li>
+<li><span class="math inline">\(\pi(\theta)\)</span>: prior distribution of the parameter</li>
+<li><span class="math inline">\(f(\pmb x | \theta)\)</span>: conditional distribution of the sample given the parameters</li>
+<li><span class="math inline">\(\pi(\theta | \pmb x)\)</span>: posterior distribution of the parameter (conditional distribution of <span class="math inline">\(\theta\)</span> given the observed sample <span class="math inline">\(\pmb x\)</span>)</li>
+</ul></li>
+<li>Bayesian inference
+<ul>
+<li><span class="math inline">\(\displaystyle \pi(\theta|\pmb x) = \frac{f(\pmb x | \theta)\pi(\theta)}{m(\pmb x)} = \frac{f(\pmb x | \theta)\pi(\theta)}{\int f(\pmb x | \theta)\pi(\theta)~d\theta}\)</span></li>
+<li>Note: for simplicity, we can use <span class="math inline">\(\displaystyle \pi(\theta|\pmb x) \propto {f(\pmb x | \theta)\pi(\theta)}\)</span></li>
+<li>Note: for simplicity, you can rely only on the <strong>kernel</strong> of the two distributions (i.e., omit all factors that do not depend on <span class="math inline">\(\theta\)</span>)</li>
+</ul></li>
+<li>The prior distribution is often selected from a family of priors <span class="math inline">\(\pi(\theta|y)\)</span> indexed by a hyperparameter <span class="math inline">\(\gamma\)</span></li>
+<li>Selecting a prior
+<ul>
+<li>Empirical Bayes: The parameters of the prior distribution are estimated from the data</li>
+<li>Hierarchical Bayes: The parameters of the prior distribution are modeled by another distribution (the hyperprior distribution)</li>
+<li>Robust Bayes: The performance of an estimator is evaluated for each member of the class, with the goal of finding an estimator that performs well for the entire class</li>
+</ul></li>
+<li>Conjugate prior (the prior and posterior distribution are part of the same class of distributions)</li>
+<li>Bayesian point estimate of <span class="math inline">\(\theta\)</span>
+<ul>
+<li>Maximum a posteriori probability (MAP) estimator by maximizing the posterior distribution <span class="math inline">\(\pi(\theta | \pmb x)\)</span></li>
+<li>The conditional expectation estimator: the mean of the posterior distribution</li>
+</ul></li>
+<li>Credible interval for <span class="math inline">\(\theta\)</span> (i.e., Bayesian confidence interval)
+<ul>
+<li>An interval <span class="math inline">\(\displaystyle \Big[L(\theta|\pmb x),U(\theta|\pmb x) \Big]\)</span> such that</li>
+<li><span class="math inline">\(\displaystyle P\Big(L(\theta|\pmb x) \le \theta \le U(\theta|\pmb x) \Big) = \int_{L(\theta|\pmb x)}^{U(\theta|\pmb x)} \pi(\theta | \pmb x)~d\theta = 1-\alpha\)</span></li>
+<li>The parameter <span class="math inline">\(\theta\)</span> has probability <span class="math inline">\(1 - \alpha\)</span> to lie inside the credible interval</li>
+</ul></li>
+<li>When the sample size goes to infinity, the prior becomes dominated by the likelihood</li>
+<li>Obtaining posterior probabilities
+<ul>
+<li><span class="math inline">\(P(\theta \in \Theta_0) = P(H_0 \text{ is true}|\pmb x)\)</span></li>
+<li><span class="math inline">\(P(\theta \notin \Theta_0) = P(H_0 \text{ is false}|\pmb x)\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="week-8-m-estimators" class="level2">
+<h2 class="anchored" data-anchor-id="week-8-m-estimators">Week 8: M-estimators</h2>
+<ul>
+<li><span class="math inline">\(\displaystyle 0 = \sum_{i = 1}^n U_i (\hat \theta)\)</span></li>
+<li>The solution <span class="math inline">\(\hat \theta\)</span> to <span class="math inline">\(\displaystyle 0 = \sum_{i = 1}^n U_i (\hat \theta)\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span> when the data are iid and the estimating equation is unbiased such that
+<ul>
+<li><span class="math inline">\(\displaystyle E\Big[U_i (\theta)\Big] = 0\)</span></li>
+</ul></li>
+<li>The law of iterated expectation
+<ul>
+<li><span class="math inline">\(E[Y_{ij}] = E\Bigg[E\Big[Y_{ij} \Big| X_i\Big] \Bigg]\)</span></li>
+</ul></li>
+<li>Asymptotic distribution/normality
+<ul>
+<li>When the data are iid, then the solution <span class="math inline">\(\hat \theta\)</span> to an unbiased estimating equation <span class="math inline">\(\displaystyle 0 = \sum_{i = 1}^n U_i (\hat \theta)\)</span> is asymptotically normal with</li>
+<li><span class="math inline">\(\sqrt n(\hat \theta - \theta) \xrightarrow D N(0, \Sigma)\)</span> and</li>
+<li><span class="math inline">\(\displaystyle \Sigma = E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1} \text{Var}\Big[ U_i(\theta) \Big]E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1,T}\)</span></li>
+</ul></li>
+<li>In the single-parameter case,
+<ul>
+<li><span class="math inline">\(\displaystyle \Sigma = \text{Var}\Big[U(\theta)\Big] E\Bigg[ \frac{\partial}{\partial \theta} U(\theta) \Bigg]^{-2}\)</span></li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p><span class="math inline">\(\alpha\)</span> = shape, <span class="math inline">\(\beta\)</span> = rate, where <span class="math inline">\(\beta = 1/\theta\)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><span class="math inline">\(k\)</span> = shape, <span class="math inline">\(\theta\)</span> = scale<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./week1.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Point estimation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

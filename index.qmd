@@ -1,0 +1,470 @@
+# Overview {.unnumbered}
+
+\def\R{\mathbb{R}}
+
+\newcommand{\indep}{\perp \!\!\! \perp}
+
+## Common discrete distributions
+
+||$f(x)$|$F(x)$|$E[X]$| $\text{Var}[X]$|
+|--|---|---|-|-|
+|Bernoulli|$\displaystyle p^x(1-p)^{1-x}$|$\displaystyle 1 - p$|$p$|$p(1-p)$|
+|Binomial|$\displaystyle {n \choose x} p^x(1-p)^{n-x}$|$\displaystyle \sum_{i = 0}^x {n \choose i} p^i(1-p)^{n-i}$|$np$|$np(1-p)$|
+|Poisson|$\displaystyle \dfrac{e^{-\lambda} \lambda^x}{x!}$|$\displaystyle  \sum_{k = 0}^x \dfrac{e^{-\lambda} \lambda^k}{k!}$|$\lambda$|$\lambda$|
+
+## Common continuous distributions
+
+||$f(x)$|$F(x)$|$E[X]$|$\text{Var}[X]$|
+|--|----|---|-|-|
+|Normal|$\dfrac{1}{\sigma\sqrt{2\pi}}\exp\Bigg(-\dfrac{(x - \mu)^2}{2\sigma^2}\Bigg)$|$\Phi\Bigg(\dfrac{x - \mu}{\sigma}\Bigg)$|$\mu$|$\sigma^2$|
+|Exponential|$\lambda\exp(-\lambda x)$|$1 - \exp(-\lambda x)$|$\dfrac{1}{\lambda}$|$\dfrac{1}{\lambda^2}$|
+|Exp $\beta=\frac{1}{\lambda}$|$\frac{1}\beta\exp(-{x}/\beta)$|$1 - \exp(- x/\beta)$|$\beta$|$\beta^2$|
+|Uniform|$\dfrac{1}{b-a}$|$\dfrac{x-a}{b-a}$|$\dfrac{a + b}{2}$|$\dfrac{(b -a)^2}{12}$|
+|Gamma[^1]|$\dfrac{\beta^a x^{a-1}e^{-\beta x}}{\Gamma(\alpha)}$|$\dfrac{\gamma(a,\beta x)}{\Gamma(\alpha)}$|$\dfrac{\alpha}{\beta}$|$\dfrac{\alpha}{\beta^2}$|
+|Gamma[^2]|$\dfrac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k}$|$\dfrac{\gamma\Big(k,\frac{x}{\theta}\Big)}{\Gamma(k)}$|$k\theta$|$k\theta^2$|
+|$\chi^2_k$|$\dfrac{x^{\frac{k}{2}-1}e^{-x/2}}{2^{k/2}\Gamma(\frac{k}{2})}$|$\dfrac{\gamma\Big(\frac{k}{2},\frac{x}{2} \Big)}{\Gamma(k/2)}$|$k$|$2k$|
+
+[^1]: $\alpha$ = shape, $\beta$ = rate, where $\beta = 1/\theta$  
+[^2]: $k$ = shape, $\theta$ = scale
+
+\newpage
+
+## Week 1: Point estimation
+
+- Distribution function definition 
+  - $F_X(x) = P(X \le x)$
+  - $\displaystyle \lim_{x \rightarrow -\infty} F_X(x) = 0$
+  - $\displaystyle \lim_{x \rightarrow +\infty} F_X(x) = 1$
+  - $F_X(x)$ is a non-decreasing function of $x$
+  - $F_X(x)$ is right-continuous
+  - Its derivative $f_X(x)$ is the probability density function
+- Parametric model definition 
+  - Set of (conditional) distribution functions indexed by an unknown finite-dimensional parameter
+  - E.g., linear regression model is a parametric model for $F_{Y|X}$
+    - $F_{Y|X}(y | x; \theta) = N(\alpha + \beta x, \nu^2); \theta \equiv (\alpha, \beta, \nu^2) \in \R^2 \times \R^+$
+- Semi-parametric model definition 
+  - Set of (conditional) distribution functions indexed by an unknown finite-dimensional parameter and some infinite-dimensional parameter (e.g. unknown function)
+  - E.g., conditional mean model
+    - $F_{Y|X}(y | x; \theta) : E(Y | X = x) = \alpha + \beta x;~ \theta \equiv (\alpha, \beta) \in \R^2$
+- Likelihood function definition 
+  - The density of all observed data, viewed as a function of $\theta$, evaluated at the effective observations $x_1, ..., x_n$ 
+  - $\displaystyle L(\theta | x_1,..., x_n)=f_{X_1, ..., X_n}(x_1,...,x_n|\theta)$
+- i.i.d sampling 
+- Maximum likelihood estimate 
+  - The value of $\theta$ which maximizes the likelihood $L(\theta | x_1,...,x_n)$
+  - $\displaystyle \hat \theta = \text{argmax}_\theta L(\theta | x_1,...,x_n)$
+- Invariance of the MLE 
+  - If $\hat \theta$ is the MLE of $\theta$, then for any function $g(\theta)$, the MLE of $g(\theta)$ is $g(\hat \theta)$
+- Calculate expected counts using the MLE, $\chi^2$ test to contrast observed and expected counts 
+- Likelihood function for the zero-inflated Poisson model 
+- MLE of the normal distribution 
+- Censoring problem (equipment failure times): Censored exponential distribution 
+- The Neyman-Scott problem
+- Marginal likelihood, marginal/restricted MLE
+  - Transforming the data, such that their distribution is independent of nuisance parameters
+- Two approaches to tackle the nuisance parameter problem
+  - Marginal likelihood
+  - Conditional likelihood
+- Distribution of transformed data / a function of a random variable
+  - For $Y = h(X)$, use the chain rule to obtain the pdf of $Y$
+  - $h(X)$ **strictly increasing**
+  - $\displaystyle f_Y(y) = f_X\Big(h^{-1}(y)\Big) \frac{d}{dy} \Big[h^{-1}(y)\Big]$
+  - $h(X)$ **strictly decreasing**
+  - $\displaystyle f_Y(y) = f_X\Big(h^{-1}(y) \Big)   \Bigg| \frac{d}{dy} \Big[h^{-1}(y)  \Big]\Bigg|$
+- Bijective (i.e., one-to-one) multivariate transformations
+  - A bijection, also known as a bijective function, one-to-one correspondence, or invertible function, is a function between the elements of two sets, where each element of one set is paired with exactly one element of the other set, and each element of the other set is paired with exactly one element of the first set. There are no unpaired elements.
+- Score vector 
+  - The derivative of the loglikelihood based on data for a single subject $X_i$
+  - $\displaystyle l_i(\theta) = \ln f_X(X_i;\theta) = \ln L_i(\theta)$
+  - $\displaystyle S_i(\theta) \equiv \frac{\partial l_i(\theta)}{\partial \theta} = \frac{\partial \ln L_i(\theta)}{\partial \theta}$
+  - Total score: $\displaystyle S_n(\theta) = \sum_{i = 1}^n S_i(\theta)$ 
+  - Under regularity conditions, $\displaystyle S_n(\hat \theta_{MLE}) = \sum_{i = 1}^n S_i(\hat \theta_{MLE}) = 0$ 
+  - The MLE is obtained by solving $\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0$
+- Mean of the score statistic
+- Fisher information matrix $I(\theta)$ and large-sample variance / covariance matrix 
+  - There are two equivalent definitions/ways of obtaining the Fisher information matrix
+  - $\displaystyle I_1(\theta) = - E\Bigg[\frac{\partial}{\partial \theta} S_i(\theta) \Bigg] = - E\Bigg[\frac{\partial^2}{\partial \theta^2} \ln f_X(X_i;\theta) \Bigg]$
+  - $\displaystyle I_1(\theta) = E\Bigg[ \Big\{S_i(\theta)\Big\}^2 \Bigg] = E\Bigg[ \Big\{  \frac{\partial}{\partial \theta} \ln f_X(X_i;\theta)\Big\}^2 \Bigg]$
+  - $\displaystyle I_{jk}(\theta) = - E_\theta \Bigg[\frac{\partial^2}{\partial\theta_j\partial\theta_k} l_i(\theta) \Bigg]$
+  - $\displaystyle \text{Var}(\hat \theta) = \frac{1}{nI(\theta)}$
+  - Total Fisher information: in the iid case, $I_T = nI_1(\theta)$ 
+- The inverse of a $2 \times 2$ matrix 
+- Example multivariate Fisher information 
+- Variance cost of adding complexity 
+- The large sample variance of the MLE for a parameter $\theta$ when the other parameter $\eta$ is known 
+  - $\displaystyle \Big(n I_{\theta\theta}\Big)^{-1}$
+- Large-sample variance versus asymptotic variance
+  - Var$(\hat \theta) = \displaystyle \Big(n I_{\theta\theta}\Big)^{-1}$ is the large sample variance
+  -  $V(\theta) = \displaystyle \Big(I_{\theta\theta}\Big)^{-1}$ is the asymptotic variance
+  - Var$(\hat \theta) \approx V(\theta)/n$ for $n$ large
+- When the other parameter $\eta$ is unknown, we have the Fisher information
+  - $\displaystyle I^*_{\theta\theta} = I_{\theta\theta} - \Big[ I_{\theta\eta} \cdot I^{-1}_{\eta\eta} \cdot I_{\eta\theta} \Big] = I_{\theta\theta} - \dfrac{I_{\theta\eta}^2}{I_{\eta\eta}}$
+  - Then, we have the large sample variance of the MLE for $\theta$ with the other parameter unknown:
+  - $\displaystyle \Big(n I^*_{\theta\theta}\Big)^{-1}$
+  - And we have the total information $nI^*_{\theta\theta}$
+- Inference under singular Fisher information matrix: when the variance increases to an enormous extent
+- Cramer-Rao inequality, Minimum Variance Unbiased Estimators (MVUE) 
+- The Cramer-Rao inequality provides a lower bound for the variance of unbiased estimators $W(\pmb X)$ of $\tau(\theta)$ (i.e., functions of $\theta$) 
+  - $\displaystyle \text{Var}\{W(\pmb X)\} \ge {\Big\{\frac{\partial}{\partial\theta} \tau(\theta)\Big\}^2} \frac{1}{nI(\theta)}$
+- For unbiased estimators $W(\pmb X)$ of $\theta$,
+  - $\displaystyle \text{Var}\{W(\pmb X)\} \ge \frac{1}{nI(\theta)}$
+- If there exists a Minimum Variance Unbiased Estimator $W$ of $\tau(\theta)$, then $W$ is unique 
+- Uniformly Minimum Variance Unbiased Estimators (UMVUE) 
+- MLEs are BAN: Best Asymptotically Normal (i.e., asymptotically efficient). The MLE has a limiting normal distribution with the Cramer-Rao lower bound as variance: 
+  - $\displaystyle \text{Var}(\hat \theta)= \frac{1}{nI(\theta)}$
+- Optimization 
+  - First order Taylor approximation
+- Newton-Raphson method 
+  - $\displaystyle x_{n + 1} = x_n - f(x_n)/f'(x_n)$
+  - Goal is to find the solution to $\displaystyle \frac{1}{n} \sum_{i = 1}^n S_i(\theta) = 0$ 
+- Mixture density
+  - Full data $Y_{\text{full}} = (Y_1, Z_1, ..., Y_n, Z_n)$
+  - Observed data $Y_{\text{obs}} = (Y_1, ..., Y_n)$ 
+  - Unobserved, missing data $\pmb Z = (Z_1, ..., Z_n)$ 
+  - Because $\pmb Z$ is unobserved, the joint likelihood of the full data $L_F(\theta | Y_{\text{full}}) = L_F(\theta | Y_{\text{obs}}, \pmb Z)$ cannot be computed
+- EM algorithm 
+  - Properties 
+  - In the E (Expectation) step, we formally estimate the missing information
+  - In the M (Maximization) step, we estimate the parameters
+- Estimation methods 
+  - Maximum likelihood
+  - EM algorithm
+  - Method of moments
+  - Quantile-matching
+  - Least squares
+  - M-estimation
+  - Bayesian Estimation
+  
+  
+\newpage
+  
+  
+## Week 2: Large sample theory 
+
+- Desirable properties of a statistic 
+- Convergence of non-random sequences
+- Convergence in probability 
+  - A sequence of random variables $Y_1, Y_2, ...$ converges in probability to a random variable $Y$ if, for every $\epsilon > 0$:
+  - $\displaystyle \lim_{n \rightarrow \infty} P\Big(|Y_n - Y| \ge \epsilon \Big) = 0$, or, equivalently,
+  - $\displaystyle \lim_{n \rightarrow \infty} P\Big(|Y_n - Y| < \epsilon \Big) = 1$
+  - Notation: $Y_n \xrightarrow{P} Y$
+- Weak consistency 
+  - Let $\pmb W_n = \pmb W_n(\pmb X_1, ..., \pmb X_n)$ be an estimator of a function $\tau(\pmb t)$ of parameter(s) $\pmb t$ based on based on *n* random variables $\pmb X_1, ..., \pmb X_n$. The sequence of estimators $\pmb W_n$ of $\tau(\pmb t)$ is consistent if $\displaystyle \pmb W_n \xrightarrow{P} \tau(\pmb t)$ for ever $\pmb \theta \in \pmb \Theta$. 
+- Weak law of large numbers (convergence in probability) 
+  - Let $\pmb X_1, ..., \pmb X_n$ be iid with finite expectation $E[\pmb X_i] = \mu$ and let $\displaystyle \bar{\pmb X}_n = \frac{1}{n} \sum_{i = 1}^n \pmb X_i$. Then, $\pmb{\bar X}_n$ is a consistent estimator of the population mean $\mu$:
+  - $\displaystyle \bar{\pmb X}_n \xrightarrow{P} \mu$ or, equivalently,
+  - $\displaystyle \lim_{n \rightarrow \infty} P\Big(|\pmb{\bar X}_n - \mu| \ge \epsilon \Big) = 0$
+- Chebychev's inequality 
+  - For any $\epsilon > 0$ and a random $Z$, 
+  - $\displaystyle P\Bigg(\Big|Z - E[Z]\Big| \ge \epsilon  \Bigg) \le \frac{\text{Var}[Z]}{\epsilon^2}$
+- Strong law of large numbers: almost sure convergence 
+  - Let $\pmb X_1, ..., \pmb X_n$ be iid with finite expectation $E[\pmb X_i] = \mu$ and let $\displaystyle \bar{\pmb X}_n = \frac{1}{n} \sum_{i = 1}^n \pmb X_i$.  
+  Then, for any $\epsilon >0$,
+  - $\displaystyle P\Big( \lim_{n \rightarrow \infty}|\pmb{\bar X}_n - \mu| < \epsilon \Big) = 1$ or, equivalently,
+  - $\displaystyle P\Big( \lim_{n \rightarrow \infty}|\pmb{\bar X}_n - \mu| \ge \epsilon \Big) = 0$
+  - Notation: $\pmb{\bar X_n} \xrightarrow{a.s.} \mu$
+  - That is, $\pmb{\bar X}_n$ converges almost surely to $\mu$ (or, equivalently, converges with probability one to $\mu$)
+  - Note: if $X_n \xrightarrow{a.s.} X$, then $X_n \xrightarrow{P} X$: almost sure converge is stronger than, and is a superset of, convergence in probability
+  - Stronger than convergence in probability (which implies weak consistency)
+- Consistency of a function of $\pmb X_n$ (**continuous mapping**)
+  - If $\pmb X_n \xrightarrow{P} \pmb X$ and $\pmb h$ is a continuous function, then
+  - $\pmb h(\pmb X_n) \xrightarrow{P} \pmb h (\pmb X)$
+  - For example, since $S^2_n$ is a consistent estimator of $\sigma^2$, then $\sqrt{S^2_n} = S_n$ is a consistent estimator of $\sqrt{\sigma^2} = \sigma$ 
+- Convergence in distribution 
+  - A sequence of random variables $X_1, X_2, ...$ converges in distribution or in law to a random variable $X$ if 
+  - $\displaystyle \lim_{n \rightarrow \infty} F_{X_n}(x) = F_X(x)$ at all points at which $F_X(x)$ is continuous
+  - Notation: $X_n \xrightarrow{D} X$ or $X_n \xrightarrow{D} F$
+  - Convergence in distribution does **not** guarantee that $X_n$ is likely to be close to $X$ or imply convergence in probability in general: it is about convergence of cdf, not of random variables.
+  - For example, if $X_n$ converges in distribution to a standard normal variable $Z$ ($X_n \xrightarrow{D} Z$), then it also converges in distribution to $-Z$ ($X_n \xrightarrow{D} -Z$). 
+  - Note: convergence in distribution is weaker than almost sure convergence and convergence in probability. If a sequence of random variables converges almost surely or in probability (NB: the first implies the second, but the second does not imply the first), it also converges in distribution.
+- From weakest to strongest: 
+  - $X_n \xrightarrow{D} X$, which implies $h(X_n) \xrightarrow{D} h(X)$
+  - $X_n \xrightarrow{P} X$, which implies $h(X_n) \xrightarrow{P} h(X)$ and $X_n \xrightarrow{D} X$
+  - $X_n \xrightarrow{a.s.} X$, which implies $h(X_n) \xrightarrow{a.s.} h(X)$, $X_n \xrightarrow{P} X$, and $X_n \xrightarrow{D} X$
+- Convergence in distribution for vectors 
+  - $\pmb X_n \xrightarrow{D} \pmb X$ implies $X_n^{(k)} \xrightarrow{D} X^{(k)} ~~~\forall k$
+  - **However,** $X_n^{(k)} \xrightarrow{D} X^{(k)} ~~~\forall k$ does **not** imply  $\pmb X_n \xrightarrow{D} \pmb X$, **unless** the $X_n^{(1)},..., X_n^{(K)}$ **and** the $X^{(1)},..., X^{(K)}$ are independent
+- Slutsky's lemma 
+  - Consider two sequences of random variables $X_n$ and $Y_n$, with $X_n \xrightarrow{D} X$ and $Y_n \xrightarrow{P} c$. Then,
+  - $X_n + Y_n \xrightarrow{D} X + c$
+  - $Y_nX_n \xrightarrow{D} cX$
+  - $\displaystyle \frac{X_n}{Y_n} \xrightarrow{D} \frac{X}{c}$ if $c \ne 0$
+- The asymptotic distribution of sums 
+- Central Limit Theorem (CLT): univariate verson 
+  - Let $X_1, X_2,...$ be a sequence of iid random variables with $E[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2$. Then, 
+  - $\displaystyle \frac{\sqrt n(\bar X_n - \mu)}{\sigma} \xrightarrow{D} N(0,1)$
+  - Notation: $\displaystyle \frac{\sqrt n(\bar X_n - \mu)}{\sigma} \approx N(0,1)$
+  - $\sqrt n( {\bar X_n} -  \mu) \xrightarrow{D} N( 0,  \sigma^2)$
+- Multivariate CLT 
+  - Let $\pmb X_n$ be a sequence of iid random vectors with mean $E[\pmb X_n] = \pmb \mu$ and covariance matrix $\text{Var}[\pmb X] = \pmb\Sigma$. Then,
+  - $\sqrt n(\pmb {\bar X} - \pmb \mu) \xrightarrow{D} N(\pmb 0, \pmb \Sigma)$
+- The Delta Method: Variance of transformations 
+  - Let $X_n$ be a sequence of random variables such that $\sqrt n(X_n - \theta) \xrightarrow{D} N(0, \sigma^2)$. Consider a function $g$ and a value $\theta$ for which $g'(\theta) \ne 0$ exists. Then:
+  - $\sqrt n\Big(g(X_n) - g(\theta)\Big) \xrightarrow{D} N\Big(0, \sigma^2\Big[g'(\theta)\Big]^2\Big)$
+- Asymptotically pivotal quantities (APQs) 
+  - We want to avoid asymptotic distributions that depend on unknown parameters. To do so, we can use
+    - The plug-in method 
+    - Variance-stabilizing transformations
+    - We wish to find a function $g(\theta)$ such that $\sigma^2\Big[g'(\theta)\Big]^2 = c^2$ or, equivalently, $\sigma g'(\theta) = c$
+    
+\newpage
+    
+## Week 3: Asymptotics of maximum likelihood estimators
+
+- MLE (multivariate) definition 
+- Desirable properties for the MLE 
+  - Consistency: $\pmb{\hat \theta} \xrightarrow{P} \pmb{\theta}_0$
+  - Asymptotic normality
+- Support of a distribution 
+  - The support of f is the smallest closed set containing all the values of $\pmb y$ for which $f(\pmb y) > 0$
+- Consistency assumptions (regularity conditions) 
+  - Identifiability
+- Consistency theorem 
+  - If the regularity conditions hold, there exists a consistent solution of the score equations
+  - NB: this does not yet imply that the MLE is consistent! (Only when there is only one solution to the score equations)
+  - For the exponential family of distributions, the score equations have a unique solution; the MLE is consistent
+- Further assumptuins/regularity conditions for asymptotic normality 
+- Asymptotic normality of the MLE 
+  - $\displaystyle \sqrt{n}(\hat \theta - \theta_0) \xrightarrow{D} N\Big(0, I_1(\theta_0)^{-1}\Big)$ as $n \rightarrow \infty$
+- Asymptotic normality presupposes consistency: if an estimator $\hat \theta$ is asymptotically normal, it is necessarily consistent
+- Asymptotic variance 
+- Large-sample variance versus asymptotic variance
+  - Var$(\hat \theta) = \displaystyle \Big(n I_{\theta\theta}\Big)^{-1}$ is the large sample variance
+  -  $V(\theta) = \displaystyle \Big(I_{\theta\theta}\Big)^{-1}$ is the asymptotic variance
+  - Var$(\hat \theta) \approx V(\theta)/n$ for $n$ large
+- Asymptotic efficiency 
+
+\newpage
+
+## Week 4: Hypothesis testing
+
+- Rejection and non-rejection regions
+  - Rejection region of H: The set $R$ of possible outcomes $\pmb y$ not consistent with H
+  - Non-rejection region of H: The set $R^c$ of possible outcomes $\pmb y$ consistent with H
+  - Reject H iff $\pmb y \in R$
+- Test $H_0: \pmb \theta \in \Theta_0$ vs. $H_a: \pmb \theta \notin \Theta_0$
+  - Define some test statistic $T(\pmb y)$ to evaluate $H_0$
+  - $T$ is a 1-dimensional summary of the $n$-dimensional observed data $\pmb y$
+  - $R = \{\pmb y|T(\pmb y) \text{ rejects } H_0\}$
+- Type I and type II errors 
+  - Type I: $\pmb \theta \in \Theta_0$ and $\pmb y \in R$. We reject $H_0$ when it is in fact true
+  - The probability of a Type I error: $\alpha(R) = P_{\pmb\theta}(\pmb Y \in R)$ for $\pmb \theta \in \Theta_0$
+  - Type II: $\pmb \theta \notin \Theta_0$ and $\pmb y \notin R$. We fail to reject $H_0$ when it is in fact false
+  - The probability of a Type II error: $\beta(R) = P_{\pmb \theta}(\pmb Y \notin R) = 1 - P_{\pmb \theta}(\pmb Y \in R)$ for $\pmb \theta \notin \Theta_0$
+- The Power function of a test with rejection region $R$ based on a sample of size $n$ 
+  - $\beta_n(\pmb \theta) = P_{\pmb \theta}(\pmb Y \in R)$
+  - If $\pmb \theta \notin \Theta_0$, $\beta_n(\pmb \theta)$ is the probability of detecting the alternative: $\beta_n(\pmb \theta) =1 - \beta(R)$
+  - If $\pmb \theta \in \Theta_0$, $\beta_n(\pmb \theta)$ is the Type I error probability: $\beta_n(\pmb \theta) = \alpha(R)$
+- Likelihood ratio 
+  - $\displaystyle T_{LR}(y) = \dfrac{\sup_{\Theta_0} L(\theta | y)}{\sup_{\Theta} L(\theta | y)}$
+  - $\displaystyle R = \{y | T_{LR}(y) \le \xi \}$, where $\xi$ is the critical value
+- Choose a critical value $\xi$ such that $\displaystyle P\Big(T_{LR}(Y) \le \xi; H_0\Big) = \alpha$ 
+  - Reject $H_0$ if $T(y) \le \xi$
+- Exponential LRT of $H_0: \theta \le \theta_0$ vs $H_a: \theta > \theta_0$ 
+- Normal LRT with known variance of $H_0: \mu \le \mu_0$ vs. $H_a: \mu > \mu_0$ 
+  - $T_W = T_S = T_{LR} = \displaystyle \frac{n(\bar Y - \mu_0)^2}{\sigma^2}$
+  - Reject $H_0$ if $T > \chi^2_{1,\alpha}$, where $\chi^2_{1,\alpha} = Q(1 - \alpha)$ and $Q$ is the quantile function associated with the $\chi^2$ distribution. For example, when $\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84$.
+  - This is equivalent to rejecting $H_0$ if $Z = \displaystyle \frac{\bar Y - \mu_0}{\sigma/\sqrt n} > z_{\alpha}$, where $z_{\alpha} = Q(1 - \alpha) = \Phi^{-1}(1 - \alpha)$ and $Q$ is the quantile function associated with the standard normal distribution distribution. In other words, $z_\alpha$ satisfies $P(Z \ge z_\alpha) = \alpha$.
+  - A note on notation: $z_{\alpha} = \Phi^{-1}(1-\alpha) = Q(1 - \alpha)$. For example, when $\alpha = 0.05, z_{\alpha} \approx 1.64$. $z_\alpha$ satisfies $P(Z \le z_\alpha) = 1- \alpha$ and $P(Z > z_\alpha) = \alpha$. 
+  - Corresponding power function
+- Level of a test
+  - **Size $\alpha$ test**  
+  $\displaystyle \sup_{\pmb \theta \in \Theta_0} P(\pmb Y \in R) =\sup_{\pmb \theta \in \Theta_0} \beta_n(\pmb \theta) = \alpha$
+  - **Level $\alpha$ test**  
+  $\displaystyle \sup_{\pmb \theta \in \Theta_0} P(\pmb Y \in R) =\sup_{\pmb \theta \in \Theta_0} \beta_n(\pmb \theta) \le \alpha$
+  - **Asymptotic level $\alpha$ test**  
+  $\displaystyle \sup_{\pmb \theta \in \Theta_0} P(\pmb Y \in R) =\sup_{\pmb \theta \in \Theta_0} \beta_n(\pmb \theta) \xrightarrow{n \rightarrow \infty} \alpha$
+- The Wald Statistic, Likelihood Ratio Statistic, and Score Statistic are asymptotically equivalent under appropriate regularity conditions 
+  - Wald is often the simplest to calculate (need to calculate the MLE) and can be the least conservative 
+  - The LR statistic is often the most computationally demanding (requires likelihood evaluation under both hypotheses)
+  - The Score is often somewhere in between (doesn't need the MLE)
+- **Simple null hypothesis: all parameters known under $H_0$**
+- Three test statistics 
+  - Wald:  
+  $T_W = \displaystyle \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\Big\{nI_1(\hat \theta_{\text MLE})\Big\}^{-1}} = \frac{(\hat \theta_{\text{MLE}} -\theta_0)^2}{\text{Var}(\hat \theta_{\text{MLE}})} = (\hat \theta_{\text{MLE}} -\theta_0)^2 \cdot nI_1(\hat \theta_{\text{MLE}})$
+  - Likelihood ratio :  
+  $\displaystyle T_{LR} = -2\Big\{\ell(\theta_0) - \ell(\hat \theta_{\text{MLE}}) \Big\} =  2\Big\{\ell(\hat \theta_{\text{MLE}}) - \ell(\theta_0)  \Big\}$ or, equivalently,    
+  $\displaystyle T_{LR} = -2\ln\Bigg\{\frac{L(\theta_0)}{L(\hat \theta_{\text{MLE}})} \Bigg\} =  2\ln\Bigg\{\frac{ L(\hat \theta_{\text{MLE}})}{L(\theta_0)} \Bigg\}$
+  - Score:  
+  $\displaystyle T_S = \frac{S_n(\theta_0)^2}{nI_1(\theta_0)}$
+- Asymptotic distribution of the Wald statistic 
+  - $\displaystyle T_W = nI_1(\theta)(\hat \theta_{\text{MLE}} -\theta)^2 \xrightarrow{D} \chi_1^2 \text{ under } H_0$
+  - $\displaystyle \sqrt{n}(\hat \theta_{\text{MLE}} - \theta) \xrightarrow{D} N\Big(0, \frac{1}{I_1(\theta)}\Big)$
+  - $\displaystyle Z_W = \sqrt{T_W} = \sqrt{nI_1(\theta)}(\hat \theta_{\text{MLE}} - \theta) \xrightarrow{D} N(0, 1)$
+  - NB: the relationship between a standard normal variable and the $\chi^2$ distribution:  
+  $Z^2 \sim \chi_1^2$
+- General vector formulation of the Wald statistic 
+  - $\displaystyle T_W = (\hat{\pmb\theta}_{\text{MLE}} - \hat{\pmb\theta}_0)^T \{\pmb I_T(\hat {\pmb \theta}_{\text{MLE}})\}(\hat{\pmb\theta}_{\text{MLE}} - \hat{\pmb\theta}_0) \xrightarrow{D} \chi_b^2 \text{ under } H_0$
+  - $\displaystyle \hat{\pmb\theta}_{\text{MLE}} \xrightarrow{D} N\Big({\pmb\theta}_0, \Big[\pmb I_T(\pmb \theta_0) \Big]^{-1}\Big)$
+  - $\displaystyle \sqrt{\pmb I_T(\pmb \theta_0)} (\hat{\pmb\theta}_{\text{MLE}} - \pmb \theta_0) \xrightarrow{D} N\Big({\pmb\theta}_0,  \mathbb{1}_b \Big)$
+- Score statistic (Lagrange Multiplier test) 
+  - $\displaystyle T_S = \frac{[S_n(\theta_0)]^2}{nI_1(\theta_0)} \xrightarrow{D} \chi^2_1$
+  - $\displaystyle \text{Reject } H_0 \text{ if } T_S > \chi^2_{1,\alpha}$, where $\chi^2_{1,\alpha} = Q(1 - \alpha)$ and $Q$ is the quantile function associated with the $\chi^2$ distribution. For example, when $\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84$.
+  - $\displaystyle Z_S = \frac{S_n(\theta_0)}{\sqrt{nI_1(\theta_0)}} \xrightarrow{D} N(0,1)$
+  - $\displaystyle \text{Reject } H_0 \text{ if } Z_S > z_{\alpha}$, where $z_{\alpha} = Q(1 - \alpha) = \Phi^{-1}(1 - \alpha)$ and $Q$ is the quantile function associated with the standard normal distribution distribution.
+- Multi-parameter formulation of the Score statistic 
+  - $\displaystyle T_S = \pmb S_n(\pmb \theta_0)^T [\pmb I_T(\pmb \theta_0)]^{-1} \pmb S_n(\pmb \theta_0) \xrightarrow {D} \chi^2_b$ under $H_0$
+  - $[\pmb I_T(\pmb \theta_0)]^{-1/2} \pmb S_n(\pmb \theta_0) \xrightarrow {D} N(\pmb 0, \mathbb{1}_b)$
+- Likelihood ratio statistic 
+  - $T_{LR} = 2\Big\{ \ell(\hat \theta_{MLE}) - \ell(\theta_0) \Big\} \xrightarrow{D} \chi^2_1 \text{ under } H_0, \text{ as } n \rightarrow \infty$
+  - $\text{Reject } H_0 \text{ if } T_{LR} > \chi^2_{1,\alpha}$, where $\chi^2_{1,\alpha} = Q(1 - \alpha)$ and $Q$ is the quantile function associated with the $\chi^2$ distribution. For example, when $\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84$.
+- Multi-parameter formulation of the Likelihood ratio statistic
+  - $T_{LR} = 2\Big\{ \ell(\hat {\pmb \theta}_{MLE}) - \ell(\pmb\theta_0) \Big\} \xrightarrow{D} \chi^2_b \text{ under } H_0, \text{ as } n \rightarrow \infty$
+  - The distribution of $T_{LR}$ converges to a $\chi^2_r$ distribution as $n \rightarrow \infty$, where the degrees of freedom $r$, are given by the difference between the number of free parameters specified by $\pmb \theta \in \Theta_0$ (the $H_0$-restricted parameter space) and the number of free parameters specified by $\pmb \theta \in \Theta$ (the entire parameter space)
+  - We reject $H_0$ iff $T_{LR} > \chi^2_{r,\alpha}$, where $\chi^2_{1,\alpha} = Q(1 - \alpha)$ and $Q$ is the quantile function associated with the $\chi^2$ distribution. For example, when $\alpha = 0.05, \chi^2_{1,0.05} \approx 3.84$.
+- **Composite null hypotheses (unknown parameters under $H_0$)** 
+- Partitioning the information matrix 
+  - Let $\hat{\pmb I} = \pmb I_T(\hat{\pmb \theta}_{\text{MLE}}) = n \pmb I_1(\hat{\pmb \theta}_{\text{MLE}})$
+- Wald test of $H_0: \pmb \theta_1 = \pmb \theta_{10}$ versus $H_a: \pmb \theta_1 \ne \pmb \theta_{10}$ 
+  - $T_W = (\hat{\pmb\theta}_1 - {\pmb\theta}_{10})^T \Bigg( \hat{\pmb I}_{11}- \frac{(\hat{\pmb I}_{12})^2}{\hat{\pmb I}_{22}} \Bigg)(\hat{\pmb\theta}_1 - {\pmb\theta}_{10}) \xrightarrow{D} \chi^2_r$
+- Score test of $H_0: \pmb \theta_1 = \pmb \theta_{10}$ versus $H_a: \pmb \theta_1 \ne \pmb \theta_{10}$ 
+  - $T_S =\pmb S_{1n}(\pmb \theta_{10})^T \Bigg( \tilde{\pmb I}_{11}- \frac{(\tilde{\pmb I}_{12})^2}{\tilde{\pmb I}_{22}} \Bigg)^{-1} \pmb S_{1n}(\pmb \theta_{10}) \xrightarrow {D} \chi^2_r$
+- Likelihood ratio test of $H_0: \pmb \theta_1 = \pmb \theta_{10}$ versus $H_a: \pmb \theta_1 \ne \pmb \theta_{10}$ 
+  - $\displaystyle T_{LR} = -2\Big\{ \ell(\tilde{\pmb \theta}) - \ell(\hat{\pmb \theta}) \Big\} \xrightarrow{D} \chi^2_{r}$
+- Asymptotic equivalence of tests 
+  - Two sequences of tests $V_n$ and $V'_n$ with respective rejection regions $R_n$ and $R'_n$ are asymptotically equivalent if under the null hypothesis, the probability of obtaining the same conclusion from both tests converges to 1 as $n \rightarrow \infty$
+  - Under regularity conditions, the Wald, Score, and Likelihood Ratio tests are asymptotic level $\alpha$ tests 
+  - Under suitable regularity conditions, $T_W$, $T_S$, and $T_{LR}$ are asymptotically equivalent tests 
+- Showing asymptotic equivalence 
+- Consistent tests (no upper limit to power) 
+  - A sequence of tests is called consistent against a specific alternative $\pmb \theta_1$ if $\beta_n(\pmb \theta_1) \xrightarrow{n \rightarrow \infty} 1$
+- Showing consistency for asymptotically normal test statistics 
+- Showing consistency with nuisance parameters
+- Power function normal
+- Asymptotic power approximation 
+  - $\displaystyle \beta_n(\theta_1) \approx \Phi \Bigg(\frac{\sqrt n(\theta_1 - \theta_1)}{\sigma(\theta_0)} - z_{\alpha} \Bigg)$, where $z_\alpha$ satisfies $P(Z \ge z_\alpha) = \alpha$
+  - $\displaystyle n \ge \frac{(z_{\alpha} + z_{1 -\beta})^2}{(\theta_1 - \theta_0)^2}\sigma^2(\theta_0)$
+- Asymptotic power approximation with nuisance parameters 
+  - $\displaystyle \beta_n(\theta_n, \eta) \xrightarrow{ n \rightarrow \infty} \Phi\Bigg(\frac{\Delta}{\sigma(\theta_0, \eta)} - z_{\alpha}\Bigg)$, where $z_\alpha$ satisfies $P(Z \ge z_\alpha) = \alpha$
+- Relative efficiency of tests $e_{12} = N_2 / N_1$ 
+- Efficiency is impacted by 
+  - The null and the alternative of interest
+  - The significance level $\alpha$
+  - The power $\beta$ at which the test is to be conducted
+- Three relative efficiency measures
+  - Pitman efficiency $\displaystyle \lim_{\theta \rightarrow \theta_0} e_{12}(\alpha, \beta, \theta)$
+  - Bahadur efficiency $\displaystyle \lim_{\alpha \rightarrow 0} e_{12}(\alpha, \beta, \theta)$
+  - Hodges and Lehmann efficiency $\displaystyle \lim_{\beta \rightarrow 1} e_{12}(\alpha, \beta, \theta)$
+  
+
+\newpage
+
+## Week 5: Confidence intervals
+
+- Interval estimate vs. interval estimator/random interval 
+- Coverage probability 
+  - $P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)$
+- Confidence coefficient / confidence level 
+  - $\inf_\theta P_\theta\Big(\theta \in [L(\pmb X), U(\pmb X)] \Big)$
+- Duality between test statistics and confidence sets 
+  - For a level $\alpha$ test with rejection region $R(\theta_0)$,
+  - $C(\pmb X) = \Big[\theta_0: \pmb X \notin R(\theta_0) \Big]$ is a $1 - \alpha$ confidence set.
+  - For a $1 - \alpha$ confidence set $C(\pmb X)$
+  - $R(\theta_0) = \Big[\pmb X : \theta_0 \notin C(\pmb X) \Big]$ is the rejection region of a level $\alpha$ test
+- Pivotal quantities 
+  - A random variable $Q(\pmb X,\theta)$ is a pivotal quantity (or pivot) if the distribution of $Q(\pmb X, \theta)$ is independent of all parameters
+  - If $\pmb X \sim F(\pmb x | \theta)$ then $Q(\pmb X, \theta)$ given $\theta$ has the same distribution for all values of $\theta$
+  - A pivot that is also a statistic (a function of the observed data $\pmb X$) is called an ancillary statistic
+  - For example, the distribution of the $T$ statistic $Q(\pmb X, \mu, \sigma^2) =\displaystyle T = \frac{\bar X - \mu}{S/\sqrt n} \sim t_{n-1}$ does not depend on the parameters $\mu$ and $\sigma^2$. Thus, $T$ is a pivotal quantity, and using the pivot $T \sim t_{n-1}$ , we have
+  - $P\Big(-t_{n-1,\frac{\alpha}{2}}  \le T \le t_{n-1,\frac{\alpha}{2}} \Big) = 1-\alpha$, where $t_\alpha = Q^{-1}(1 - \alpha)$ satisfies $P(T \ge t_\alpha) = \alpha$
+- Interval estimators based on pivots 
+  - Find numbers $a$ and $b$ such that $\displaystyle P_\theta\Big(a \le Q(\pmb X,\theta) \le b \Big) \ge 1 - \alpha$
+  - Then, $C(\pmb x) = \Big[\theta: a \le Q(\pmb x, \theta) \le b \Big]$ and $C(\pmb X)$ is a $1 - \alpha$ confidence set for $\theta$. 
+- Decreasing versus increasing pivotal functions of $\theta$
+  - If $Q(\pmb x, \theta)$ is an increasing function of $\theta$, then $C(\pmb x)$ has the form  
+  $Q^{-1}(\pmb x, a) \le \theta \le Q^{-1}(\pmb x, b)$
+  - If $Q(\pmb x, \theta)$ is a decreasing function of $\theta$, then $C(\pmb x)$ has the form  
+  $Q^{-1}(\pmb x, b) \le \theta \le Q^{-1}(\pmb x, a)$
+- Confidence interval for $\sigma^2$ based on a pivot 
+  - $(n-1)S^2/\sigma^2 \sim\chi^2_{n-1}$ 
+- Confidence intervals based on a pivot of the CDF
+- Suppose T is a statistic with continuous cdf $F_T(t|\theta)$ and $F_T(T|\theta) \sim U(0,1)$
+  - When $F_T(t | \theta)$ is a decreasing function of $\theta$,
+    - $F_T\Big(t | \theta_U(\theta)\Big) = \alpha/2$
+    - $F_T\Big(t | \theta_L(\theta)\Big) = 1 - \alpha/2$
+  - When $F_T(t | \theta)$ is an increasing function of $\theta$,
+    - $F_T\Big(t | \theta_U(\theta)\Big) = 1- \alpha/2$
+    - $F_T\Big(t | \theta_L(\theta)\Big) = \alpha/2$
+  - Then, the random interval $\Big(\theta_L(T),\theta_U(T)\Big)$ is a $1-\alpha$ confidence set for $\theta$
+- Asymptotic confidence coefficient
+  - A sequence of interval estimators $\Big[L_n(\pmb X), U_n(\pmb X)  \Big]$ of a parameter $\theta$ has asymptotic confidence coefficient $\gamma$ if for every $\theta$
+  - $\displaystyle P_\theta \Bigg(\theta \in \Big[L_n(\pmb X), U_n(\pmb X)  \Big] \Bigg) \xrightarrow{n \rightarrow \infty} \gamma$
+- Evaluating interval estimators 
+  - Size and coverage probability: for a specified coverage probability, find the interval with the shortest length
+  - Test-related optimality: probability of covering false values
+  - Loss function: reflection both length and coverage
+  
+  
+\newpage
+
+## Week 6: Inference under the bootstrap  
+
+- Bootstrap: re-sampling with replacement 
+- When $n$ is very small, assuming asymptotic normality is unreasonable 
+- Building confidence intervals 
+  - Straightforward when the exact distribution of a statistic is available
+  - Straightforward when we can use asymptotics (i.e., for any distribution and sample size $n$ where the CLT holds)
+  - When neither are possible (e.g., small $n$ or no exact distribution): bootstrap
+- Two approaches
+  - If you can sample from $f_\theta$, use $\hat \theta$ and generate $B$ bootstrap samples from $f_{\hat \theta}$
+  - If not, draw with replacement from the available data to get $B$ bootstrap samples
+- With the bootstrap, we can discover the sampling distribution of a statistic 
+- Bootstrap approach 
+- Strengths and weaknesses 
+
+\newpage
+
+
+## Week 7: Bayesian statistics
+
+- In the frequentist approach, the parameter $\theta$ is fixed and the data is random 
+- In the Bayesian approach, the parameter $\theta$ is a random variable and the data is fixed
+- A prior distribution is a subjective distribution of the parameters based on the experimenter's belief 
+- A posterior distribution is a distribution of the parameters updated by the information contain in the sample
+- Bayesian approach notation  
+  - $\pmb x$: observed sample $x_1, ..., x_n$
+  - $\pi(\theta)$: prior distribution of the parameter
+  - $f(\pmb x | \theta)$: conditional distribution of the sample given the parameters
+  - $\pi(\theta | \pmb x)$: posterior distribution of the parameter (conditional distribution of $\theta$ given the observed sample $\pmb x$)
+- Bayesian inference 
+  - $\displaystyle \pi(\theta|\pmb x) = \frac{f(\pmb x | \theta)\pi(\theta)}{m(\pmb x)} = \frac{f(\pmb x | \theta)\pi(\theta)}{\int f(\pmb x | \theta)\pi(\theta)~d\theta}$
+  - Note: for simplicity, we can use $\displaystyle \pi(\theta|\pmb x) \propto {f(\pmb x | \theta)\pi(\theta)}$
+  - Note: for simplicity, you can rely only on the **kernel** of the two distributions (i.e., omit all factors that do not depend on $\theta$)
+- The prior distribution is often selected from a family of priors $\pi(\theta|y)$ indexed by a hyperparameter $\gamma$ 
+- Selecting a prior 
+  - Empirical Bayes: The parameters of the prior distribution are estimated from the data
+  - Hierarchical Bayes: The parameters of the prior distribution are modeled by another distribution (the hyperprior distribution)
+  - Robust Bayes: The performance of an estimator is evaluated for each member of the class, with the goal of finding an estimator that performs well for the entire class
+- Conjugate prior (the prior and posterior distribution are part of the same class of distributions) 
+- Bayesian point estimate of $\theta$ 
+  - Maximum a posteriori probability (MAP) estimator by maximizing the posterior distribution $\pi(\theta | \pmb x)$
+  - The conditional expectation estimator: the mean of the posterior distribution
+- Credible interval for $\theta$ (i.e., Bayesian confidence interval) 
+  - An interval $\displaystyle \Big[L(\theta|\pmb x),U(\theta|\pmb x) \Big]$ such that
+  - $\displaystyle P\Big(L(\theta|\pmb x) \le \theta \le U(\theta|\pmb x) \Big) = \int_{L(\theta|\pmb x)}^{U(\theta|\pmb x)} \pi(\theta | \pmb x)~d\theta = 1-\alpha$
+  - The parameter $\theta$ has probability $1 - \alpha$ to lie inside the credible interval
+- When the sample size goes to infinity, the prior becomes dominated by the likelihood
+- Obtaining posterior probabilities
+  - $P(\theta \in \Theta_0) = P(H_0 \text{ is true}|\pmb x)$
+  - $P(\theta \notin \Theta_0) = P(H_0 \text{ is false}|\pmb x)$
+  
+\newpage
+
+## Week 8: M-estimators
+
+- $\displaystyle 0 = \sum_{i = 1}^n U_i (\hat \theta)$ 
+- The solution $\hat \theta$ to $\displaystyle 0 = \sum_{i = 1}^n U_i (\hat \theta)$ is a consistent estimator of $\theta$ when the data are iid and the estimating equation is unbiased such that
+  - $\displaystyle E\Big[U_i (\theta)\Big] = 0$ 
+- The law of iterated expectation
+  - $E[Y_{ij}] = E\Bigg[E\Big[Y_{ij} \Big| X_i\Big] \Bigg]$
+- Asymptotic distribution/normality 
+  - When the data are iid, then the solution $\hat \theta$ to an unbiased estimating equation $\displaystyle 0 = \sum_{i = 1}^n U_i (\hat \theta)$ is asymptotically normal with
+  - $\sqrt n(\hat \theta - \theta) \xrightarrow D N(0, \Sigma)$ and 
+  - $\displaystyle \Sigma = E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1} \text{Var}\Big[ U_i(\theta)  \Big]E\Bigg(\frac{\partial}{\partial \theta} U_i(\theta) \Bigg)^{-1,T}$
+- In the single-parameter case,
+  - $\displaystyle \Sigma = \text{Var}\Big[U(\theta)\Big] E\Bigg[ \frac{\partial}{\partial \theta} U(\theta)  \Bigg]^{-2}$
+  
+  
+  
+  
+  

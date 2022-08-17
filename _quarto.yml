@@ -1,0 +1,24 @@
+project:
+  type: book
+
+book:
+  title: "Statistical Inference"
+  author: "Shilaan Alzahawi"
+  date: ""
+  chapters:
+    - index.qmd
+    - week1.qmd
+    - week2.qmd
+    - week3.qmd
+    - week4.qmd
+    - week5.qmd
+    - exercises.qmd
+
+#bibliography:
+
+format:
+  html:
+    theme: cosmo
+
+
+

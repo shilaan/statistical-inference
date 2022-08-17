@@ -1,0 +1,88 @@
+# Large sample theory 
+
+## Convergence 
+
+The maximum likelihood estimator $\hat\theta_n$ is distributed $N(\theta, (nI_\theta)^{-1})$ for every $\theta$, for large n.
+
+An estimator $\pmb{\hat \theta}$ of $\pmb \theta$ is weakly consistent if the estimator $\pmb{\hat \theta}$ converges in probability to the true value $\pmb \theta$. An estimator $\pmb{\hat \theta}$ of $\pmb \theta$ is strongly consistent if the estimator $\pmb{\hat \theta}$ converges with probability one to the true value (i.e., converges almost surely to $\pmb \theta$). An estimator $\pmb{\hat \theta}$ is asymptotically normal if $\sqrt n(\pmb{\hat \theta} - \pmb\theta)$ converges in distribution to a normal distribution with mean $\pmb 0$ and covariance matrix $\pmb \Sigma$.
+$$
+\begin{split}
+\text{Weak consistency: }& \pmb{\hat \theta} \xrightarrow{P} \pmb\theta \text{ as }n \rightarrow \infty \\
+\text{Strong consistency: }& \text{ For any } \epsilon > 1,  P(\lim_{n \rightarrow \infty}|\pmb{\hat \theta} - \pmb\theta| < \epsilon) = 1. \text{ That is,}\\
+&\pmb{\hat \theta} \xrightarrow{\text{a.s.}} \pmb\theta\\
+\text{Asymptotic normality: }& \sqrt n(\pmb{\hat \theta} - \pmb\theta) \xrightarrow{d} N(0, \pmb\Sigma)
+\end{split}
+$$
+
+## Central limit theorem (CLT)
+
+Let $X_1, X_2, ...$ be a sequence of iid random variables with $E(X_i) = \mu$ and $Var(X_i) = \sigma^2$. Then
+$$
+\begin{split}
+\frac{\sqrt n (\bar X_n - \mu)}{\sigma} &\xrightarrow{D} N(0,1)\\
+\frac{\sqrt n (\bar X_n - \mu)}{\sigma} &\approx N(0,1) \\
+\sqrt n (\bar X_n - \mu) &\xrightarrow{D} N(0, \sigma^2)
+\end{split}
+$$
+
+## Delta method 
+
+$$
+\begin{split}
+\text{Let } X_n &\text{ be a sequence of RVs s.t.} \\
+\sqrt n(X_n - \theta) &\xrightarrow{D} N(0, \sigma^2) \\
+&\text{Then, } \\
+\sqrt n\Big(g(X_n) - g(\theta)\Big) &\xrightarrow{D} N\Big(0, \sigma^2\Big[g'(\theta)\Big]^2\Big)
+\end{split}
+$$
+
+Some useful identities to obtain $N(0,1)$:
+$$
+\begin{split}
+N(0, k) &= \sqrt k N(0,1) \\
+N(0, k^2) &= kN(0,1) \\
+N(\mu, k^2) &= kN(\frac{\mu}{k}, 1)
+\end{split}
+$$
+
+Consider iid random observations $X_1, X_2,...$ with $E(X_i) = \mu$ and $Var(X_i) = \sigma^2 < \infty$. We want to estimate $1/\mu$. Use the Delta Method to obtain the asymptotic distribution of $\sqrt n\Big(\frac{1}{\bar X_n} - \frac{1}{\mu}\Big)$. We have (from the CLT):  
+
+$$
+\begin{split}
+\sqrt n\Big({\bar X_n} - {\mu}\Big) &\xrightarrow{D} N(0, \sigma^2) \\
+\sqrt n\Big(g(X_n) - g(\theta)\Big) &\xrightarrow{D} N\Big(0, \sigma^2\Big[g'(\theta)\Big]^2\Big) \\
+\text{where } g(\theta) = \frac{1}{\theta},~ g'(\theta) &= -\frac{1}{\theta^2}, g'(\theta)^2 = \frac{1}{\theta^4}, \text{ and } \theta = \mu \\
+\sqrt n\Big(\frac{1}{\bar X_n} - \frac{1}{\mu}\Big) &\xrightarrow{D} N\Big(0, \frac{\sigma^2}{\mu^4}\Big) \\
+\sqrt n\Big(\frac{1}{\bar X_n} - \frac{1}{\mu}\Big) &\xrightarrow{D} \frac{\sigma}{\mu^2}N\Big(0, 1\Big) \\
+\text{Using Slutsky's} &\text{ lemma}, \\
+\frac{\sqrt n\Big(\frac{1}{\bar X_n} - \frac{1}{\mu}\Big)}{\sigma / \mu^2} &\xrightarrow{D} N\Big(0, 1\Big) \\
+\text{Plugging in consistent} &\text{ estimators}, \\
+\frac{\sqrt n\Big(\frac{1}{\bar X_n} - \frac{1}{\mu}\Big)}{\sqrt{S^2_n} / \bar X^2_n} &\xrightarrow{D} N\Big(0, 1\Big)
+\end{split}
+$$
+
+## Variance stabilizing transformations 
+
+We have $X_1, X_2, ...$ iid Poisson($\lambda$) random variables. Find an appropriate variance stabilizing transformation. We have
+$$
+\begin{split}
+E[X_i] = \text{Var}[X_i] &= \lambda. \text{From the CLT, } \\
+\sqrt n (\bar X_n - \lambda) &\xrightarrow{D}N(0,\lambda) \\
+\text{We wish to find a function } &g(\lambda) \text{ such that} \\
+\lambda\Big[g'(\lambda)\Big]^2 &= c. \\
+\text{A great candidate would be } c &= 1, \text{such that} \\
+[g'(\lambda)\Big]^2 &= \frac{1}{\lambda} \\
+g'(\lambda) &= \sqrt{\frac{1}{\lambda}} = \lambda^{-1/2} \\
+g(\lambda) &= \int \lambda^{-1/2} ~d\lambda \\
+&= \frac{1}{1/2} \lambda^{1/2} \\
+&= 2\sqrt\lambda \\
+\text{Using the Delta method to } &\text{confirm, we have} \\
+\sqrt n\Big(g(X_n) - g(\lambda)\Big) &\xrightarrow{D} N\Big(0, \lambda\Big[g'(\lambda)\Big]^2\Big) \\
+\sqrt n\Big(2\sqrt{X_n} - 2\sqrt{\lambda}\Big) &\xrightarrow{D} N\Big(0, \lambda\Big[g'(\lambda)\Big]^2\Big) \\
+&\xrightarrow{D} N\Big(0, \lambda\Big[\frac{1}{\sqrt \lambda}\Big]^2\Big) \\
+&\xrightarrow{D} N\Big(0, \lambda\frac{1}{\lambda}\Big) \\
+&\xrightarrow{D} N\Big(0, 1\Big) \\
+\end{split}
+$$
+
+
