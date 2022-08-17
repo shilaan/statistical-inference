@@ -532,7 +532,7 @@ L(\mu) &amp;= \prod_{i = 1}^n f_{X_i}(y_i)^{I(y_i &lt; a)}\Big[1 - F_{X_i}(a)\Bi
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>xi <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xi) <span class="co">#the MLE based on the full data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.05513069</code></pre>
+<pre><code>[1] 0.009724927</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>yi <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(xi <span class="sc">&lt;</span> a, xi, a)</span>
@@ -545,7 +545,7 @@ L(\mu) &amp;= \prod_{i = 1}^n f_{X_i}(y_i)^{I(y_i &lt; a)}\Big[1 - F_{X_i}(a)\Bi
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">nlm</span>(negloglik, <span class="at">p =</span> <span class="sc">-</span>.<span class="dv">03</span>)<span class="sc">$</span>estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.068</code></pre>
+<pre><code>[1] 0.0205651</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -655,11 +655,11 @@ E[\hat \sigma^2] &amp;= E\Bigg[\frac{1}{n} \sum_{i = 1}^n V_i^2\Bigg] \\
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">1</span>); y2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((y1 <span class="sc">-</span> y2)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">4</span><span class="sc">*</span>n) <span class="co">#biased mle of sigma^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4591671</code></pre>
+<pre><code>[1] 0.4419836</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((y1 <span class="sc">-</span> y2)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>n)  <span class="co">#restricted/marginal mle of sigma^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9183342</code></pre>
+<pre><code>[1] 0.8839672</code></pre>
 </div>
 </div>
 </section>
